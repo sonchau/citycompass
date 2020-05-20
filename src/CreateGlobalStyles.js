@@ -6,15 +6,21 @@ const CreateGlobalStyle = createGlobalStyle`
 * {
     box-sizing: border-box;
 }
-html,
+html 
+{
+    font-size: 62.5%;
+ }
+
 body {
-    height: 100%;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
 }
-body {
-    background: ${(props) => props.theme.primaryBg};
+*,
+ *::before,
+ *::after {
     margin: 0;
     padding: 0;
-    font-family: "Roboto", sans-serif;
+    box-sizing: inherit;
 }
 #root {
     min-height: 100vh;
