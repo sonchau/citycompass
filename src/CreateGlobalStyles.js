@@ -12,6 +12,7 @@ html
  }
 
 body {
+    background: ${(props) => props.theme.primaryBg};
     font-family: "Roboto", sans-serif;
     box-sizing: border-box;
 }

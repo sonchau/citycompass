@@ -18,7 +18,6 @@ const Root = () => {
         <StyledContainer>
           <StyledHeader>
             <span>Geografia</span>{" "}
-            {/* <Toggle theme={theme} toggleTheme={toggleTheme} /> */}
           </StyledHeader>
           <StyledContent>
             <StyledSidebar>StyledSidebar it is</StyledSidebar>
