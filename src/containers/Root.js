@@ -28,7 +28,7 @@ const Root = () => {
           </StyledHeader>
           <StyledContent>
             <StyledSidebar>
-              <Sidebar></Sidebar>
+              <Sidebar routes={communityProfileRoutes} />
             </StyledSidebar>
             <StyledMain>
               <Switch>

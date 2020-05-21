@@ -1,16 +1,15 @@
 import React from "react";
-import communityProfileRoutes from "../../routes/communityProfiles";
 import { NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ routes }) => {
   return (
     <div>
       <ul>
-        {communityProfileRoutes.map((prop, key) => {
+        {routes.map((prop, key) => {
           if (prop.redirect) return null;
           return (
             <li key={key}>
-              <NavLink to={prop.path} className="nav-link">
+              <NavLink to={prop.path}>
                 <p>{prop.name}</p>
               </NavLink>
             </li>

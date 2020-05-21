@@ -2,12 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Root from "./containers/Root";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import indexRoutes from "./routes/index";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Root />
+      <Switch>
+        {indexRoutes.map((prop, key) => {
+          return (
+            <Route path={prop.path} key={key} component={prop.component} />
+          );
+        })}
+      </Switch>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
