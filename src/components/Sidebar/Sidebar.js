@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import StyledDropdown from "../../styled/StyledDropdown";
+import StyledSidebarDropdown from "../../styled/Sidebar/StyledSidebarDropdown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = ({ routes }) => {
-  const [dropdownCls, setDropdownCls] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
     <React.Fragment>
@@ -18,24 +20,27 @@ const Sidebar = ({ routes }) => {
                 if (route.nestedRoutes) {
                   return (
                     <React.Fragment>
-                      <button onClick={() => setDropdownCls(!dropdownCls)}>
-                        {route.name}
+                      <button onClick={() => setDropdownOpen(!dropdownOpen)}>
+                        {route.name} <FontAwesomeIcon icon={faCaretDown} />
                       </button>
 
-                      <StyledDropdown display={dropdownCls}>
+                      <StyledSidebarDropdown display={dropdownOpen}>
                         {route.nestedRoutes.map((nestedRoute, key) => {
                           return (
-                            <NavLink to={nestedRoute.path}>
+                            <NavLink
+                              to={nestedRoute.path}
+                              activeClassName="selected"
+                            >
                               <p>{nestedRoute.name}</p>
                             </NavLink>
                           );
                         })}
-                      </StyledDropdown>
+                      </StyledSidebarDropdown>
                     </React.Fragment>
                   );
                 }
                 return (
-                  <NavLink to={route.path}>
+                  <NavLink to={route.path} activeClassName="selected">
                     <p>{route.name}</p>
                   </NavLink>
                 );
@@ -43,7 +48,7 @@ const Sidebar = ({ routes }) => {
             </React.Fragment>
           );
         return (
-          <NavLink to={prop.path}>
+          <NavLink to={prop.path} activeClassName="selected">
             <p>{prop.name}</p>
           </NavLink>
         );
