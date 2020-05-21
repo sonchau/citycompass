@@ -1,60 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import StyledDropdown from "../../styled/StyledDropdown";
 
 const Sidebar = ({ routes }) => {
-  return (
-    <div>
-      <ul>
-        {routes.map((prop, key) => {
-          if (prop.redirect) return null;
-          if (prop.category)
-            return (
-              <React.Fragment>
-                <h3>{prop.categoryText}</h3>
+  const [dropdownCls, setDropdownCls] = useState(false);
 
-                {prop.routes.map((route, key) => {
-                  if (route.nestedRoutes) {
-                    return (
-                      <React.Fragment>
-                        <li key={key}>
-                          <NavLink to={route.path}>
-                            <p>{route.name}</p>
-                          </NavLink>
-                        </li>
-                        <ul>
-                          {route.nestedRoutes.map((nestedRoute, key) => {
-                            return (
-                              <li key={key}>
-                                <NavLink to={nestedRoute.path}>
-                                  <p>{nestedRoute.name}</p>
-                                </NavLink>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </React.Fragment>
-                    );
-                  }
-                  return (
-                    <li key={key}>
-                      <NavLink to={route.path}>
-                        <p>{route.name}</p>
-                      </NavLink>
-                    </li>
-                  );
-                })}
-              </React.Fragment>
-            );
+  return (
+    <React.Fragment>
+      {routes.map((prop, key) => {
+        if (prop.redirect) return null;
+        if (prop.category)
           return (
-            <li key={key}>
-              <NavLink to={prop.path}>
-                <p>{prop.name}</p>
-              </NavLink>
-            </li>
+            <React.Fragment>
+              <h3>{prop.categoryText}</h3>
+
+              {prop.routes.map((route, key) => {
+                if (route.nestedRoutes) {
+                  return (
+                    <React.Fragment>
+                      <button onClick={() => setDropdownCls(!dropdownCls)}>
+                        {route.name}
+                      </button>
+
+                      <StyledDropdown display={dropdownCls}>
+                        {route.nestedRoutes.map((nestedRoute, key) => {
+                          return (
+                            <NavLink to={nestedRoute.path}>
+                              <p>{nestedRoute.name}</p>
+                            </NavLink>
+                          );
+                        })}
+                      </StyledDropdown>
+                    </React.Fragment>
+                  );
+                }
+                return (
+                  <NavLink to={route.path}>
+                    <p>{route.name}</p>
+                  </NavLink>
+                );
+              })}
+            </React.Fragment>
           );
-        })}
-      </ul>
-    </div>
+        return (
+          <NavLink to={prop.path}>
+            <p>{prop.name}</p>
+          </NavLink>
+        );
+      })}
+    </React.Fragment>
   );
 };
 
