@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import StyledSidebarDropdown from "../../styled/Sidebar/StyledSidebarDropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = ({ routes }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -21,7 +21,10 @@ const Sidebar = ({ routes }) => {
                   return (
                     <React.Fragment>
                       <button onClick={() => setDropdownOpen(!dropdownOpen)}>
-                        {route.name} <FontAwesomeIcon icon={faCaretDown} />
+                        {route.name}{" "}
+                        <FontAwesomeIcon
+                          icon={dropdownOpen ? faCaretDown : faCaretRight}
+                        />
                       </button>
 
                       <StyledSidebarDropdown display={dropdownOpen}>

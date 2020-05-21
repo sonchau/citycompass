@@ -1,5 +1,8 @@
 import CommunityProfiles from "../views/CommunityProfiles";
 import PopulationHightLights from "../views/PopulationHightLights";
+import PopulationSummary from "../views/AreaProfiles/population/PopulationSummary";
+import PopulationEstimates from "../views/AreaProfiles/population/PopulationEstimates";
+import AreaProfiles from "../views/AreaProfiles/AreaProfiles";
 
 var communityProfileRoutes = [
   {
@@ -18,24 +21,22 @@ var communityProfileRoutes = [
 
     routes: [
       {
-        path: "/test1",
+        path: "/area-profiles",
         name: "About the Profile Areas",
-        component: PopulationHightLights,
+        component: AreaProfiles,
       },
       {
-        path: "/test2",
         name: "Population",
-        component: PopulationHightLights,
         nestedRoutes: [
           {
-            path: "/test3",
+            path: "/population-summary",
             name: "Population Summary",
-            component: PopulationHightLights,
+            component: PopulationSummary,
           },
           {
-            path: "/test4",
+            path: "/population-estimates",
             name: "Population Estimates",
-            component: PopulationHightLights,
+            component: PopulationEstimates,
           },
         ],
       },
