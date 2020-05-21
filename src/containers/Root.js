@@ -4,11 +4,18 @@ import store from "../store";
 import CreateGlobalStyles from "../CreateGlobalStyles";
 import { ThemeProvider } from "styled-components";
 import theme from "../constants/theme";
-import StyledContainer from "../components/Layout/StyledContainer";
-import StyledHeader from "../components/Layout/StyledHeader";
-import StyledContent from "../components/Layout/StyledContent";
-import StyledSidebar from "../components/Layout/StyledSidebar";
-import StyledMain from "../components/Layout/StyledMain";
+import { Route, Switch, Redirect } from "react-router-dom";
+
+// Styled components
+import StyledContainer from "../styled/Layout/StyledContainer";
+import StyledHeader from "../styled/Layout/StyledHeader";
+import StyledContent from "../styled/Layout/StyledContent";
+import StyledSidebar from "../styled/Layout/StyledSidebar";
+import StyledMain from "../styled/Layout/StyledMain";
+
+// components
+import Sidebar from "../components/Sidebar/Sidebar";
+import communityProfileRoutes from "../routes/communityProfiles";
 
 const Root = () => {
   return (
@@ -20,8 +27,30 @@ const Root = () => {
             <span>Geografia</span>{" "}
           </StyledHeader>
           <StyledContent>
-            <StyledSidebar>StyledSidebar it is</StyledSidebar>
-            <StyledMain>Its Main Content Area</StyledMain>
+            <StyledSidebar>
+              <Sidebar></Sidebar>
+            </StyledSidebar>
+            <StyledMain>
+              <Switch>
+                {communityProfileRoutes.map((prop, key) => {
+                  if (prop.pro) {
+                    return null;
+                  }
+                  if (prop.redirect) {
+                    return (
+                      <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                    );
+                  }
+                  return (
+                    <Route
+                      path={prop.path}
+                      component={prop.component}
+                      key={key}
+                    />
+                  );
+                })}
+              </Switch>
+            </StyledMain>
           </StyledContent>
         </StyledContainer>
       </ThemeProvider>
