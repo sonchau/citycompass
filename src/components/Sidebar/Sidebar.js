@@ -13,6 +13,28 @@ const Sidebar = ({ routes }) => {
                 <h3>{prop.categoryText}</h3>
 
                 {prop.routes.map((route, key) => {
+                  if (route.nestedRoutes) {
+                    return (
+                      <React.Fragment>
+                        <li key={key}>
+                          <NavLink to={route.path}>
+                            <p>{route.name}</p>
+                          </NavLink>
+                        </li>
+                        <ul>
+                          {route.nestedRoutes.map((nestedRoute, key) => {
+                            return (
+                              <li key={key}>
+                                <NavLink to={nestedRoute.path}>
+                                  <p>{nestedRoute.name}</p>
+                                </NavLink>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </React.Fragment>
+                    );
+                  }
                   return (
                     <li key={key}>
                       <NavLink to={route.path}>

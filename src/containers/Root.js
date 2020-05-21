@@ -42,6 +42,27 @@ const Root = () => {
                     return (
                       <React.Fragment>
                         {prop.routes.map((route, key) => {
+                          if (route.nestedRoutes) {
+                            return (
+                              <React.Fragment>
+                                <Route
+                                  path={route.path}
+                                  component={route.component}
+                                  key={key}
+                                />
+
+                                {route.nestedRoutes.map((nestedRoute, key) => {
+                                  return (
+                                    <Route
+                                      path={nestedRoute.path}
+                                      component={nestedRoute.component}
+                                      key={key}
+                                    />
+                                  );
+                                })}
+                              </React.Fragment>
+                            );
+                          }
                           return (
                             <Route
                               path={route.path}

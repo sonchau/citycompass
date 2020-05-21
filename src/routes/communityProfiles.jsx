@@ -26,11 +26,18 @@ var communityProfileRoutes = [
         path: "/test2",
         name: "Population",
         component: PopulationHightLights,
-      },
-      {
-        path: "/test3",
-        name: "How old are we?",
-        component: PopulationHightLights,
+        nestedRoutes: [
+          {
+            path: "/test3",
+            name: "Population Summary",
+            component: PopulationHightLights,
+          },
+          {
+            path: "/test4",
+            name: "Population Estimates",
+            component: PopulationHightLights,
+          },
+        ],
       },
     ],
   },
