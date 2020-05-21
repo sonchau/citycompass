@@ -12,7 +12,28 @@ var communityProfileRoutes = [
     name: "Population Highlights",
     component: PopulationHightLights,
   },
+  {
+    heading: true,
+    headingText: "Area Profiles",
 
+    routes: [
+      {
+        path: "/test1",
+        name: "About the Profile Areas",
+        component: PopulationHightLights,
+      },
+      {
+        path: "/test2",
+        name: "Population",
+        component: PopulationHightLights,
+      },
+      {
+        path: "/test3",
+        name: "How old are we?",
+        component: PopulationHightLights,
+      },
+    ],
+  },
   {
     redirect: true,
     path: "/",

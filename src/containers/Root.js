@@ -38,6 +38,21 @@ const Root = () => {
                       <Redirect from={prop.path} to={prop.pathTo} key={key} />
                     );
                   }
+                  if (prop.heading) {
+                    return (
+                      <React.Fragment>
+                        {prop.routes.map((route, key) => {
+                          return (
+                            <Route
+                              path={route.path}
+                              component={route.component}
+                              key={key}
+                            />
+                          );
+                        })}
+                      </React.Fragment>
+                    );
+                  }
                   return (
                     <Route
                       path={prop.path}

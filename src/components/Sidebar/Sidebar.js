@@ -7,6 +7,22 @@ const Sidebar = ({ routes }) => {
       <ul>
         {routes.map((prop, key) => {
           if (prop.redirect) return null;
+          if (prop.heading)
+            return (
+              <React.Fragment>
+                <h3>{prop.headingText}</h3>
+
+                {prop.routes.map((route, key) => {
+                  return (
+                    <li key={key}>
+                      <NavLink to={route.path}>
+                        <p>{route.name}</p>
+                      </NavLink>
+                    </li>
+                  );
+                })}
+              </React.Fragment>
+            );
           return (
             <li key={key}>
               <NavLink to={prop.path}>
