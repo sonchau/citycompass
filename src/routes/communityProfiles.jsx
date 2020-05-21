@@ -13,8 +13,8 @@ var communityProfileRoutes = [
     component: PopulationHightLights,
   },
   {
-    heading: true,
-    headingText: "Area Profiles",
+    category: true,
+    categoryText: "Area Profiles",
 
     routes: [
       {

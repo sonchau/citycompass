@@ -7,10 +7,10 @@ const Sidebar = ({ routes }) => {
       <ul>
         {routes.map((prop, key) => {
           if (prop.redirect) return null;
-          if (prop.heading)
+          if (prop.category)
             return (
               <React.Fragment>
-                <h3>{prop.headingText}</h3>
+                <h3>{prop.categoryText}</h3>
 
                 {prop.routes.map((route, key) => {
                   return (

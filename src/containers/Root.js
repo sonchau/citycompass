@@ -38,7 +38,7 @@ const Root = () => {
                       <Redirect from={prop.path} to={prop.pathTo} key={key} />
                     );
                   }
-                  if (prop.heading) {
+                  if (prop.category) {
                     return (
                       <React.Fragment>
                         {prop.routes.map((route, key) => {
