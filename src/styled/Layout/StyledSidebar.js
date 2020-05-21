@@ -6,11 +6,14 @@ const StyledSidebar = styled.nav`
   border: 1px solid;
   background-color: ${(props) => props.theme.sidebarBg};
   color: ${(props) => props.theme.sidebarClr};
-  padding: 2rem 0rem 0rem 2rem;
+  padding: 2rem 0rem 0rem 0rem;
 
   .selected {
     background-color: ${(props) => props.theme.sidebarActiveBg};
     color: ${(props) => props.theme.sidebarActiveClr};
+  }
+
+  & div {
   }
 
   & a,
@@ -24,12 +27,12 @@ const StyledSidebar = styled.nav`
     text-align: left;
     cursor: pointer;
     outline: none;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 1rem;
   }
   /* On mouse-over */
   & a:hover,
   button:hover {
-    color: #f1f1f1;
+    color: ${(props) => props.theme.sidebarHoverClr};
   }
 `;
 
