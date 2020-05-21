@@ -33,9 +33,6 @@ const Root = () => {
             <StyledMain>
               <Switch>
                 {communityProfileRoutes.map((prop, key) => {
-                  if (prop.pro) {
-                    return null;
-                  }
                   if (prop.redirect) {
                     return (
                       <Redirect from={prop.path} to={prop.pathTo} key={key} />

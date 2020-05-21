@@ -1,29 +1,22 @@
-// import Dashboard from "views/Dashboard/Dashboard.jsx";
-// import Notifications from "views/Notifications/Notifications.jsx";
-// import Icons from "views/Icons/Icons.jsx";
-// import Typography from "views/Typography/Typography.jsx";
-// import TableList from "views/TableList/TableList.jsx";
-// import Maps from "views/Maps/Maps.jsx";
-// import UserPage from "views/UserPage/UserPage.jsx";
 import CommunityProfiles from "../views/CommunityProfiles";
-import Page1 from "../views/Page1";
+import PopulationHightLights from "../views/PopulationHightLights";
 
 var communityProfileRoutes = [
   {
-    path: "/communityprofiles",
-    name: "Community Profiles",
+    path: "/community-profiles",
+    name: "Home",
     component: CommunityProfiles,
   },
   {
-    path: "/page1",
-    name: "page 1",
-    component: Page1,
+    path: "/population-highlights",
+    name: "Population Highlights",
+    component: PopulationHightLights,
   },
 
   {
     redirect: true,
     path: "/",
-    pathTo: "/communityprofiles",
+    pathTo: "/community-profiles",
     name: "Community Profiles",
   },
 ];
