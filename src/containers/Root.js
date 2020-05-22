@@ -17,6 +17,9 @@ import StyledMain from "../styled/Layout/StyledMain";
 import Sidebar from "../components/Sidebar/Sidebar";
 import communityProfileRoutes from "../routes/communityProfiles";
 
+// container
+import HeaderContainer from "./HeaderContainer";
+
 const Root = () => {
   return (
     <Provider store={store}>
@@ -24,7 +27,7 @@ const Root = () => {
         <CreateGlobalStyles />
         <StyledContainer>
           <StyledHeader>
-            <span>Geografia</span>{" "}
+            <HeaderContainer />{" "}
           </StyledHeader>
           <StyledContent>
             <StyledSidebar>

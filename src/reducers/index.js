@@ -1,7 +1,4 @@
 import { combineReducers } from "redux";
-import communityProfiles from "./communityProfiles";
-import selectedProfile from "./selectedProfile";
-export default combineReducers({
-  communityProfiles,
-  selectedProfile,
-});
+import theme from "./theme";
+
+export default combineReducers({ theme });
