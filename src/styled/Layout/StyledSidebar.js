@@ -13,9 +13,6 @@ const StyledSidebar = styled.nav`
     color: ${(props) => props.theme.sidebarActiveClr};
   }
 
-  & div {
-  }
-
   & a,
   button {
     text-decoration: none;
