@@ -4,18 +4,22 @@ import Root from "./containers/Root";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import indexRoutes from "./routes/index";
+import { Provider } from "react-redux";
+import store from "./store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        {indexRoutes.map((prop, key) => {
-          return (
-            <Route path={prop.path} key={key} component={prop.component} />
-          );
-        })}
-      </Switch>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          {indexRoutes.map((prop, key) => {
+            return (
+              <Route path={prop.path} key={key} component={prop.component} />
+            );
+          })}
+        </Switch>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
