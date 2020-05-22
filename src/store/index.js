@@ -1,3 +1,3 @@
 import configureStore from "./configureStore";
-const store = configureStore({ theme: "light" });
+const store = configureStore();
 export default store;

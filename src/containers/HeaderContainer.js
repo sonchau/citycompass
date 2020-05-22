@@ -1,20 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
+import { SET_THEME } from "../constants/actionTypes";
 
-const HeaderContainer = ({ theme, toggleTheme }) => {
-  return <button onClick={toggleTheme}>{theme}</button>;
+const HeaderContainer = ({ isThemeLight, toggleTheme }) => {
+  return (
+    <button onClick={() => toggleTheme(!isThemeLight)}>Toggle Theme</button>
+  );
 };
 
 const mapStateToProps = (state) => {
-  console.log("state", state);
   return {
-    theme: state.theme,
+    isThemeLight: state.isThemeLight,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleTheme: () => dispatch({ type: "SET_THEME" }),
+    toggleTheme: (isThemeLight) =>
+      dispatch({ type: SET_THEME, payload: isThemeLight }),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);

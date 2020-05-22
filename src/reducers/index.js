@@ -1,4 +1,4 @@
 import { combineReducers } from "redux";
-import theme from "./theme";
+import isThemeLight from "./isThemeLight";
 
-export default combineReducers({ theme });
+export default combineReducers({ isThemeLight });

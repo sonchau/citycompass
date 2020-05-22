@@ -19,11 +19,9 @@ import communityProfileRoutes from "../routes/communityProfiles";
 // container
 import HeaderContainer from "./HeaderContainer";
 
-const Root = (props) => {
+const Root = ({ isThemeLight }) => {
   return (
-    <ThemeProvider
-      theme={props.theme === "light" ? theme.lightTheme : theme.darkTheme}
-    >
+    <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
       <StyledContainer>
         <StyledHeader>
@@ -95,7 +93,7 @@ const Root = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.theme,
+    isThemeLight: state.isThemeLight,
   };
 };
 export default connect(mapStateToProps, null)(Root);
