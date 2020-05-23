@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import CreateGlobalStyles from "../CreateGlobalStyles";
-import { ThemeProvider } from "styled-components";
-import theme from "../constants/theme";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 // Styled components
+import { ThemeProvider } from "styled-components";
+import CreateGlobalStyles from "../CreateGlobalStyles";
+import theme from "../constants/theme";
 import StyledContainer from "../styled/Layout/StyledContainer";
 import StyledHeader from "../styled/Layout/StyledHeader";
 import StyledContent from "../styled/Layout/StyledContent";
@@ -18,6 +18,9 @@ import communityProfileRoutes from "../routes/communityProfiles";
 
 // container
 import HeaderContainer from "./HeaderContainer";
+
+// action creators
+import fetchData from "../actions/apiActions";
 
 const Root = ({ isThemeLight, makeAPIRequest }) => {
   // Similar to componentDidMount and componentDidUpdate:
@@ -96,7 +99,6 @@ const Root = ({ isThemeLight, makeAPIRequest }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log("state", state);
   return {
     isThemeLight: state.isThemeLight,
   };
@@ -104,39 +106,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    makeAPIRequest: () => dispatch(fetchData()),
+    makeAPIRequest: () =>
+      dispatch(fetchData("SELECT * FROM casey.cc_pagedirectory")),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Root);
-
-function fetchData() {
-  return (dispatch, getState) => {
-    fetch(buildQueryUrl())
-      .then((response) => response.json())
-      .then((result) => dispatch({ type: "SET_DATA", payload: result }));
-  };
-}
-
-function buildQueryUrl(
-  query = "SELECT * FROM casey.cc_pagedirectory",
-  params = {}
-) {
-  const baseURL = `https://maps.geografia.com.au`;
-  const username = "casey";
-  const sqlApi = `/user/${username}/api/v2/sql`;
-  const q = templateRender(query, params);
-  return `${baseURL}/${sqlApi}?q=${q}`;
-}
-
-const templateRender = (template, data) => {
-  const paramsRex = /\{\{(.*?)\}\}/g;
-  return template
-    .replace(paramsRex, (expression) =>
-      expression.slice(2, -2).chain((name) => {
-        let value = data[name] !== undefined ? data[name] : expression;
-        // return typeof value == "number" ? value.toLocaleString() : value;
-        return value;
-      })
-    )
-    .replace(/\s\s+/g, " ");
-};
