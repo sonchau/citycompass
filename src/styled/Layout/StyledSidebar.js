@@ -6,7 +6,7 @@ const StyledSidebar = styled.nav`
   border: 1px solid;
   background-color: ${(props) => props.theme.sidebarBg};
   color: ${(props) => props.theme.sidebarClr};
-  padding: 2rem 0rem 0rem 0rem;
+  padding: 2rem 0rem 0rem 2rem;
 
   .selected {
     background-color: ${(props) => props.theme.sidebarActiveBg};
@@ -24,12 +24,13 @@ const StyledSidebar = styled.nav`
     text-align: left;
     cursor: pointer;
     outline: none;
-    padding: 0.25rem 1rem;
+    padding: 0.25rem 0rem;
   }
   /* On mouse-over */
   & a:hover,
   button:hover {
-    color: ${(props) => props.theme.sidebarHoverClr};
+    background-color: ${(props) => props.theme.sidebarActiveBg};
+    color: ${(props) => props.theme.sidebarActiveClr};
   }
 `;
 

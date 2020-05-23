@@ -1,14 +1,17 @@
 const lightTheme = {
   // primary
-  primaryBg: "rgb(205, 210, 214)",
-  color: "rgb(0, 0, 0)",
+  primaryBg: "rgb(255, 255, 255)",
+  color: "rgb(23, 23, 33)",
+
+  // content
+  contentBg: "rgb(23, 23, 33)",
 
   // sidebar section
-  sidebarBg: "rgb(245, 246, 247)",
-  sidebarClr: "rgb(0, 0, 0)",
+  sidebarBg: "rgb(238, 238, 238)",
+  sidebarClr: "rgb(23, 23, 33)",
   sidebarHoverClr: "rgb(100, 100, 100)",
-  sidebarLinkClr: "rgb(0, 0, 0)",
-  sidebarActiveBg: "rgb(214, 87, 81)",
+  sidebarLinkClr: "rgb(23, 23, 33)",
+  sidebarActiveBg: "rgb(233, 59, 34)",
   sidebarActiveClr: "rgb(255, 255, 255)",
   sidebarDropdownBg: "rgb(255, 228, 230)",
 };
