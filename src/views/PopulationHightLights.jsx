@@ -102,6 +102,35 @@ const PopulationHighlights = () => {
         <div
           style={{ width: "100%", height: "100rem", backgroundColor: "black" }}
         ></div>
+
+        <div style={{ display: "flex" }}>
+          <div style={{ flex: "0 0 70%" }}>
+            <h2>By the numbers</h2>
+            <p>
+              The City of Casey is located in Melbourne's south-eastern suburbs,
+              between 28 and 60 kilometres south-east of the Melbourne CBD. The
+              City of Casey is bounded by the City of 14% Knox and the Yarra
+              Ranges Council area in the north, Cardinia Shire in the east,
+              Western Port and Mornington Peninsula Shire in the south, and
+              Frankston City and the City of Greater Dandenong in the west. The
+              City of Casey's 38% 23% boundaries are Police Road, Churchill
+              National Park, West Boundary Track, Horswood Road and Boundary
+              Road in the north, Cardinia Creek. 25% McCormacks Road, Pound
+              Road, Tooradin Station Road, Hardys Road and Dalmore Road in the
+              east, the Western Port coastline and South Boundary Road East in
+              the south, and Western Port Highway, South Gippsland Highway,
+              South Gippsland Freeway, Princes Highway, Claredale Road and the
+              Dandenong Creek in the west. Primary production Parkland Geografia
+              visual treatment | Version 1.2 | May 2020 The City of Casey's
+              boundaries are Police Road, Churchill National Park, West Boundary
+              Residential Track, Horswood Road and Boundary Road in the north,
+              Cardinia Creek.
+            </p>
+          </div>
+          <div>
+            <h2>Land use</h2>
+          </div>
+        </div>
       </div>
     </React.Fragment>
   );
