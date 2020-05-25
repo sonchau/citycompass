@@ -18,7 +18,6 @@ const StyledSidebar = styled.nav`
   button {
     text-decoration: none;
     color: ${(props) => props.theme.sidebarLinkClr};
-    font-size: 2rem;
     display: block;
     border: none;
     background: none;
