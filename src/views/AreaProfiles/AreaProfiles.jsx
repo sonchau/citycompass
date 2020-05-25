@@ -97,16 +97,37 @@ const AreaProfiles = () => {
           >
             <div
               style={{
-                backgroundColor: "#EEEEEE",
+                backgroundColor: "rgb(238, 238, 238)",
+                color: "black",
                 height: "40rem",
                 width: "40rem",
+                borderRadius: "4rem 4rem 4rem 0rem",
+                padding: "3rem",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
-              Card 1
+              <span style={{ flex: "0 0 30%", backgroundColor: "purple" }}>
+                MEDIAN AGE
+              </span>
+              <span
+                style={{
+                  flex: "0 0 30%",
+                  backgroundColor: "pink",
+                  fontSize: "8rem",
+                }}
+              >
+                34
+              </span>
+              <span style={{ flex: "0 0 40%", backgroundColor: "red" }}>
+                <p>Greater Melbourne</p>
+                <p>Victoria</p>
+                <p>Australia</p>
+              </span>
             </div>
             <div
               style={{
-                backgroundColor: "#EEEEEE",
+                backgroundColor: "rgb(238, 238, 238)",
                 height: "40rem",
                 width: "40rem",
               }}
@@ -115,7 +136,7 @@ const AreaProfiles = () => {
             </div>
             <div
               style={{
-                backgroundColor: "#EEEEEE",
+                backgroundColor: "rgb(238, 238, 238)",
                 height: "40rem",
                 width: "40rem",
               }}
@@ -133,7 +154,7 @@ const AreaProfiles = () => {
           >
             <div
               style={{
-                backgroundColor: "#EEEEEE",
+                backgroundColor: "rgb(238, 238, 238)",
                 height: "40rem",
                 width: "40rem",
               }}
@@ -142,7 +163,7 @@ const AreaProfiles = () => {
             </div>
             <div
               style={{
-                backgroundColor: "#EEEEEE",
+                backgroundColor: "rgb(238, 238, 238)",
                 height: "40rem",
                 width: "40rem",
               }}
@@ -151,7 +172,7 @@ const AreaProfiles = () => {
             </div>
             <div
               style={{
-                backgroundColor: "#EEEEEE",
+                backgroundColor: "rgb(238, 238, 238)",
                 height: "40rem",
                 width: "40rem",
               }}
@@ -169,7 +190,7 @@ const AreaProfiles = () => {
           >
             <div
               style={{
-                backgroundColor: "#EEEEEE",
+                backgroundColor: "rgb(238, 238, 238)",
                 height: "40rem",
                 width: "40rem",
               }}
@@ -178,7 +199,7 @@ const AreaProfiles = () => {
             </div>
             <div
               style={{
-                backgroundColor: "#EEEEEE",
+                backgroundColor: "rgb(238, 238, 238)",
                 height: "40rem",
                 width: "40rem",
               }}
@@ -187,7 +208,7 @@ const AreaProfiles = () => {
             </div>
             <div
               style={{
-                backgroundColor: "#EEEEEE",
+                backgroundColor: "rgb(238, 238, 238)",
                 height: "40rem",
                 width: "40rem",
               }}
