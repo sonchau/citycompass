@@ -1,6 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExport, faShare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFileExport,
+  faShare,
+  faSortUp,
+  faSortDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 const AreaProfiles = () => {
   return (
@@ -107,23 +112,56 @@ const AreaProfiles = () => {
                 flexDirection: "column",
               }}
             >
-              <span style={{ flex: "0 0 30%", backgroundColor: "purple" }}>
-                MEDIAN AGE
-              </span>
-              <span
+              <span style={{ flex: "0 0 20%" }}>MEDIAN AGE</span>
+              <div
                 style={{
-                  flex: "0 0 30%",
-                  backgroundColor: "pink",
-                  fontSize: "8rem",
+                  flex: "0 0 40%",
+                  position: "relative",
                 }}
               >
-                34
-              </span>
-              <span style={{ flex: "0 0 40%", backgroundColor: "red" }}>
-                <p>Greater Melbourne</p>
-                <p>Victoria</p>
-                <p>Australia</p>
-              </span>
+                <span style={{ fontSize: "10rem" }}>34</span>
+                <span style={{ position: "absolute", top: "40%", left: "35%" }}>
+                  <FontAwesomeIcon icon={faSortUp} color="green" size="4x" />
+                </span>
+                <span style={{ position: "absolute", top: "50%", left: "50%" }}>
+                  +1
+                </span>
+              </div>
+              <div
+                style={{
+                  flex: "0 0 40%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <div style={{ paddingTop: "1rem" }}>
+                  <span style={{ marginRight: "0.3rem" }}>36</span>
+                  <span style={{ position: "relative" }}>
+                    <span style={{ position: "absolute", top: "30%" }}>
+                      <FontAwesomeIcon icon={faSortUp} color="green" />
+                    </span>
+                  </span>
+                  <span style={{ marginLeft: "2rem" }}>Greater Melbourne</span>
+                </div>
+                <div style={{ paddingTop: "1rem" }}>
+                  <span style={{ marginRight: "0.3rem" }}>36</span>
+                  <span style={{ position: "relative" }}>
+                    <span style={{ position: "absolute", top: "30%" }}>
+                      <FontAwesomeIcon icon={faSortUp} color="red" />
+                    </span>
+                  </span>
+                  <span style={{ marginLeft: "2rem" }}>Victoria</span>
+                </div>
+                <div style={{ paddingTop: "1rem" }}>
+                  <span style={{ marginRight: "0.3rem" }}>36</span>
+                  <span style={{ position: "relative" }}>
+                    <span style={{ position: "absolute", top: "30%" }}>
+                      <FontAwesomeIcon icon={faSortUp} color="red" />
+                    </span>
+                  </span>
+                  <span style={{ marginLeft: "2rem" }}>Australia</span>
+                </div>
+              </div>
             </div>
             <div
               style={{
