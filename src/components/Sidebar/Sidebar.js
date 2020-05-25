@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import StyledSidebarDropdown from "../../styled/Sidebar/StyledSidebarDropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronRight,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = ({ routes }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -14,17 +17,48 @@ const Sidebar = ({ routes }) => {
         if (prop.category)
           return (
             <React.Fragment>
-              <h3>{prop.categoryText}</h3>
+              <p
+                style={{
+                  fontWeight: 600,
+                  padding: "3rem 0rem 1rem 0rem",
+                  borderBottom: "1px solid gray",
+                  fontSize: "1.7rem",
+                }}
+              >
+                {prop.categoryText}
+              </p>
 
               {prop.routes.map((route, key) => {
                 if (route.nestedRoutes) {
                   return (
                     <React.Fragment>
-                      <button onClick={() => setDropdownOpen(!dropdownOpen)}>
-                        {route.name}{" "}
-                        <FontAwesomeIcon
-                          icon={dropdownOpen ? faCaretDown : faCaretRight}
-                        />
+                      <button
+                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                        style={{ width: "100%" }}
+                      >
+                        <span
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            borderBottom: "1px solid gray",
+                            padding: "0.5rem 1rem 0.5rem 0rem",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: "1.7rem",
+                            }}
+                          >
+                            {route.name}{" "}
+                          </span>
+                          <span>
+                            <FontAwesomeIcon
+                              icon={
+                                dropdownOpen ? faChevronDown : faChevronRight
+                              }
+                            />
+                          </span>
+                        </span>
                       </button>
 
                       <StyledSidebarDropdown display={dropdownOpen}>
@@ -34,7 +68,15 @@ const Sidebar = ({ routes }) => {
                               to={nestedRoute.path}
                               activeClassName="selected"
                             >
-                              <p>{nestedRoute.name}</p>
+                              <p
+                                style={{
+                                  fontSize: "1.7rem",
+                                  borderBottom: "1px solid gray",
+                                  padding: "0.5rem 0rem",
+                                }}
+                              >
+                                {nestedRoute.name}
+                              </p>
                             </NavLink>
                           );
                         })}
@@ -44,7 +86,15 @@ const Sidebar = ({ routes }) => {
                 }
                 return (
                   <NavLink to={route.path} activeClassName="selected">
-                    <p>{route.name}</p>
+                    <p
+                      style={{
+                        fontSize: "1.7rem",
+                        borderBottom: "1px solid gray",
+                        padding: "0.5rem 0rem",
+                      }}
+                    >
+                      {route.name}
+                    </p>
                   </NavLink>
                 );
               })}
@@ -52,7 +102,16 @@ const Sidebar = ({ routes }) => {
           );
         return (
           <NavLink to={prop.path} activeClassName="selected">
-            <p>{prop.name}</p>
+            <p
+              style={{
+                fontWeight: 600,
+                padding: "0.5rem 0rem",
+                borderBottom: "1px solid gray",
+                fontSize: "1.7rem",
+              }}
+            >
+              {prop.name}
+            </p>
           </NavLink>
         );
       })}

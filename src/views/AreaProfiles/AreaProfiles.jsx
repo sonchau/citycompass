@@ -218,42 +218,6 @@ const AreaProfiles = () => {
               Card 6
             </div>
           </div>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "7rem",
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: "rgb(238, 238, 238)",
-                height: "40rem",
-                width: "40rem",
-              }}
-            >
-              Card 7
-            </div>
-            <div
-              style={{
-                backgroundColor: "rgb(238, 238, 238)",
-                height: "40rem",
-                width: "40rem",
-              }}
-            >
-              Card 8
-            </div>
-            <div
-              style={{
-                backgroundColor: "rgb(238, 238, 238)",
-                height: "40rem",
-                width: "40rem",
-              }}
-            >
-              Card 9
-            </div>
-          </div>
         </div>
       </div>
     </div>
