@@ -22,10 +22,11 @@ import HeaderContainer from "./HeaderContainer";
 // action creators
 import fetchData from "../actions/apiActions";
 
-const Root = ({ isThemeLight, makeAPIRequest }) => {
+const Root = ({ isThemeLight, makeAPIRequest, ageSexPyramid }) => {
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     makeAPIRequest();
+    ageSexPyramid();
   });
   return (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
@@ -108,6 +109,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     makeAPIRequest: () =>
       dispatch(fetchData("SELECT * FROM casey.cc_pagedirectory")),
+    ageSexPyramid: () =>
+      dispatch(fetchData(`SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Root);
