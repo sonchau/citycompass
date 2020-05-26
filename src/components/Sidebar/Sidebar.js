@@ -15,6 +15,7 @@ import {
 
 const Sidebar = ({ routes }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
 
   return (
     <React.Fragment>
@@ -30,9 +31,10 @@ const Sidebar = ({ routes }) => {
               {prop.routes.map((route, key) => {
                 if (route.nestedRoutes) {
                   return (
-                    <React.Fragment>
+                    <div style={{ position: "relative" }}>
                       <StyledDropdownButton
-                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                        onMouseOver={() => setDropdownOpen(true)}
+                        onMouseLeave={() => setDropdownOpen(false)}
                       >
                         <span>{route.name} </span>
                         <span>
@@ -42,7 +44,11 @@ const Sidebar = ({ routes }) => {
                         </span>
                       </StyledDropdownButton>
 
-                      <StyledDropdown display={dropdownOpen}>
+                      <StyledDropdown
+                        display={dropdownOpen}
+                        onMouseOver={() => setDropdownOpen(true)}
+                        onMouseLeave={() => setDropdownOpen(false)}
+                      >
                         {route.nestedRoutes.map((nestedRoute, key) => {
                           return (
                             <NavLink
@@ -59,7 +65,7 @@ const Sidebar = ({ routes }) => {
                           );
                         })}
                       </StyledDropdown>
-                    </React.Fragment>
+                    </div>
                   );
                 }
 
