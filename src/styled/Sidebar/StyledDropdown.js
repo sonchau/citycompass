@@ -3,7 +3,7 @@ import styled from "styled-components";
 const StyledSidebarDropdown = styled.div`
   position: absolute;
   z-index: 1000;
-  left: 30.7rem;
+  left: 30rem;
   top: -0.4rem;
   width: 20rem;
   padding: 1rem;

@@ -33,7 +33,8 @@ const Sidebar = ({ routes }) => {
                   return (
                     <div style={{ position: "relative" }}>
                       <StyledDropdownButton
-                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                        onMouseOver={() => setDropdownOpen(true)}
+                        onMouseLeave={() => setDropdownOpen(false)}
                       >
                         <span>{route.name} </span>
                         <span>
@@ -43,7 +44,11 @@ const Sidebar = ({ routes }) => {
                         </span>
                       </StyledDropdownButton>
 
-                      <StyledDropdown display={dropdownOpen}>
+                      <StyledDropdown
+                        display={dropdownOpen}
+                        onMouseOver={() => setDropdownOpen(true)}
+                        onMouseLeave={() => setDropdownOpen(false)}
+                      >
                         {route.nestedRoutes.map((nestedRoute, key) => {
                           return (
                             <NavLink
