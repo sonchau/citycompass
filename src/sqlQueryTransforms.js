@@ -81,7 +81,18 @@ export default {
         (data[index]["b"] = uniqueArray(
           rows
             .filter((r) => r["a_level"] === a_level)
-            .map(({ b_level, b_title }) => ({ b_level, b_title }))
+            .map(({ b_level, b_title }) => ({
+              b_level,
+              b_title,
+              // map over cs for this b
+              c: uniqueArray(
+                rows
+                  .filter(
+                    (r) => r["a_level"] === a_level && r["b_level"] === b_level
+                  )
+                  .map(({ c_level, c_title }) => ({ c_level, c_title }))
+              ),
+            }))
         ).log("bs"))
     );
 
