@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { PAGE_DATA_QUERY, PAGE_DATA_QUERY_TRANSFORM } from "../sqlQueries";
 
 // Styled components
 import { ThemeProvider } from "styled-components";
@@ -22,10 +23,10 @@ import HeaderContainer from "./HeaderContainer";
 // action creators
 import fetchData from "../actions/apiActions";
 
-const Root = ({ isThemeLight, makeAPIRequest, ageSexPyramid }) => {
+const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    makeAPIRequest();
+    pageStructure();
     ageSexPyramid();
   });
   return (
@@ -105,12 +106,17 @@ const mapStateToProps = (state) => {
   };
 };
 
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    makeAPIRequest: () =>
-      dispatch(fetchData("SELECT * FROM casey.cc_pagedirectory")),
+    pageStructure: () =>
+      dispatch(fetchData(PAGE_DATA_QUERY, PAGE_DATA_QUERY_TRANSFORM)),
     ageSexPyramid: () =>
-      dispatch(fetchData(`SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`))
+      dispatch(
+        fetchData(
+          `SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`
+        )
+      ),
   };
 };
 

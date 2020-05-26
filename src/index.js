@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import indexRoutes from "./routes/index";
 import { Provider } from "react-redux";
 import store from "./store";
+import "./utils/object_extensions.exec.js"
 
 ReactDOM.render(
   <React.StrictMode>
