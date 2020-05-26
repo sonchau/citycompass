@@ -110,4 +110,5 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchData("SELECT * FROM casey.cc_pagedirectory")),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Root);

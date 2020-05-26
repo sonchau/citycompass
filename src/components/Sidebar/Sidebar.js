@@ -15,6 +15,7 @@ import {
 
 const Sidebar = ({ routes }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
 
   return (
     <React.Fragment>
@@ -30,7 +31,7 @@ const Sidebar = ({ routes }) => {
               {prop.routes.map((route, key) => {
                 if (route.nestedRoutes) {
                   return (
-                    <React.Fragment>
+                    <div style={{ position: "relative" }}>
                       <StyledDropdownButton
                         onClick={() => setDropdownOpen(!dropdownOpen)}
                       >
@@ -59,7 +60,7 @@ const Sidebar = ({ routes }) => {
                           );
                         })}
                       </StyledDropdown>
-                    </React.Fragment>
+                    </div>
                   );
                 }
 
