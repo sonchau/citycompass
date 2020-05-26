@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { PAGE_DATA_QUERY, PAGE_DATA_QUERY_TRANSFORM } from "../sqlQueries";
 
 // Styled components
 import { ThemeProvider } from "styled-components";
@@ -22,11 +23,11 @@ import HeaderContainer from "./HeaderContainer";
 // action creators
 import fetchData from "../actions/apiActions";
 
-const Root = ({ isThemeLight, makeAPIRequest, ageSexPyramid }) => {
+const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    makeAPIRequest();
-    ageSexPyramid();
+    pageStructure();
+    // ageSexPyramid();
   });
   return (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
@@ -100,6 +101,7 @@ const Root = ({ isThemeLight, makeAPIRequest, ageSexPyramid }) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log("state", state);
   return {
     isThemeLight: state.isThemeLight,
   };
@@ -107,10 +109,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    makeAPIRequest: () =>
-      dispatch(fetchData("SELECT * FROM casey.cc_pagedirectory")),
-    ageSexPyramid: () =>
-      dispatch(fetchData(`SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`))
+    pageStructure: () =>
+      // TODO: move SET_ROUTES to import form action constants
+      dispatch(
+        fetchData(PAGE_DATA_QUERY, "SET_ROUTES", PAGE_DATA_QUERY_TRANSFORM)
+      ),
+    // ageSexPyramid: () =>
+    //   dispatch(
+    //     fetchData(
+    //       `SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`
+    //     )
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Root);
