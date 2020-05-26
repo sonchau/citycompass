@@ -27,7 +27,7 @@ const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     pageStructure();
-    ageSexPyramid();
+    // ageSexPyramid();
   });
   return (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
@@ -101,22 +101,24 @@ const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log("state", state);
   return {
     isThemeLight: state.isThemeLight,
   };
 };
 
-
 const mapDispatchToProps = (dispatch) => {
   return {
     pageStructure: () =>
-      dispatch(fetchData(PAGE_DATA_QUERY, PAGE_DATA_QUERY_TRANSFORM)),
-    ageSexPyramid: () =>
+      // TODO: move SET_ROUTES to import form action constants
       dispatch(
-        fetchData(
-          `SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`
-        )
+        fetchData(PAGE_DATA_QUERY, "SET_ROUTES", PAGE_DATA_QUERY_TRANSFORM)
       ),
+    // ageSexPyramid: () =>
+    //   dispatch(
+    //     fetchData(
+    //       `SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`
+    //     )
   };
 };
 
