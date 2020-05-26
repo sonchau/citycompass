@@ -2,17 +2,25 @@ import remove from "./utils/removeKey";
 
 export default {
   PAGE_DATA_QUERY: ({ rows, fields }) => {
-    const row2nested = ({
-      a_level,
-      a_title,
-      b_level,
-      b_title,
-      c_level,
-      c_title,
-      d_level,
-      d_title,
-      page_code,
-    }) => {
+    const row2nested = (
+      memo,
+      {
+        // [{a: b[ c: [ d: []]], .... }]
+        // [{
+        // depth: 2
+        // a: [{ level: "A1", title: "Area profile" },
+        //     b: [ { }, {}, {}, c: [{}, d:] ] }] ]
+        a_level,
+        a_title,
+        b_level,
+        b_title,
+        c_level,
+        c_title,
+        d_level,
+        d_title,
+        page_code,
+      }
+    ) => {
       const countDepth = (str) => {
         const re = /([A-D]\d+)/g;
         return ((str || "").match(re) || []).length;
@@ -27,31 +35,59 @@ export default {
         return _json;
       };
 
-      return trimByDepth({
-        depth,
-        page_code,
-        a: {
-          a_level,
-          a_title,
-          b: {
-            b_level,
-            b_title,
-            c: {
-              c_level,
-              c_title,
-              d: {
-                d_level,
-                d_title,
-              },
-            },
-          },
-        },
-      });
+      //   [{A1, title}, {A2, title}]
+
+      //   return trimByDepth({
+      //     depth,
+      //     page_code,
+      //     a: {
+      //       a_level,
+      //       a_title,
+      //       b: {
+      //         b_level,
+      //         b_title,
+      //         c: {
+      //           c_level,
+      //           c_title,
+      //           d: {
+      //             d_level,
+      //             d_title,
+      //           },
+      //         },
+      //       },
+      //     },
+      //   });
     };
 
-    return rows.reduce((memo, current) => {
-      memo.push(row2nested(current));
+    let data = rows.reduce((memo, current) => {
+      current.log("current");
+      // [{A1, title}, {A2, title}]
+      const found = memo.find((obj) => obj["a_level"] === current["a_level"]);
+
+      if (!found) {
+        memo.push({
+          a_level: current["a_level"],
+          a_title: current["a_title"],
+        });
+      }
+
+      console.log(memo);
       return memo;
     }, []);
+
+    // get Bs for A1 (later do in loop for each A*)
+    data.map(
+      ({ a_level }, index) =>
+        (data[index]["b"] = uniqueArray(
+          rows
+            .filter((r) => r["a_level"] === a_level)
+            .map(({ b_level, b_title }) => ({ b_level, b_title }))
+        ).log("bs"))
+    );
+
+    return data;
   },
 };
+
+const uniqueArray = (a) =>
+  [...new Set(a.map((o) => JSON.stringify(o)))].map((s) => JSON.parse(s));
