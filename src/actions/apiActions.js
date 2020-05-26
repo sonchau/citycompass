@@ -1,11 +1,11 @@
 import buildQueryUrl from "../utils/buildQueryUrl";
 import { SET_DATA } from "../constants/actionTypes";
 
-const fetchData = (query) => {
+const fetchData = (query, action_type) => {
   return (dispatch, getState) => {
     fetch(buildQueryUrl(query))
       .then((response) => response.json())
-      .then((result) => dispatch({ type: SET_DATA, payload: result }));
+      .then((result) => dispatch({ type: action_type, payload: result }));
   };
 };
 

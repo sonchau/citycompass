@@ -10,6 +10,13 @@ var communityProfileRoutes = [
     name: "Home",
     component: CommunityProfiles,
   },
+
+  {
+    path: "/community-route",
+    name: "Another route",
+    component: CommunityProfiles,
+  },
+
   {
     path: "/population-highlights",
     name: "Population Highlights",

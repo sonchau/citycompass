@@ -22,11 +22,12 @@ import HeaderContainer from "./HeaderContainer";
 // action creators
 import fetchData from "../actions/apiActions";
 
-const Root = ({ isThemeLight, makeAPIRequest, ageSexPyramid }) => {
+const Root = ({ isThemeLight, makeAPIRequest, ageSexPyramid, getRoutes }) => {
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    makeAPIRequest();
-    ageSexPyramid();
+    // makeAPIRequest();
+    // ageSexPyramid();
+    getRoutes();
   });
   return (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
@@ -100,6 +101,7 @@ const Root = ({ isThemeLight, makeAPIRequest, ageSexPyramid }) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log("state", state);
   return {
     isThemeLight: state.isThemeLight,
   };
@@ -107,10 +109,19 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    makeAPIRequest: () =>
-      dispatch(fetchData("SELECT * FROM casey.cc_pagedirectory")),
-    ageSexPyramid: () =>
-      dispatch(fetchData(`SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`))
+    // makeAPIRequest: () =>
+    //   dispatch(fetchData("SELECT * FROM casey.cc_pagedirectory", "SET_DATA")),
+    // ageSexPyramid: () =>
+    //   dispatch(
+    //     fetchData(
+    //       `SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`,
+    //       "SET_DATA"
+    //     )
+    //   ),
+    getRoutes: () =>
+      dispatch(
+        fetchData(`SELECT * FROM casey.cc_pagedirectory_21610`, "SET_ROUTES")
+      ),
   };
 };
 
