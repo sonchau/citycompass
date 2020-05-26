@@ -60,8 +60,6 @@ export default {
     };
 
     let data = rows.reduce((memo, current) => {
-      current.log("current");
-      // [{A1, title}, {A2, title}]
       const found = memo.find((obj) => obj["a_level"] === current["a_level"]);
 
       if (!found) {
@@ -71,7 +69,6 @@ export default {
         });
       }
 
-      console.log(memo);
       return memo;
     }, []);
 
@@ -90,7 +87,18 @@ export default {
                   .filter(
                     (r) => r["a_level"] === a_level && r["b_level"] === b_level
                   )
-                  .map(({ c_level, c_title }) => ({ c_level, c_title }))
+                  .map(({ c_level, c_title }) => ({
+                    c_level,
+                    c_title,
+                    d: uniqueArray(
+                      rows.filter(
+                        (r) =>
+                          r["a_level"] === a_level &&
+                          r["b_level"] === b_level &&
+                          r["c_level"] === c_level
+                      ).map(({d_level, d_title}) => ({d_level, d_title}))
+                    ),
+                  }))
               ),
             }))
         ).log("bs"))
