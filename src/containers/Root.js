@@ -15,20 +15,20 @@ import StyledMain from "../styled/Layout/StyledMain";
 
 // components
 import Sidebar from "../components/Sidebar/Sidebar";
-import communityProfileRoutes from "../routes/communityProfiles";
-
+import CommunityProfiles from "../views/CommunityProfiles";
+import PopulationEstimates from "../views/AreaProfiles/population/PopulationEstimates";
 // container
 import HeaderContainer from "./HeaderContainer";
 
 // action creators
 import fetchData from "../actions/apiActions";
 
-const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
+const Root = ({ isThemeLight, dataset, pageStructure }) => {
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     pageStructure();
     // ageSexPyramid();
-  });
+  }, []);
   return (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
@@ -42,6 +42,21 @@ const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
           </StyledSidebar>
           <StyledMain>
             <Switch>
+              <Route path="/A1">
+                <CommunityProfiles />
+              </Route>
+              <Route path="/A2">
+                <PopulationEstimates />
+              </Route>
+
+              {/* {dataset &&
+                dataset.map((a) => (
+                  <Route
+                    key={a["a_level"]}
+                    path={a["a_level"]}
+                    component={CommunityProfiles}
+                  />
+                ))} */}
               {/* {communityProfileRoutes.map((prop, key) => {
                 if (prop.redirect) {
                   return (
@@ -101,8 +116,10 @@ const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
 };
 
 const mapStateToProps = (state) => {
+  console.log("state.routes", state.routes);
   return {
     isThemeLight: state.isThemeLight,
+    dataset: state.routes,
   };
 };
 

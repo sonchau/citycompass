@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = (props) => {
   return (
     <div>
       {props.routes.map((a) => (
         <div key={a["a_level"]}>
-          <h3>{a["a_title"]}</h3>
-          {a.b.map((b) => (
+          <h3>
+            <NavLink to={a["a_level"]}>{a["a_title"]}</NavLink>
+          </h3>
+          {/* {a.b.map((b) => (
             <div>
               <h4>{b["b_title"]}</h4>
               {b.c.map((c) => (
                 <h5>{c["c_title"]}</h5>
               ))}
             </div>
-          ))}
+          ))} */}
         </div>
       ))}
     </div>
