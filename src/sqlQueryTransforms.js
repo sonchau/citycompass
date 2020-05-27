@@ -1,7 +1,7 @@
 import remove from "./utils/removeKey";
 
 export default {
-  PAGE_DATA_QUERY: ({ rows, fields }) => {
+  PAGE_DIRECTORY_QUERY: ({ rows, fields }) => {
     const row2nested = (
       memo,
       {
@@ -34,29 +34,6 @@ export default {
         remove(_json, depth2key[depth + 1]);
         return _json;
       };
-
-      //   [{A1, title}, {A2, title}]
-
-      //   return trimByDepth({
-      //     depth,
-      //     page_code,
-      //     a: {
-      //       a_level,
-      //       a_title,
-      //       b: {
-      //         b_level,
-      //         b_title,
-      //         c: {
-      //           c_level,
-      //           c_title,
-      //           d: {
-      //             d_level,
-      //             d_title,
-      //           },
-      //         },
-      //       },
-      //     },
-      //   });
     };
 
     let data = rows.reduce((memo, current) => {
@@ -78,30 +55,41 @@ export default {
         (data[index]["b"] = uniqueArray(
           rows
             .filter((r) => r["a_level"] === a_level)
+            .filter(({ b_level }) => b_level)
             .map(({ b_level, b_title }) => ({
               b_level,
               b_title,
+              page_code: `${a_level}${b_level}`,
               // map over cs for this b
               c: uniqueArray(
                 rows
                   .filter(
                     (r) => r["a_level"] === a_level && r["b_level"] === b_level
                   )
+                  .filter(({ c_level }) => c_level)
                   .map(({ c_level, c_title }) => ({
                     c_level,
                     c_title,
+                    page_code: `${a_level}${b_level}${c_level}`,
                     d: uniqueArray(
-                      rows.filter(
-                        (r) =>
-                          r["a_level"] === a_level &&
-                          r["b_level"] === b_level &&
-                          r["c_level"] === c_level
-                      ).map(({d_level, d_title}) => ({d_level, d_title}))
+                      rows
+                        .filter(
+                          (r) =>
+                            r["a_level"] === a_level &&
+                            r["b_level"] === b_level &&
+                            r["c_level"] === c_level
+                        )
+                        .filter(({ d_level }) => d_level)
+                        .map(({ d_level, d_title }) => ({
+                          d_level,
+                          d_title,
+                          page_code: `${a_level}${b_level}${c_level}${d_level}`,
+                        }))
                     ),
                   }))
               ),
             }))
-        ).log("bs"))
+        ))
     );
 
     return data;
