@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { PAGE_DATA_QUERY, PAGE_DATA_QUERY_TRANSFORM } from "../sqlQueries";
+import { PAGE_DIRECTORY_QUERY } from "../sqlQueries";
 
 // Styled components
 import { ThemeProvider } from "styled-components";
@@ -15,20 +15,20 @@ import StyledMain from "../styled/Layout/StyledMain";
 
 // components
 import Sidebar from "../components/Sidebar/Sidebar";
-import communityProfileRoutes from "../routes/communityProfiles";
-
+import CommunityProfiles from "../views/CommunityProfiles";
+import PopulationEstimates from "../views/AreaProfiles/population/PopulationEstimates";
 // container
 import HeaderContainer from "./HeaderContainer";
 
 // action creators
 import fetchData from "../actions/apiActions";
 
-const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
+const Root = ({ isThemeLight, dataset, pageStructure }) => {
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     pageStructure();
     // ageSexPyramid();
-  });
+  }, []);
   return (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
@@ -38,11 +38,23 @@ const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
         </StyledHeader>
         <StyledContent>
           <StyledSidebar>
-            <Sidebar routes={communityProfileRoutes} />
+            <Sidebar />
           </StyledSidebar>
           <StyledMain>
             <Switch>
-              {communityProfileRoutes.map((prop, key) => {
+              {/* <Route path="/A1">
+                <CommunityProfiles />
+              </Route>
+              <Route path="/A2">
+                <PopulationEstimates />
+              </Route> */}
+
+              {dataset && (
+                <Route key={"page_code"} path={`/:page_code`}>
+                  <PopulationEstimates></PopulationEstimates>
+                </Route>
+              )}
+              {/* {communityProfileRoutes.map((prop, key) => {
                 if (prop.redirect) {
                   return (
                     <Redirect from={prop.path} to={prop.pathTo} key={key} />
@@ -91,7 +103,7 @@ const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
                     key={key}
                   />
                 );
-              })}
+              })} */}
             </Switch>
           </StyledMain>
         </StyledContent>
@@ -101,18 +113,19 @@ const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log("state", state);
+  console.log("state.pageDirectory", state.pageDirectory);
   return {
     isThemeLight: state.isThemeLight,
+    dataset: state.pageDirectory,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     pageStructure: () =>
-      // TODO: move SET_ROUTES to import form action constants
+      // TODO: move SET_PAGE_DIRECTORY to import form action constants
       dispatch(
-        fetchData(PAGE_DATA_QUERY, "SET_ROUTES", PAGE_DATA_QUERY_TRANSFORM)
+        fetchData(PAGE_DIRECTORY_QUERY, "SET_PAGE_DIRECTORY")
       ),
     // ageSexPyramid: () =>
     //   dispatch(

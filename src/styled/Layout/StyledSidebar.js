@@ -7,7 +7,7 @@ const StyledSidebar = styled.nav`
   background-color: ${(props) => props.theme.sidebarBg};
   color: ${(props) => props.theme.sidebarClr};
   padding: 2rem 0rem 0rem 2rem;
-  height: 100vh;
+  /* height: 100vh; */
 
   .selected {
     background-color: ${(props) => props.theme.sidebarActiveBg};
