@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const Sidebar = (props) => {
   return (
     <div>
-      {props.routes.map((a) => (
+      {props.pageDirectory.map((a) => (
         <div key={a["a_level"]}>
           <h3> {a["a_title"]}</h3>
           {a.b.map((b) => (
@@ -34,9 +34,9 @@ const Sidebar = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  // state.routes.map((r) => console.log("r", r));
+  // state.pageDirectory.map((r) => console.log("r", r));
   return {
-    routes: state.routes,
+    pageDirectory: state.pageDirectory,
   };
 };
 export default connect(mapStateToProps, null)(Sidebar);
