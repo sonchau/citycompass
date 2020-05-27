@@ -4,12 +4,12 @@ import { NavLink } from "react-router-dom";
 
 const Sidebar = (props) => {
   return (
-    <div>
+    <React.Fragment>
       {props.routes.map((a) => (
-        <div key={a["a_level"]}>
-          <h3> {a["a_title"]}</h3>
+        <React.Fragment key={a["a_level"]}>
+          <h2> {a["a_title"]}</h2>
           {a.b.map((b) => (
-            <div>
+            <React.Fragment>
               <h4>
                 <NavLink to={b["page_code"]}>{b["b_title"]}</NavLink>
               </h4>
@@ -25,11 +25,11 @@ const Sidebar = (props) => {
                   ))}
                 </React.Fragment>
               ))}
-            </div>
+            </React.Fragment>
           ))}
-        </div>
+        </React.Fragment>
       ))}
-    </div>
+    </React.Fragment>
   );
 };
 
