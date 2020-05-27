@@ -42,21 +42,19 @@ const Root = ({ isThemeLight, dataset, pageStructure }) => {
           </StyledSidebar>
           <StyledMain>
             <Switch>
-              <Route path="/A1">
+              {/* <Route path="/A1">
                 <CommunityProfiles />
               </Route>
               <Route path="/A2">
                 <PopulationEstimates />
-              </Route>
+              </Route> */}
 
-              {/* {dataset &&
+              {dataset &&
                 dataset.map((a) => (
-                  <Route
-                    key={a["a_level"]}
-                    path={a["a_level"]}
-                    component={CommunityProfiles}
-                  />
-                ))} */}
+                  <Route key={a["a_level"]} path={`/${a["a_level"]}`}>
+                    <PopulationEstimates></PopulationEstimates>
+                  </Route>
+                ))}
               {/* {communityProfileRoutes.map((prop, key) => {
                 if (prop.redirect) {
                   return (
