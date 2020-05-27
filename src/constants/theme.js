@@ -7,12 +7,13 @@ const lightTheme = {
   contentBg: "rgb(23, 23, 33)",
 
   // sidebar section
-  sidebarBg: "rgb(238, 238, 238)",
-  sidebarClr: "rgb(23, 23, 33)",
+  sidebarBg: "rgb(255, 255, 255)",
+  sidebarClr: "rgb(38,38,38)",
   sidebarHoverClr: "rgb(100, 100, 100)",
-  sidebarLinkClr: "rgb(23, 23, 33)",
-  sidebarActiveBg: "rgb(233, 59, 34)",
-  sidebarActiveClr: "rgb(255, 255, 255)",
+  sidebarLinkClr: "rgb(38,38,38)",
+  sidebarActiveBg: "rgb(230,247,254)",
+  sidebarActiveClr: "rgb(41,145,250)",
+  sidebarActiveBorderClr: "rgb(29,142,250)",
   sidebarDropdownBg: "rgb(255, 228, 230)",
 };
 
