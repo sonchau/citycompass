@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { PAGE_DATA_QUERY, PAGE_DATA_QUERY_TRANSFORM } from "../sqlQueries";
+import { PAGE_DATA_QUERY } from "../sqlQueries";
 
 // Styled components
 import { ThemeProvider } from "styled-components";
@@ -125,7 +125,7 @@ const mapDispatchToProps = (dispatch) => {
     pageStructure: () =>
       // TODO: move SET_ROUTES to import form action constants
       dispatch(
-        fetchData(PAGE_DATA_QUERY, "SET_ROUTES", PAGE_DATA_QUERY_TRANSFORM)
+        fetchData(PAGE_DATA_QUERY, "SET_ROUTES")
       ),
     // ageSexPyramid: () =>
     //   dispatch(
