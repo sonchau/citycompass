@@ -34,7 +34,7 @@ const Sidebar = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  // state.routes.map((r) => console.log("r", r));
+  // state.pageDirectory.map((r) => console.log("r", r));
   return {
     pageDirectory: state.pageDirectory,
   };
