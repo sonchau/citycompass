@@ -59,6 +59,7 @@ export default {
             .map(({ b_level, b_title }) => ({
               b_level,
               b_title,
+              page_code: `${a_level}${b_level}`,
               // map over cs for this b
               c: uniqueArray(
                 rows
@@ -69,6 +70,7 @@ export default {
                   .map(({ c_level, c_title }) => ({
                     c_level,
                     c_title,
+                    page_code: `${a_level}${b_level}${c_level}`,
                     d: uniqueArray(
                       rows
                         .filter(
@@ -78,7 +80,11 @@ export default {
                             r["c_level"] === c_level
                         )
                         .filter(({ d_level }) => d_level)
-                        .map(({ d_level, d_title }) => ({ d_level, d_title }))
+                        .map(({ d_level, d_title }) => ({
+                          d_level,
+                          d_title,
+                          page_code: `${a_level}${b_level}${c_level}${d_level}`,
+                        }))
                     ),
                   }))
               ),
