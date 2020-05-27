@@ -1,4 +1,4 @@
-import sqlQueryTransforms from "../sqlQueryTransforms";
+import sqlQueryTransforms from "./../sqlQueryTransforms";
 
 export default (state = [], action) => {
   switch (action.type) {
