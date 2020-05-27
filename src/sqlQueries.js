@@ -1,4 +1,4 @@
-export const PAGE_DATA_QUERY = `/* PAGE_DATA_QUERY */ SELECT
+export const PAGE_DIRECTORY_QUERY = `/* PAGE_DIRECTORY_QUERY */ SELECT
   a_level, a_title,
   b_level, b_title,
   c_level, c_title,

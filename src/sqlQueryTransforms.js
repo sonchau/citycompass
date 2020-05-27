@@ -1,7 +1,7 @@
 import remove from "./utils/removeKey";
 
 export default {
-  PAGE_DATA_QUERY: ({ rows, fields }) => {
+  PAGE_DIRECTORY_QUERY: ({ rows, fields }) => {
     const row2nested = (
       memo,
       {

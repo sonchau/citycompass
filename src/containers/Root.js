@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { PAGE_DATA_QUERY } from "../sqlQueries";
+import { PAGE_DIRECTORY_QUERY } from "../sqlQueries";
 
 // Styled components
 import { ThemeProvider } from "styled-components";
@@ -113,19 +113,19 @@ const Root = ({ isThemeLight, dataset, pageStructure }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log("state.routes", state.routes);
+  console.log("state.pageDirectory", state.pageDirectory);
   return {
     isThemeLight: state.isThemeLight,
-    dataset: state.routes,
+    dataset: state.pageDirectory,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     pageStructure: () =>
-      // TODO: move SET_ROUTES to import form action constants
+      // TODO: move SET_PAGE_DIRECTORY to import form action constants
       dispatch(
-        fetchData(PAGE_DATA_QUERY, "SET_ROUTES")
+        fetchData(PAGE_DIRECTORY_QUERY, "SET_PAGE_DIRECTORY")
       ),
     // ageSexPyramid: () =>
     //   dispatch(
