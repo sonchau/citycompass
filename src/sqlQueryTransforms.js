@@ -91,12 +91,14 @@ export default {
                     c_level,
                     c_title,
                     d: uniqueArray(
-                      rows.filter(
-                        (r) =>
-                          r["a_level"] === a_level &&
-                          r["b_level"] === b_level &&
-                          r["c_level"] === c_level
-                      ).map(({d_level, d_title}) => ({d_level, d_title}))
+                      rows
+                        .filter(
+                          (r) =>
+                            r["a_level"] === a_level &&
+                            r["b_level"] === b_level &&
+                            r["c_level"] === c_level
+                        )
+                        .map(({ d_level, d_title }) => ({ d_level, d_title }))
                     ),
                   }))
               ),

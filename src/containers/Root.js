@@ -23,7 +23,7 @@ import HeaderContainer from "./HeaderContainer";
 // action creators
 import fetchData from "../actions/apiActions";
 
-const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
+const Root = ({ isThemeLight, ageSexPyramid, pageStructure, routes }) => {
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     pageStructure();
@@ -38,11 +38,16 @@ const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
         </StyledHeader>
         <StyledContent>
           <StyledSidebar>
-            <Sidebar routes={communityProfileRoutes} />
+            {routes ? (
+              <React.Fragment>
+                <Sidebar routes={routes} />
+                <pre>{JSON.stringify(routes[0], null, 2)}</pre>
+              </React.Fragment>
+            ) : null}
           </StyledSidebar>
           <StyledMain>
             <Switch>
-              {communityProfileRoutes.map((prop, key) => {
+              {/* {communityProfileRoutes.map((prop, key) => {
                 if (prop.redirect) {
                   return (
                     <Redirect from={prop.path} to={prop.pathTo} key={key} />
@@ -91,7 +96,7 @@ const Root = ({ isThemeLight, ageSexPyramid, pageStructure }) => {
                     key={key}
                   />
                 );
-              })}
+              })} */}
             </Switch>
           </StyledMain>
         </StyledContent>
@@ -104,6 +109,7 @@ const mapStateToProps = (state) => {
   console.log("state", state);
   return {
     isThemeLight: state.isThemeLight,
+    routes: state.routes,
   };
 };
 
