@@ -34,29 +34,6 @@ export default {
         remove(_json, depth2key[depth + 1]);
         return _json;
       };
-
-      //   [{A1, title}, {A2, title}]
-
-      //   return trimByDepth({
-      //     depth,
-      //     page_code,
-      //     a: {
-      //       a_level,
-      //       a_title,
-      //       b: {
-      //         b_level,
-      //         b_title,
-      //         c: {
-      //           c_level,
-      //           c_title,
-      //           d: {
-      //             d_level,
-      //             d_title,
-      //           },
-      //         },
-      //       },
-      //     },
-      //   });
     };
 
     let data = rows.reduce((memo, current) => {
@@ -78,6 +55,7 @@ export default {
         (data[index]["b"] = uniqueArray(
           rows
             .filter((r) => r["a_level"] === a_level)
+            .filter(({ b_level }) => b_level)
             .map(({ b_level, b_title }) => ({
               b_level,
               b_title,
@@ -87,6 +65,7 @@ export default {
                   .filter(
                     (r) => r["a_level"] === a_level && r["b_level"] === b_level
                   )
+                  .filter(({ c_level }) => c_level)
                   .map(({ c_level, c_title }) => ({
                     c_level,
                     c_title,
@@ -98,6 +77,7 @@ export default {
                             r["b_level"] === b_level &&
                             r["c_level"] === c_level
                         )
+                        .filter(({ d_level }) => d_level)
                         .map(({ d_level, d_title }) => ({ d_level, d_title }))
                     ),
                   }))
