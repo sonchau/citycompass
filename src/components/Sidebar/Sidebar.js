@@ -1,34 +1,37 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 
-// Styled Component
-import StyledDropdown from "../../styled/Sidebar/StyledDropdown";
-import StyledDropdownButton from "../../styled/Sidebar/StyledDropdownButton";
-import StyledSideNav from "../../styled/Sidebar/StyledSideNav";
-
-// Font Awesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronRight,
-  faChevronDown,
-} from "@fortawesome/free-solid-svg-icons";
-
-const Sidebar = ({ routes }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [popupOpen, setPopupOpen] = useState(false);
-
+const Sidebar = (props) => {
   return (
-    <React.Fragment>
-      
-    </React.Fragment>
+    <div>
+      {props.routes.map((a) => (
+        <div key={a["a_level"]}>
+          <h3>{a["a_title"]}</h3>
+          {a.b.map((b) => (
+            <div>
+              <h4>{b["b_title"]}</h4>
+              {b.c.map((c) => (
+                <h5>{c["c_title"]}</h5>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 };
 
-export default Sidebar;
+const mapStateToProps = (state) => {
+  // state.routes.map((r) => console.log("r", r));
+  return {
+    routes: state.routes,
+  };
+};
+export default connect(mapStateToProps, null)(Sidebar);
 
 const buildNav = (navSchema) => {
-  return <div key={navSchema["a_level"]}>{navSchema["a_title"]}</div>
-}
+  return <div key={navSchema["a_level"]}>{navSchema["a_title"]}</div>;
+};
 
 // {routes.map((prop, key) => {
 //   if (prop.redirect) return null;

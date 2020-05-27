@@ -103,7 +103,7 @@ export default {
                   }))
               ),
             }))
-        ).log("bs"))
+        ))
     );
 
     return data;
