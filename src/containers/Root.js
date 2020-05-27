@@ -49,12 +49,11 @@ const Root = ({ isThemeLight, dataset, pageStructure }) => {
                 <PopulationEstimates />
               </Route> */}
 
-              {dataset &&
-                dataset.map((a) => (
-                  <Route key={a["a_level"]} path={`/${a["a_level"]}`}>
-                    <PopulationEstimates></PopulationEstimates>
-                  </Route>
-                ))}
+              {dataset && (
+                <Route key={"page_code"} path={`/:page_code`}>
+                  <PopulationEstimates></PopulationEstimates>
+                </Route>
+              )}
               {/* {communityProfileRoutes.map((prop, key) => {
                 if (prop.redirect) {
                   return (

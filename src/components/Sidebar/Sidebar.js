@@ -7,17 +7,26 @@ const Sidebar = (props) => {
     <div>
       {props.routes.map((a) => (
         <div key={a["a_level"]}>
-          <h3>
-            <NavLink to={a["a_level"]}>{a["a_title"]}</NavLink>
-          </h3>
-          {/* {a.b.map((b) => (
+          <h3> {a["a_title"]}</h3>
+          {a.b.map((b) => (
             <div>
-              <h4>{b["b_title"]}</h4>
+              <h4>
+                <NavLink to={b["page_code"]}>{b["b_title"]}</NavLink>
+              </h4>
               {b.c.map((c) => (
-                <h5>{c["c_title"]}</h5>
+                <React.Fragment>
+                  <h5>
+                    <NavLink to={c["page_code"]}>{c["c_title"]}</NavLink>
+                  </h5>
+                  {c.d.map((d) => (
+                    <h6>
+                      <NavLink to={d["page_code"]}>{d["d_title"]}</NavLink>
+                    </h6>
+                  ))}
+                </React.Fragment>
               ))}
             </div>
-          ))} */}
+          ))}
         </div>
       ))}
     </div>
