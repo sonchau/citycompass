@@ -22,13 +22,10 @@ import HeaderContainer from "./HeaderContainer";
 
 // action creators
 import fetchData from "../actions/apiActions";
+import sqlQueryTransforms from "./../sqlQueryTransforms";
 
-const Root = ({ isThemeLight, dataset, pageStructure }) => {
+const Root = ({ isThemeLight, pageDirectory }) => {
   // Similar to componentDidMount and componentDidUpdate:
-  useEffect(() => {
-    pageStructure();
-    // ageSexPyramid();
-  }, []);
   return (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
@@ -38,7 +35,11 @@ const Root = ({ isThemeLight, dataset, pageStructure }) => {
         </StyledHeader>
         <StyledContent>
           <StyledSidebar>
-            <Sidebar />
+            <Sidebar
+              pageDirectory={sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](
+                pageDirectory
+              )}
+            />
           </StyledSidebar>
           <StyledMain>
             <Switch>
@@ -49,7 +50,7 @@ const Root = ({ isThemeLight, dataset, pageStructure }) => {
                 <PopulationEstimates />
               </Route> */}
 
-              {dataset && (
+              {pageDirectory && (
                 <Route key={"page_code"} path={`/:page_code`}>
                   <PopulationEstimates></PopulationEstimates>
                 </Route>
@@ -116,23 +117,20 @@ const mapStateToProps = (state) => {
   console.log("state.pageDirectory", state.pageDirectory);
   return {
     isThemeLight: state.isThemeLight,
-    dataset: state.pageDirectory,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    pageStructure: () =>
-      // TODO: move SET_PAGE_DIRECTORY to import form action constants
-      dispatch(
-        fetchData(PAGE_DIRECTORY_QUERY, "SET_PAGE_DIRECTORY")
-      ),
-    // ageSexPyramid: () =>
-    //   dispatch(
-    //     fetchData(
-    //       `SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`
-    //     )
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     pageStructure: () =>
+//       // TODO: move SET_PAGE_DIRECTORY to import form action constants
+//       dispatch(fetchData(PAGE_DIRECTORY_QUERY, "SET_PAGE_DIRECTORY")),
+//     // ageSexPyramid: () =>
+//     //   dispatch(
+//     //     fetchData(
+//     //       `SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`
+//     //     )
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Root);
+export default connect(mapStateToProps)(Root);
