@@ -16,10 +16,9 @@ const StyledSidebar = styled.nav`
      border-right: 3px solid ${(props) => props.theme.sidebarActiveBorderClr};
   }
 
-  & a,
-  button {
-    height: 4rem;
-    line-height: 4rem;
+  & a {
+    height: 3rem;
+    line-height: 3rem;
     margin-bottom: 0.8rem;
     margin-top: 0.4rem;
     padding: 0rem 1.6rem 0rem 3.6rem;
@@ -33,8 +32,8 @@ const StyledSidebar = styled.nav`
     outline: none;
   }
   /* On mouse-over */
-  & a:hover,
-  button:hover {
+  & a:hover
+ {
     /* background-color: ${(props) => props.theme.sidebarActiveBg}; */
     color: ${(props) => props.theme.sidebarActiveClr};
   }
@@ -54,15 +53,12 @@ const StyledSidebar = styled.nav`
 	position:absolute;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-
 	width:30rem;
 	left: ${(props) => props.theme.sidebarWidth};
 	top:5px;
 	display:none;
 }
-.mainMenu li ul li {
-	/* font-size:smaller; */
-}
+
 .mainMenu li:hover ul {
 	display:block;
 }
