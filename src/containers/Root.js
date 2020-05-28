@@ -17,6 +17,7 @@ import StyledMain from "../styled/Layout/StyledMain";
 import Sidebar from "../components/Sidebar/Sidebar";
 import CommunityProfiles from "../views/CommunityProfiles";
 import PopulationEstimates from "../views/AreaProfiles/population/PopulationEstimates";
+import ErrorPage from "../views/ErrorPage";
 // container
 import HeaderContainer from "./HeaderContainer";
 
@@ -45,11 +46,13 @@ const Root = ({ isThemeLight, pageDirectory }) => {
             <Switch>
               <Route
                 key={"page_code"}
+                exact={true}
                 path={`/:page_code`}
                 component={({ page_code }) =>
-                  [page_code].log() && <CommunityProfiles page_code={page_code} />
+                  <CommunityProfiles page_code={page_code} />
                 }
-              ></Route>
+              />
+              <Route component={ErrorPage} />
             </Switch>
           </StyledMain>
         </StyledContent>

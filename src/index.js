@@ -26,7 +26,7 @@ getData(PAGE_DIRECTORY_QUERY)
               <Route exact path="/" component={IndexPage} />
               <Route
                 path={`/${clientName}`}
-                key={key}
+                key={clientName}
                 component={() => (
                   <RootComponent pageDirectory={response.data} />
                 )}
