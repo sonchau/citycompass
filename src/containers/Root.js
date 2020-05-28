@@ -25,7 +25,7 @@ import HeaderContainer from "./HeaderContainer";
 import fetchData from "../actions/apiActions";
 import sqlQueryTransforms from "./../sqlQueryTransforms";
 
-const Root = ({ isThemeLight, pageDirectory }) => {
+const Root = ({ path, isThemeLight, pageDirectory }) => {
   // Similar to componentDidMount and componentDidUpdate:
   return (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
@@ -47,7 +47,7 @@ const Root = ({ isThemeLight, pageDirectory }) => {
               <Route
                 key={"page_code"}
                 exact={true}
-                path={`/:page_code`}
+                path={`${path}/A1B2`}
                 component={({ page_code }) =>
                   <CommunityProfiles page_code={page_code} />
                 }

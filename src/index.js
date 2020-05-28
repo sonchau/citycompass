@@ -28,7 +28,7 @@ getData(PAGE_DIRECTORY_QUERY)
                 path={`/${clientName}`}
                 key={clientName}
                 component={() => (
-                  <RootComponent pageDirectory={response.data} />
+                  <RootComponent path={`/${clientName}`} pageDirectory={response.data} />
                 )}
               />
             </Switch>
