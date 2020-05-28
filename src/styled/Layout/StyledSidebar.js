@@ -9,7 +9,6 @@ const StyledSidebar = styled.nav`
   padding: 2rem 0rem 0rem 0rem;
   font-size: 1.4rem;
 
-  height: 100vh;
 
   .selected {
     background-color: ${(props) => props.theme.sidebarActiveBg};
@@ -53,7 +52,8 @@ const StyledSidebar = styled.nav`
 
 .mainMenu li ul {
 	position:absolute;
-	border:1px solid #000;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 
 	width:30rem;
 	left: ${(props) => props.theme.sidebarWidth};

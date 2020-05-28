@@ -6,6 +6,7 @@ const StyledMain = styled.main`
   border-radius: 0rem 1.5rem 1.5rem 0rem;
   border: 0.5px solid lightgray;
   padding: 5rem 5rem 5rem 10rem;
+  height: 300rem;
 `;
 
 export default StyledMain;
