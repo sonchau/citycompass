@@ -43,68 +43,13 @@ const Root = ({ isThemeLight, pageDirectory }) => {
           </StyledSidebar>
           <StyledMain>
             <Switch>
-              {/* <Route path="/A1">
-                <CommunityProfiles />
-              </Route>
-              <Route path="/A2">
-                <PopulationEstimates />
-              </Route> */}
-
-              {pageDirectory && (
-                <Route key={"page_code"} path={`/:page_code`}>
-                  <PopulationEstimates></PopulationEstimates>
-                </Route>
-              )}
-              {/* {communityProfileRoutes.map((prop, key) => {
-                if (prop.redirect) {
-                  return (
-                    <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                  );
+              <Route
+                key={"page_code"}
+                path={`/:page_code`}
+                component={({ page_code }) =>
+                  [page_code].log() && <CommunityProfiles page_code={page_code} />
                 }
-                if (prop.category) {
-                  return (
-                    <React.Fragment>
-                      {prop.routes.map((route, key) => {
-                        if (route.nestedRoutes) {
-                          return (
-                            <React.Fragment>
-                              <Route
-                                path={route.path}
-                                component={route.component}
-                                key={key}
-                              />
-
-                              {route.nestedRoutes.map((nestedRoute, key) => {
-                                return (
-                                  <Route
-                                    path={nestedRoute.path}
-                                    component={nestedRoute.component}
-                                    key={key}
-                                  />
-                                );
-                              })}
-                            </React.Fragment>
-                          );
-                        }
-                        return (
-                          <Route
-                            path={route.path}
-                            component={route.component}
-                            key={key}
-                          />
-                        );
-                      })}
-                    </React.Fragment>
-                  );
-                }
-                return (
-                  <Route
-                    path={prop.path}
-                    component={prop.component}
-                    key={key}
-                  />
-                );
-              })} */}
+              ></Route>
             </Switch>
           </StyledMain>
         </StyledContent>

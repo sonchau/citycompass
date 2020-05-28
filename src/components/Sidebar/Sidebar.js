@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const Sidebar = ({ pageDirectory }) => {
+const Sidebar = ({ cityName = "casey", pageDirectory }) => {
   return (
     <div>
       {pageDirectory.map((a) => (
@@ -10,16 +10,16 @@ const Sidebar = ({ pageDirectory }) => {
           {a.b.map((b) => (
             <div>
               <h4>
-                <NavLink to={b["page_code"]}>{b["b_title"]}</NavLink>
+                <NavLink to={`${cityName}/${b["page_code"]}`}>{b["b_title"]}</NavLink>
               </h4>
               {b.c.map((c) => (
                 <React.Fragment>
                   <h5>
-                    <NavLink to={c["page_code"]}>{c["c_title"]}</NavLink>
+                    <NavLink to={`${cityName}/${c["page_code"]}`}>{c["c_title"]}</NavLink>
                   </h5>
                   {c.d.map((d) => (
                     <h6>
-                      <NavLink to={d["page_code"]}>{d["d_title"]}</NavLink>
+                      <NavLink to={`${cityName}/${d["page_code"]}`}>{d["d_title"]}</NavLink>
                     </h6>
                   ))}
                 </React.Fragment>

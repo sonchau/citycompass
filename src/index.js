@@ -24,19 +24,13 @@ getData(PAGE_DIRECTORY_QUERY)
           <BrowserRouter>
             <Switch>
               <Route exact path="/" component={IndexPage} />
-              {response.data.rows.map((prop, key) => {
-                const path = `/${clientName}/${prop.page_code}`;
-                console.log("path", path);
-                return (
-                  <Route
-                    path={path}
-                    key={key}
-                    component={() => (
-                      <RootComponent pageDirectory={response.data} />
-                    )}
-                  />
-                );
-              })}
+              <Route
+                path={`/${clientName}`}
+                key={key}
+                component={() => (
+                  <RootComponent pageDirectory={response.data} />
+                )}
+              />
             </Switch>
           </BrowserRouter>
         </Provider>
