@@ -31,6 +31,7 @@ const darkTheme = {
   sidebarActiveBg: "rgb(214, 87, 81)",
   sidebarActiveClr: "rgb(255, 255, 255)",
   sidebarDropdownBg: "rgb(38, 38, 38)",
+  sidebarWidth: "32rem",
 };
 
 export default { lightTheme, darkTheme };
