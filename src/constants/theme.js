@@ -15,6 +15,7 @@ const lightTheme = {
   sidebarActiveClr: "rgb(41,145,250)",
   sidebarActiveBorderClr: "rgb(29,142,250)",
   sidebarDropdownBg: "rgb(255, 228, 230)",
+  sidebarWidth: "32rem",
 };
 
 const darkTheme = {

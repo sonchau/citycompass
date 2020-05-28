@@ -31,6 +31,8 @@ body {
     font-family: "Gotham Pro", sans-serif;
     box-sizing: border-box;
 }
+input, textarea, button {font-family: inherit}
+
 *,
  *::before,
  *::after {

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 const Sidebar = (props) => {
   return (
     <React.Fragment>
@@ -12,24 +13,26 @@ const Sidebar = (props) => {
             {a["a_title"]}
           </h2>
           {a.b.map((b) => (
-            <React.Fragment>
-              <NavLink to={b["page_code"]} activeClassName="selected">
-                {b["b_title"]}
-              </NavLink>
+            <ul className="mainMenu">
+              <li>
+                <NavLink to={b["page_code"]} activeClassName="selected">
+                  {b["b_title"]}
+                </NavLink>
+                <ul>
+                  {b.c.map((c) => (
+                    <li>
+                      <NavLink to={c["page_code"]}>{c["c_title"]}</NavLink>
 
-              {/* {b.c.map((c) => (
-                <React.Fragment>
-                  <h5>
-                    <NavLink to={c["page_code"]}>{c["c_title"]}</NavLink>
-                  </h5>
-                  {c.d.map((d) => (
-                    <h6>
-                      <NavLink to={d["page_code"]}>{d["d_title"]}</NavLink>
-                    </h6>
+                      {c.d.map((d) => (
+                        <li>
+                          <NavLink to={d["page_code"]}>{d["d_title"]}</NavLink>
+                        </li>
+                      ))}
+                    </li>
                   ))}
-                </React.Fragment>
-              ))} */}
-            </React.Fragment>
+                </ul>
+              </li>
+            </ul>
           ))}
         </React.Fragment>
       ))}
