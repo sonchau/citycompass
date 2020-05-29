@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { PAGE_DIRECTORY_QUERY } from "../sqlQueries";
@@ -15,21 +15,37 @@ import StyledMain from "../styled/Layout/StyledMain";
 
 // components
 import Sidebar from "../components/Sidebar/Sidebar";
-import CommunityProfiles from "../views/CommunityProfiles";
-import PopulationEstimates from "../views/AreaProfiles/population/PopulationEstimates";
+import GenericDataComponent from "../views/GenericDataComponent";
+import ErrorPage from "../views/ErrorPage";
 // container
 import HeaderContainer from "./HeaderContainer";
 
-// action creators
-import fetchData from "../actions/apiActions";
+import { getData } from "../utils/common";
+import sqlQueryTransforms from "./../sqlQueryTransforms";
 
-const Root = ({ isThemeLight, dataset, pageStructure }) => {
-  // Similar to componentDidMount and componentDidUpdate:
+// TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
+
+const Root = ({ clientName, isThemeLight }) => {
+  let defaultPageCode, defaultPageMetaData;
+  const [pageDirectory, setPageDirectory] = useState(null);
+  const [pageMetaData, setPageMetaData] = useState(null);
   useEffect(() => {
-    pageStructure();
-    // ageSexPyramid();
+    getData(PAGE_DIRECTORY_QUERY).then(({ data }) =>
+      setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data))
+    );
   }, []);
-  return (
+
+  // Similar to componentDidMount and componentDidUpdate:
+  if (pageDirectory) {
+    // TODO: refactor to not hard code path write utility belt for parsing the navigation structure
+    defaultPageCode = pageDirectory[0]["b"][0]["page_code"];
+    defaultPageMetaData = {
+      a_title: pageDirectory[0]["a_title"],
+      b_title: pageDirectory[0]["b"][0]["b_title"],
+    };
+  }
+
+  return pageDirectory ? (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
       <StyledContainer>
@@ -38,101 +54,61 @@ const Root = ({ isThemeLight, dataset, pageStructure }) => {
         </StyledHeader>
         <StyledContent>
           <StyledSidebar>
-            <Sidebar />
+            <Sidebar
+              setPageMetaData={setPageMetaData}
+              clientName={clientName}
+              pageDirectory={pageDirectory}
+            />
           </StyledSidebar>
           <StyledMain>
             <Switch>
-              {/* <Route path="/A1">
-                <CommunityProfiles />
-              </Route>
-              <Route path="/A2">
-                <PopulationEstimates />
-              </Route> */}
-
-              {dataset && (
-                <Route key={"page_code"} path={`/:page_code`}>
-                  <PopulationEstimates></PopulationEstimates>
-                </Route>
-              )}
-              {/* {communityProfileRoutes.map((prop, key) => {
-                if (prop.redirect) {
-                  return (
-                    <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                  );
-                }
-                if (prop.category) {
-                  return (
-                    <React.Fragment>
-                      {prop.routes.map((route, key) => {
-                        if (route.nestedRoutes) {
-                          return (
-                            <React.Fragment>
-                              <Route
-                                path={route.path}
-                                component={route.component}
-                                key={key}
-                              />
-
-                              {route.nestedRoutes.map((nestedRoute, key) => {
-                                return (
-                                  <Route
-                                    path={nestedRoute.path}
-                                    component={nestedRoute.component}
-                                    key={key}
-                                  />
-                                );
-                              })}
-                            </React.Fragment>
-                          );
-                        }
-                        return (
-                          <Route
-                            path={route.path}
-                            component={route.component}
-                            key={key}
-                          />
-                        );
-                      })}
-                    </React.Fragment>
-                  );
-                }
-                return (
-                  <Route
-                    path={prop.path}
-                    component={prop.component}
-                    key={key}
+              <Route
+                exact
+                path={`/${clientName}`}
+                render={() => (
+                  <Redirect to={`/${clientName}/${defaultPageCode}`}></Redirect>
+                )}
+              ></Route>
+              <Route
+                path={`/${clientName}/:page_code`}
+                render={({
+                  match: {
+                    params: { page_code },
+                  },
+                }) => (
+                  <GenericDataComponent
+                    pageMetaData={pageMetaData || defaultPageMetaData}
+                    page_code={page_code}
                   />
-                );
-              })} */}
+                )}
+              />
+              <Route component={ErrorPage} />
             </Switch>
           </StyledMain>
         </StyledContent>
       </StyledContainer>
     </ThemeProvider>
-  );
+  ) : null;
 };
 
 const mapStateToProps = (state) => {
   console.log("state.pageDirectory", state.pageDirectory);
   return {
     isThemeLight: state.isThemeLight,
-    dataset: state.pageDirectory,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    pageStructure: () =>
-      // TODO: move SET_PAGE_DIRECTORY to import form action constants
-      dispatch(
-        fetchData(PAGE_DIRECTORY_QUERY, "SET_PAGE_DIRECTORY")
-      ),
-    // ageSexPyramid: () =>
-    //   dispatch(
-    //     fetchData(
-    //       `SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`
-    //     )
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     pageStructure: () =>
+//       // TODO: move SET_PAGE_DIRECTORY to import form action constants
+//       dispatch(fetchData(PAGE_DIRECTORY_QUERY, "SET_PAGE_DIRECTORY")),
+//     // ageSexPyramid: () =>
+//     //   dispatch(
+//     //     fetchData(
+//     //       `SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`
+//     //     )
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Root);
+export default connect(mapStateToProps)(Root);

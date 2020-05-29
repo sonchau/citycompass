@@ -6,3 +6,5 @@ export const PAGE_DIRECTORY_QUERY = `/* PAGE_DIRECTORY_QUERY */ SELECT
   page_code
   FROM casey.cc_pagedirectory_21610
   ORDER BY a_level, b_level, c_level, d_level`;
+
+  // TODO: make casey a liquid template param: {{clientName}}

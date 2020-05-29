@@ -1,117 +1,112 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React from "react";
 import { NavLink } from "react-router-dom";
-
-const Sidebar = (props) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+const Sidebar = ({ pageDirectory, clientName, setPageMetaData }) => {
   return (
-    <div>
-      {props.pageDirectory.map((a) => (
-        <div key={a["a_level"]}>
-          <h3> {a["a_title"]}</h3>
+    <React.Fragment>
+      {pageDirectory.map((a) => (
+        <React.Fragment key={a["a_level"]}>
+          <h2 style={{ padding: "2rem 1.6rem 0rem 3.6rem" }}>
+            {" "}
+            {a["a_title"]}
+          </h2>
           {a.b.map((b) => (
-            <div>
-              <h4>
-                <NavLink to={b["page_code"]}>{b["b_title"]}</NavLink>
-              </h4>
-              {b.c.map((c) => (
-                <React.Fragment>
-                  <h5>
-                    <NavLink to={c["page_code"]}>{c["c_title"]}</NavLink>
-                  </h5>
-                  {c.d.map((d) => (
-                    <h6>
-                      <NavLink to={d["page_code"]}>{d["d_title"]}</NavLink>
-                    </h6>
+            <ul className="mainMenu">
+              <li>
+                {!b.c.length ? (
+                  <NavLink
+                    onClick={() =>
+                      setPageMetaData({
+                        a_title: a["a_title"],
+                        b_title: b["b_title"],
+                      })
+                    }
+                    to={`/${clientName}/${b["page_code"]}`}
+                    activeClassName="selected"
+                  >
+                    {b["b_title"]}
+                  </NavLink>
+                ) : (
+                  <React.Fragment>
+                    <NavLink
+                      onClick={() =>
+                        setPageMetaData({
+                          a_title: a["a_title"],
+                          b_title: b["b_title"],
+                        })
+                      }
+                      to={`/${clientName}/${b["page_code"]}`}
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <span>{b["b_title"]} </span>
+                        <span>
+                          <FontAwesomeIcon icon={faChevronRight} />
+                        </span>
+                      </span>
+                    </NavLink>{" "}
+                  </React.Fragment>
+                )}
+
+                <ul>
+                  {b.c.map((c) => (
+                    <li>
+                      {!c.d.length ? (
+                        <NavLink
+                          onClick={() =>
+                            setPageMetaData({
+                              a_title: a["a_title"],
+                              b_title: b["b_title"],
+                              c_title: c["c_title"],
+                            })
+                          }
+                          to={`/${clientName}/${c["page_code"]}`}
+                        >
+                          {c["c_title"]}
+                        </NavLink>
+                      ) : (
+                        // <NavLink to={c["page_code"]}>
+                        //   <h3>{c["c_title"]}</h3>
+                        // </NavLink>
+
+                        <h3 style={{ padding: "2rem 1.6rem 0rem 3.6rem" }}>
+                          {c["c_title"]}
+                        </h3>
+                      )}
+
+                      {c.d.map((d) => (
+                        <li>
+                          <NavLink
+                            onClick={() =>
+                              setPageMetaData({
+                                a_title: a["a_title"],
+                                b_title: b["b_title"],
+                                c_title: c["c_title"],
+                                d_title: d["d_title"],
+                              })
+                            }
+                            to={`/${clientName}/${d["page_code"]}`}
+                            activeClassName="selected"
+                          >
+                            {d["d_title"]}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </li>
                   ))}
-                </React.Fragment>
-              ))}
-            </div>
+                </ul>
+              </li>
+            </ul>
           ))}
-        </div>
+        </React.Fragment>
       ))}
-    </div>
+    </React.Fragment>
   );
 };
 
-const mapStateToProps = (state) => {
-  // state.pageDirectory.map((r) => console.log("r", r));
-  return {
-    pageDirectory: state.pageDirectory,
-  };
-};
-export default connect(mapStateToProps, null)(Sidebar);
-
-const buildNav = (navSchema) => {
-  return <div key={navSchema["a_level"]}>{navSchema["a_title"]}</div>;
-};
-
-// {routes.map((prop, key) => {
-//   if (prop.redirect) return null;
-//   if (prop.category)
-//     return (
-//       <React.Fragment>
-//         <StyledSideNav padding="2.5rem 0rem 1rem 0rem" fontWeight="600">
-//           {prop.categoryText}
-//         </StyledSideNav>
-
-//         {prop.routes.map((route, key) => {
-//           if (route.nestedRoutes) {
-//             return (
-//               <div style={{ position: "relative" }}>
-//                 <StyledDropdownButton
-//                   onMouseOver={() => setDropdownOpen(true)}
-//                   onMouseLeave={() => setDropdownOpen(false)}
-//                 >
-//                   <span>{route.name} </span>
-//                   <span>
-//                     <FontAwesomeIcon
-//                       icon={dropdownOpen ? faChevronDown : faChevronRight}
-//                     />
-//                   </span>
-//                 </StyledDropdownButton>
-
-//                 <StyledDropdown
-//                   display={dropdownOpen}
-//                   onMouseOver={() => setDropdownOpen(true)}
-//                   onMouseLeave={() => setDropdownOpen(false)}
-//                 >
-//                   {route.nestedRoutes.map((nestedRoute, key) => {
-//                     return (
-//                       <NavLink
-//                         to={nestedRoute.path}
-//                         activeClassName="selected"
-//                       >
-//                         <StyledSideNav
-//                           padding="0.5rem 0rem"
-//                           fontWeight="100"
-//                         >
-//                           {nestedRoute.name}
-//                         </StyledSideNav>
-//                       </NavLink>
-//                     );
-//                   })}
-//                 </StyledDropdown>
-//               </div>
-//             );
-//           }
-
-//           /* Nav inside Category*/
-//           return (
-//             <NavLink to={route.path} activeClassName="selected">
-//               <StyledSideNav padding="0.5rem 0rem" fontWeight="100">
-//                 {route.name}
-//               </StyledSideNav>
-//             </NavLink>
-//           );
-//         })}
-//       </React.Fragment>
-//     );
-//   return (
-//     /* Home and Population Highlights Nav*/
-//     <NavLink to={prop.path} activeClassName="selected">
-//       <StyledSideNav padding="0.5rem 0rem" fontWeight="600">
-//         {prop.name}
-//       </StyledSideNav>
-//     </NavLink>
-//   );
-// })}
+export default Sidebar;
