@@ -1,18 +1,18 @@
-const addTap = receiver =>
+const addTap = (receiver) =>
   Object.defineProperty(receiver.prototype, "tap", {
-    value: function(intercept) {
+    value: function (intercept) {
       let val = this.valueOf ? this.valueOf() : this;
       intercept(val);
       return this;
     },
     enumerable: false,
     configurable: true,
-    writable: true
+    writable: true,
   });
 
-const addLog = receiver =>
+const addLog = (receiver) =>
   Object.defineProperty(receiver.prototype, "log", {
-    value: function(intercept) {
+    value: function (intercept) {
       //if (process.env.NODE_ENV == 'production') return this;
       let val = this.valueOf ? this.valueOf() : this;
       if (intercept) {
@@ -24,35 +24,35 @@ const addLog = receiver =>
     },
     enumerable: false,
     configurable: true,
-    writable: true
+    writable: true,
   });
 
-const addDebug = receiver =>
+const addDebug = (receiver) =>
   Object.defineProperty(receiver.prototype, "debug", {
-    value: function(intercept) {
+    value: function (intercept) {
       let val = this.valueOf ? this.valueOf() : this;
-      val.tap(x => {
+      val.tap((x) => {
         debugger;
       });
       return this;
     },
     enumerable: false,
     configurable: true,
-    writable: true
+    writable: true,
   });
 
-const addChain = receiver =>
+const addChain = (receiver) =>
   Object.defineProperty(receiver.prototype, "chain", {
-    value: function(intercept) {
+    value: function (intercept) {
       let val = this.valueOf ? this.valueOf() : this;
       return intercept(val);
     },
     enumerable: false,
     configurable: true,
-    writable: true
+    writable: true,
   });
 
-[Object, String, Number, Boolean].map(receiver => {
+[Object, String, Number, Boolean].map((receiver) => {
   addTap(receiver);
   addLog(receiver);
   addDebug(receiver);

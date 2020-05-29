@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-const Sidebar = (props) => {
+const Sidebar = ({ pageDirectory, clientName }) => {
   return (
     <React.Fragment>
-      {props.pageDirectory.map((a) => (
+      {pageDirectory.map((a) => (
         <React.Fragment key={a["a_level"]}>
           <h2 style={{ padding: "2rem 1.6rem 0rem 3.6rem" }}>
             {" "}
@@ -16,12 +15,15 @@ const Sidebar = (props) => {
             <ul className="mainMenu">
               <li>
                 {!b.c.length ? (
-                  <NavLink to={b["page_code"]} activeClassName="selected">
+                  <NavLink
+                    to={`/${clientName}/${b["page_code"]}`}
+                    activeClassName="selected"
+                  >
                     {b["b_title"]}
                   </NavLink>
                 ) : (
                   <React.Fragment>
-                    <NavLink to={b["page_code"]}>
+                    <NavLink to={`/${clientName}/${b["page_code"]}`}>
                       <span
                         style={{
                           display: "flex",
@@ -41,7 +43,9 @@ const Sidebar = (props) => {
                   {b.c.map((c) => (
                     <li>
                       {!c.d.length ? (
-                        <NavLink to={c["page_code"]}>{c["c_title"]}</NavLink>
+                        <NavLink to={`/${clientName}/${c["page_code"]}`}>
+                          {c["c_title"]}
+                        </NavLink>
                       ) : (
                         // <NavLink to={c["page_code"]}>
                         //   <h3>{c["c_title"]}</h3>
@@ -55,7 +59,7 @@ const Sidebar = (props) => {
                       {c.d.map((d) => (
                         <li>
                           <NavLink
-                            to={d["page_code"]}
+                            to={`/${clientName}/${d["page_code"]}`}
                             activeClassName="selected"
                           >
                             {d["d_title"]}
@@ -74,10 +78,5 @@ const Sidebar = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  // state.pageDirectory.map((r) => console.log("r", r));
-  return {
-    pageDirectory: state.pageDirectory,
-  };
-};
-export default connect(mapStateToProps, null)(Sidebar);
+
+export default Sidebar;
