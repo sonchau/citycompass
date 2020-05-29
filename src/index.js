@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Root from "./containers/Root";
 import IndexPage from "./containers/IndexPage";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import indexRoutes from "./routes/index";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -13,7 +13,7 @@ import { PAGE_DIRECTORY_QUERY } from "./sqlQueries";
 import { getData } from "./utils/common";
 import RootComponent from "./containers/Root";
 const [, client] = window.location.pathname.split("/");
-const clientName = client === "" ? "casey" : client;
+const clientName = client.length ? client : "casey";
 
 getData(PAGE_DIRECTORY_QUERY)
   .then((response) => {
@@ -23,12 +23,26 @@ getData(PAGE_DIRECTORY_QUERY)
         <Provider store={store}>
           <BrowserRouter>
             <Switch>
-              <Route exact path="/" component={IndexPage} />
+              {/* <Route exact path="/" component={IndexPage} /> */}
+              {/* TODO: later we can have an indexPage where other cities are listed for now lets redirect to casey */}
               <Route
+                exact
+                path="/"
+                render={() => <Redirect to={`/${clientName}/`}></Redirect>}
+              ></Route>
+              {/* <Route
+                exact
                 path={`/${clientName}`}
+                render={() => <Redirect to={`/${clientName}/`}></Redirect>}
+              ></Route> */}
+              <Route
+                path={`/${clientName}/`}
                 key={clientName}
                 component={() => (
-                  <RootComponent clientName={clientName} pageDirectory={response.data} />
+                  <RootComponent
+                    clientName={clientName}
+                    pageDirectory={response.data}
+                  />
                 )}
               />
             </Switch>

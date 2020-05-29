@@ -15,7 +15,7 @@ import StyledMain from "../styled/Layout/StyledMain";
 
 // components
 import Sidebar from "../components/Sidebar/Sidebar";
-import CommunityProfiles from "../views/CommunityProfiles";
+import GenericDataComponent from "../views/GenericDataComponent";
 import PopulationEstimates from "../views/AreaProfiles/population/PopulationEstimates";
 import ErrorPage from "../views/ErrorPage";
 // container
@@ -26,12 +26,12 @@ import fetchData from "../actions/apiActions";
 import sqlQueryTransforms from "./../sqlQueryTransforms";
 
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
-const rootRoutes = [{
-  path: 'A1B2', name: 'A1B2', Component: CommunityProfiles, fetchInitialData: 'fetchData(PAGE_DIRECTORY_QUERY, "SET_PAGE_DIRECTORY")'
-}]
 
 const Root = ({ clientName, isThemeLight, pageDirectory }) => {
+  pageDirectory = sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](pageDirectory);
   // Similar to componentDidMount and componentDidUpdate:
+  pageDirectory.log("pageDirectory");
+  const defaultPageCode = pageDirectory[0]["b"][0]["page_code"];
   return (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
@@ -41,21 +41,25 @@ const Root = ({ clientName, isThemeLight, pageDirectory }) => {
         </StyledHeader>
         <StyledContent>
           <StyledSidebar>
-            <Sidebar
-              pageDirectory={sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](
-                pageDirectory
-              )}
-            />
+            <Sidebar clientName={clientName} pageDirectory={pageDirectory} />
           </StyledSidebar>
           <StyledMain>
             <Switch>
-              {rootRoutes.map(({ name, Component, path, fetchInitialData}) =>
-                  <Route
-                    key={name}
-                    path={`/${clientName}/${path}`}
-                    render={(props) => <Component {...props} fetchInitialData={fetchInitialData}/>}
-                />
-              )}
+              <Route
+                exact
+                path={`/${clientName}`}
+                render={() => (
+                  <Redirect to={`/${clientName}/${defaultPageCode}`}></Redirect>
+                )}
+              ></Route>
+              <Route
+                path={`/${clientName}/:page_code`}
+                render={({
+                  match: {
+                    params: { page_code },
+                  },
+                }) => <GenericDataComponent page_code={page_code} />}
+              />
               <Route component={ErrorPage} />
             </Switch>
           </StyledMain>
