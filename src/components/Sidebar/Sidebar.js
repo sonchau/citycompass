@@ -1,39 +1,112 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
-const Sidebar = ({ pageDirectory, clientName }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+const Sidebar = ({ pageDirectory, clientName, setPageMetaData }) => {
   return (
-    <div>
+    <React.Fragment>
       {pageDirectory.map((a) => (
-        <div key={a["page_code"]}>
-          <h3> {a["a_title"]}</h3>
+        <React.Fragment key={a["a_level"]}>
+          <h2 style={{ padding: "2rem 1.6rem 0rem 3.6rem" }}>
+            {" "}
+            {a["a_title"]}
+          </h2>
           {a.b.map((b) => (
-            <div>
-              <h4>
-                <NavLink to={`/${clientName}/${b["page_code"]}`}>{b["b_title"]}</NavLink>
-              </h4>
-              {b.c.map((c) => (
-                <React.Fragment>
-                  <h5>
-                    <NavLink to={`/${clientName}/${c["page_code"]}`}>{c["c_title"]}</NavLink>
-                  </h5>
-                  {c.d.map((d) => (
-                    <h6>
-                      <NavLink to={`/${clientName}/${d["page_code"]}`}>{d["d_title"]}</NavLink>
-                    </h6>
-                  ))}
-                </React.Fragment>
-              ))}
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-};
+            <ul className="mainMenu">
+              <li>
+                {!b.c.length ? (
+                  <NavLink
+                    onClick={() =>
+                      setPageMetaData({
+                        a_title: a["a_title"],
+                        b_title: b["b_title"],
+                      })
+                    }
+                    to={`/${clientName}/${b["page_code"]}`}
+                    activeClassName="selected"
+                  >
+                    {b["b_title"]}
+                  </NavLink>
+                ) : (
+                  <React.Fragment>
+                    <NavLink
+                      onClick={() =>
+                        setPageMetaData({
+                          a_title: a["a_title"],
+                          b_title: b["b_title"],
+                        })
+                      }
+                      to={`/${clientName}/${b["page_code"]}`}
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <span>{b["b_title"]} </span>
+                        <span>
+                          <FontAwesomeIcon icon={faChevronRight} />
+                        </span>
+                      </span>
+                    </NavLink>{" "}
+                  </React.Fragment>
+                )}
 
-const buildNav = (navSchema) => {
-  return <div key={navSchema["a_level"]}>{navSchema["a_title"]}</div>;
+                <ul>
+                  {b.c.map((c) => (
+                    <li>
+                      {!c.d.length ? (
+                        <NavLink
+                          onClick={() =>
+                            setPageMetaData({
+                              a_title: a["a_title"],
+                              b_title: b["b_title"],
+                              c_title: c["c_title"],
+                            })
+                          }
+                          to={`/${clientName}/${c["page_code"]}`}
+                        >
+                          {c["c_title"]}
+                        </NavLink>
+                      ) : (
+                        // <NavLink to={c["page_code"]}>
+                        //   <h3>{c["c_title"]}</h3>
+                        // </NavLink>
+
+                        <h3 style={{ padding: "2rem 1.6rem 0rem 3.6rem" }}>
+                          {c["c_title"]}
+                        </h3>
+                      )}
+
+                      {c.d.map((d) => (
+                        <li>
+                          <NavLink
+                            onClick={() =>
+                              setPageMetaData({
+                                a_title: a["a_title"],
+                                b_title: b["b_title"],
+                                c_title: c["c_title"],
+                                d_title: d["d_title"],
+                              })
+                            }
+                            to={`/${clientName}/${d["page_code"]}`}
+                            activeClassName="selected"
+                          >
+                            {d["d_title"]}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            </ul>
+          ))}
+        </React.Fragment>
+      ))}
+    </React.Fragment>
+  );
 };
 
 export default Sidebar;
