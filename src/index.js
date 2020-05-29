@@ -12,7 +12,7 @@ import "./utils/object_extensions.exec.js";
 import { PAGE_DIRECTORY_QUERY } from "./sqlQueries";
 import { getData } from "./utils/common";
 import RootComponent from "./containers/Root";
-const [, client, page] = window.location.pathname.split("/");
+const [, client] = window.location.pathname.split("/");
 const clientName = client === "" ? "casey" : client;
 
 getData(PAGE_DIRECTORY_QUERY)
@@ -28,7 +28,7 @@ getData(PAGE_DIRECTORY_QUERY)
                 path={`/${clientName}`}
                 key={clientName}
                 component={() => (
-                  <RootComponent path={`/${clientName}`} pageDirectory={response.data} />
+                  <RootComponent clientName={clientName} pageDirectory={response.data} />
                 )}
               />
             </Switch>

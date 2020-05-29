@@ -25,7 +25,12 @@ import HeaderContainer from "./HeaderContainer";
 import fetchData from "../actions/apiActions";
 import sqlQueryTransforms from "./../sqlQueryTransforms";
 
-const Root = ({ path, isThemeLight, pageDirectory }) => {
+// TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
+const rootRoutes = [{
+  path: 'A1B2', name: 'A1B2', Component: CommunityProfiles, fetchInitialData: 'fetchData(PAGE_DIRECTORY_QUERY, "SET_PAGE_DIRECTORY")'
+}]
+
+const Root = ({ clientName, isThemeLight, pageDirectory }) => {
   // Similar to componentDidMount and componentDidUpdate:
   return (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
@@ -44,14 +49,13 @@ const Root = ({ path, isThemeLight, pageDirectory }) => {
           </StyledSidebar>
           <StyledMain>
             <Switch>
-              <Route
-                key={"page_code"}
-                exact={true}
-                path={`${path}/A1B2`}
-                component={({ page_code }) =>
-                  <CommunityProfiles page_code={page_code} />
-                }
-              />
+              {rootRoutes.map(({ name, Component, path, fetchInitialData}) =>
+                  <Route
+                    key={name}
+                    path={`/${clientName}/${path}`}
+                    render={(props) => <Component {...props} fetchInitialData={fetchInitialData}/>}
+                />
+              )}
               <Route component={ErrorPage} />
             </Switch>
           </StyledMain>
