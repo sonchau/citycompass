@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { PAGE_DIRECTORY_QUERY } from "../sqlQueries";
@@ -16,23 +16,31 @@ import StyledMain from "../styled/Layout/StyledMain";
 // components
 import Sidebar from "../components/Sidebar/Sidebar";
 import GenericDataComponent from "../views/GenericDataComponent";
-import PopulationEstimates from "../views/AreaProfiles/population/PopulationEstimates";
 import ErrorPage from "../views/ErrorPage";
 // container
 import HeaderContainer from "./HeaderContainer";
 
-// action creators
-import fetchData from "../actions/apiActions";
+import { getData } from "../utils/common";
 import sqlQueryTransforms from "./../sqlQueryTransforms";
 
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
 
-const Root = ({ clientName, isThemeLight, pageDirectory }) => {
-  pageDirectory = sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](pageDirectory);
+const Root = ({ clientName, isThemeLight }) => {
+  let defaultPageCode;
+  const [pageDirectory, setPageDirectory] = useState(null);
+  useEffect(() => {
+    getData(PAGE_DIRECTORY_QUERY).then(({ data }) =>
+      setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data))
+    );
+  }, []);
+
   // Similar to componentDidMount and componentDidUpdate:
-  pageDirectory.log("pageDirectory");
-  const defaultPageCode = pageDirectory[0]["b"][0]["page_code"];
-  return (
+  if (pageDirectory) {
+    // TODO: refactor to not hard code path write utility belt for parsing the navigation structure
+    defaultPageCode = pageDirectory[0]["b"][0]["page_code"];
+  }
+
+  return pageDirectory ? (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
       <StyledContainer>
@@ -66,7 +74,7 @@ const Root = ({ clientName, isThemeLight, pageDirectory }) => {
         </StyledContent>
       </StyledContainer>
     </ThemeProvider>
-  );
+  ) : null;
 };
 
 const mapStateToProps = (state) => {

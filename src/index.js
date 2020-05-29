@@ -1,63 +1,40 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Root from "./containers/Root";
-import IndexPage from "./containers/IndexPage";
+import "./utils/object_extensions.exec.js";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import indexRoutes from "./routes/index";
 import { Provider } from "react-redux";
 import store from "./store";
-import "./utils/object_extensions.exec.js";
-
-import { PAGE_DIRECTORY_QUERY } from "./sqlQueries";
-import { getData } from "./utils/common";
 import RootComponent from "./containers/Root";
-const [, client] = window.location.pathname.split("/");
-const clientName = client.length ? client : "casey";
 
-getData(PAGE_DIRECTORY_QUERY)
-  .then((response) => {
-    console.log("response from main", response.data);
-    ReactDOM.render(
-      <React.StrictMode>
-        <Provider store={store}>
-          <BrowserRouter>
-            <Switch>
-              {/* <Route exact path="/" component={IndexPage} /> */}
-              {/* TODO: later we can have an indexPage where other cities are listed for now lets redirect to casey */}
-              <Route
-                exact
-                path="/"
-                render={() => <Redirect to={`/${clientName}/`}></Redirect>}
-              ></Route>
-              {/* <Route
-                exact
-                path={`/${clientName}`}
-                render={() => <Redirect to={`/${clientName}/`}></Redirect>}
-              ></Route> */}
-              <Route
-                path={`/${clientName}/`}
-                key={clientName}
-                component={() => (
-                  <RootComponent
-                    clientName={clientName}
-                    pageDirectory={response.data}
-                  />
-                )}
-              />
-            </Switch>
-          </BrowserRouter>
-        </Provider>
-      </React.StrictMode>,
-      document.getElementById("root")
-    );
-  })
-  .catch(
-    ReactDOM.render(
-      <p>404 - Page not found</p>,
-      document.getElementById("root")
-    )
-  );
+const defaultClientName = "casey";
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          {/* <Route exact path="/" component={IndexPage} /> */}
+          {/* TODO: later we can have an indexPage where other cities are listed for now lets redirect to casey */}
+          <Route
+            exact
+            path="/"
+            render={() => <Redirect to={`/${defaultClientName}/`}></Redirect>}
+          ></Route>
+          <Route
+            path={`/:clientName/`}
+            component={({
+              match: {
+                params: { clientName },
+              },
+            }) => <RootComponent clientName={clientName} />}
+          />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
