@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-const Sidebar = ({ pageDirectory, clientName }) => {
+const Sidebar = ({ pageDirectory, clientName, setPageMetaData }) => {
   return (
     <React.Fragment>
       {pageDirectory.map((a) => (
@@ -16,6 +16,12 @@ const Sidebar = ({ pageDirectory, clientName }) => {
               <li>
                 {!b.c.length ? (
                   <NavLink
+                    onClick={() =>
+                      setPageMetaData({
+                        a_title: a["a_title"],
+                        b_title: b["b_title"],
+                      })
+                    }
                     to={`/${clientName}/${b["page_code"]}`}
                     activeClassName="selected"
                   >
@@ -23,7 +29,15 @@ const Sidebar = ({ pageDirectory, clientName }) => {
                   </NavLink>
                 ) : (
                   <React.Fragment>
-                    <NavLink to={`/${clientName}/${b["page_code"]}`}>
+                    <NavLink
+                      onClick={() =>
+                        setPageMetaData({
+                          a_title: a["a_title"],
+                          b_title: b["b_title"],
+                        })
+                      }
+                      to={`/${clientName}/${b["page_code"]}`}
+                    >
                       <span
                         style={{
                           display: "flex",
@@ -43,7 +57,16 @@ const Sidebar = ({ pageDirectory, clientName }) => {
                   {b.c.map((c) => (
                     <li>
                       {!c.d.length ? (
-                        <NavLink to={`/${clientName}/${c["page_code"]}`}>
+                        <NavLink
+                          onClick={() =>
+                            setPageMetaData({
+                              a_title: a["a_title"],
+                              b_title: b["b_title"],
+                              c_title: c["c_title"],
+                            })
+                          }
+                          to={`/${clientName}/${c["page_code"]}`}
+                        >
                           {c["c_title"]}
                         </NavLink>
                       ) : (
@@ -59,6 +82,14 @@ const Sidebar = ({ pageDirectory, clientName }) => {
                       {c.d.map((d) => (
                         <li>
                           <NavLink
+                            onClick={() =>
+                              setPageMetaData({
+                                a_title: a["a_title"],
+                                b_title: b["b_title"],
+                                c_title: c["c_title"],
+                                d_title: d["d_title"],
+                              })
+                            }
                             to={`/${clientName}/${d["page_code"]}`}
                             activeClassName="selected"
                           >
@@ -77,6 +108,5 @@ const Sidebar = ({ pageDirectory, clientName }) => {
     </React.Fragment>
   );
 };
-
 
 export default Sidebar;

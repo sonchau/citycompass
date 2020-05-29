@@ -26,8 +26,9 @@ import sqlQueryTransforms from "./../sqlQueryTransforms";
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
 
 const Root = ({ clientName, isThemeLight }) => {
-  let defaultPageCode;
+  let defaultPageCode, defaultPageMetaData;
   const [pageDirectory, setPageDirectory] = useState(null);
+  const [pageMetaData, setPageMetaData] = useState(null);
   useEffect(() => {
     getData(PAGE_DIRECTORY_QUERY).then(({ data }) =>
       setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data))
@@ -38,6 +39,10 @@ const Root = ({ clientName, isThemeLight }) => {
   if (pageDirectory) {
     // TODO: refactor to not hard code path write utility belt for parsing the navigation structure
     defaultPageCode = pageDirectory[0]["b"][0]["page_code"];
+    defaultPageMetaData = {
+      a_title: pageDirectory[0]["a_title"],
+      b_title: pageDirectory[0]["b"][0]["b_title"],
+    };
   }
 
   return pageDirectory ? (
@@ -49,7 +54,11 @@ const Root = ({ clientName, isThemeLight }) => {
         </StyledHeader>
         <StyledContent>
           <StyledSidebar>
-            <Sidebar clientName={clientName} pageDirectory={pageDirectory} />
+            <Sidebar
+              setPageMetaData={setPageMetaData}
+              clientName={clientName}
+              pageDirectory={pageDirectory}
+            />
           </StyledSidebar>
           <StyledMain>
             <Switch>
@@ -66,7 +75,12 @@ const Root = ({ clientName, isThemeLight }) => {
                   match: {
                     params: { page_code },
                   },
-                }) => <GenericDataComponent page_code={page_code} />}
+                }) => (
+                  <GenericDataComponent
+                    pageMetaData={pageMetaData || defaultPageMetaData}
+                    page_code={page_code}
+                  />
+                )}
               />
               <Route component={ErrorPage} />
             </Switch>
