@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Typography, Menu } from "antd";
 import { pageDepth } from "../utils/pageCodeToObjectPath";
+import { useHistory } from "react-router-dom";
 // import {
 //   MailOutlined,
 //   AppstoreOutlined,
@@ -10,14 +11,16 @@ const { Content } = Layout;
 const { Title } = Typography;
 
 const GenericDataComponent = ({ page_code, pageMetaData, adjacentPages }) => {
-  adjacentPages.log("adjacentPages");
-  pageDepth(page_code).log(page_code);
+  let history = useHistory();
+  const handleClick = (e) => {
+    history.push(`/casey/${e.key}`);
+  };
+
   return (
     <Content>
-      {" "}
       {pageDepth(page_code) === 4 ? (
         <Menu
-          onClick={(e) => console.log(e)}
+          onClick={handleClick}
           selectedKeys={[page_code]}
           mode="horizontal"
         >
