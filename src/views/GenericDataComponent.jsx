@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Typography, Menu } from "antd";
+import { Layout, Typography, Menu, Breadcrumb } from "antd";
 import { pageDepth } from "../utils/pageCodeToObjectPath";
 import { useHistory } from "react-router-dom";
 // import {
@@ -10,10 +10,19 @@ import { useHistory } from "react-router-dom";
 const { Content } = Layout;
 const { Title } = Typography;
 
-const GenericDataComponent = ({ page_code, pageMetaData, adjacentPages }) => {
+const GenericDataComponent = ({
+  page_code,
+  pageMetaData,
+  adjacentPages,
+  setPageMetaData,
+}) => {
   let history = useHistory();
-  const handleClick = (e) => {
-    history.push(`/casey/${e.key}`);
+  const handleClick = ({ key: newPageCode, ...rest }) => {
+    history.push(`/casey/${newPageCode}`);
+    setPageMetaData({
+      ...pageMetaData,
+      d_title: rest.domEvent.target.innerText,
+    });
   };
 
   return (
@@ -31,7 +40,14 @@ const GenericDataComponent = ({ page_code, pageMetaData, adjacentPages }) => {
       ) : null}
       <br />
       <Title>City of Casey</Title>
-      {page_code}
+      <Breadcrumb>
+        {Object.values(pageMetaData).map((pageTitle) => (
+          <Breadcrumb.Item>{pageTitle}</Breadcrumb.Item>
+        ))}
+      </Breadcrumb>
+
+      <hr></hr>
+
       <pre>{JSON.stringify(pageMetaData, null, 2)}</pre>
       <pre>{JSON.stringify(adjacentPages, null, 2)}</pre>
     </Content>
