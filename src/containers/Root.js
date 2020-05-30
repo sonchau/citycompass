@@ -84,6 +84,7 @@ const Root = ({ clientName, isThemeLight }) => {
                       pageDirectory,
                       page_code
                     )}
+                    setPageMetaData={setPageMetaData}
                   />
                 )}
               />
