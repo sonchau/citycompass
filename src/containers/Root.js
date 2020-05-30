@@ -22,6 +22,7 @@ import HeaderContainer from "./HeaderContainer";
 
 import { getData } from "../utils/common";
 import sqlQueryTransforms from "./../sqlQueryTransforms";
+import pageCodeToObjectPath from "../utils/pageCodeToObjectPath";
 
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
 
@@ -79,6 +80,10 @@ const Root = ({ clientName, isThemeLight }) => {
                   <GenericDataComponent
                     pageMetaData={pageMetaData || defaultPageMetaData}
                     page_code={page_code}
+                    adjacentPages={getAdjacentPageDirectory(
+                      pageDirectory,
+                      page_code
+                    )}
                   />
                 )}
               />
@@ -92,23 +97,14 @@ const Root = ({ clientName, isThemeLight }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log("state.pageDirectory", state.pageDirectory);
   return {
     isThemeLight: state.isThemeLight,
   };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     pageStructure: () =>
-//       // TODO: move SET_PAGE_DIRECTORY to import form action constants
-//       dispatch(fetchData(PAGE_DIRECTORY_QUERY, "SET_PAGE_DIRECTORY")),
-//     // ageSexPyramid: () =>
-//     //   dispatch(
-//     //     fetchData(
-//     //       `SELECT * FROM casey.cc_casey_mp_agegend5 WHERE geo_name = 'Casey (C)'`
-//     //     )
-//   };
-// };
-
 export default connect(mapStateToProps)(Root);
+
+function getAdjacentPageDirectory(pageDirectory, page_code) {
+  const adjacentPageCode = page_code.substr(0, page_code.match(/(\d+$)/).index);
+  return Object.byString(pageDirectory, pageCodeToObjectPath(adjacentPageCode));
+}

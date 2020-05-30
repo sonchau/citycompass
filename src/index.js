@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import RootComponent from "./containers/Root";
+import "antd/dist/antd.css";
 
 const defaultClientName = "casey";
 
