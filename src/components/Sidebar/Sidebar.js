@@ -13,7 +13,17 @@ const Sidebar = ({ pageDirectory, clientName, setPageMetaData }) => {
               {b.c.length ? (
                 <Menu.SubMenu title={b["b_title"]}>
                   {b.c.map((c) => (
-                    <Menu.Item>{c["c_title"]}</Menu.Item>
+                    <Menu>
+                      {c.d.length ? (
+                        <Menu.ItemGroup title={c["c_title"]}>
+                          {c.d.map((d) => (
+                            <Menu.Item>{d["d_title"]}</Menu.Item>
+                          ))}
+                        </Menu.ItemGroup>
+                      ) : (
+                        <Menu.Item>{c["c_title"]}</Menu.Item>
+                      )}
+                    </Menu>
                   ))}
                 </Menu.SubMenu>
               ) : (
