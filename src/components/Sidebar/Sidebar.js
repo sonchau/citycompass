@@ -1,45 +1,43 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { Menu } from "antd";
 const Sidebar = ({ pageDirectory, clientName, setPageMetaData }) => {
+  console.log("pageDirectory", pageDirectory);
   return (
-    <React.Fragment>
+    <Menu mode="vertical">
       {pageDirectory.map((a) => (
-        <React.Fragment>
-          {a.b.map((b) => (
-            <Menu key={a["a_level"]} mode="vertical">
-              {b.c.length ? (
-                <Menu.SubMenu key={b["b_level"]} title={b["b_title"]}>
-                  {b.c.map((c) => (
-                    <Menu>
-                      {c.d.length ? (
-                        <Menu.ItemGroup title={c["c_title"]}>
-                          {c.d.map((d) => (
-                            <Menu.Item key={d["d_level"]}>
-                              {d["d_title"]}
-                            </Menu.Item>
-                          ))}
-                        </Menu.ItemGroup>
-                      ) : (
-                        <Menu.Item key={c["c_level"]}>{c["c_title"]}</Menu.Item>
-                      )}
-                    </Menu>
-                  ))}
-                </Menu.SubMenu>
-              ) : (
-                <Menu.Item key={b["b_level"]}>{b["b_title"]}</Menu.Item>
-              )}
-            </Menu>
-          ))}
-        </React.Fragment>
+        <Menu.ItemGroup title={a["a_title"]}>{bLevel(a.b)}</Menu.ItemGroup>
       ))}
-    </React.Fragment>
+    </Menu>
   );
 };
 
 export default Sidebar;
+
+function bLevel(b) {
+  return b.map((b) =>
+    b.c.length ? (
+      <Menu.SubMenu key={b["page_code"]} title={b["b_title"]}>
+        {flyoutMenus(b.c)}
+      </Menu.SubMenu>
+    ) : (
+      <Menu.Item key={b["page_code"]}>{b["b_title"]}</Menu.Item>
+    )
+  );
+}
+
+function flyoutMenus(c) {
+  return c.map((c) => {
+    return c.d.length ? (
+      <Menu.ItemGroup title={c["c_title"]}>
+        {c.d.map((d) => (
+          <Menu.Item key={d["page_code"]}>{d["d_title"]}</Menu.Item>
+        ))}
+      </Menu.ItemGroup>
+    ) : (
+      <Menu.Item key={c["page_code"]}>{c["c_title"]}</Menu.Item>
+    );
+  });
+}
 
 // return (
 //   <React.Fragment>
