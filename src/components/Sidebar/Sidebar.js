@@ -9,25 +9,27 @@ const Sidebar = ({ pageDirectory, clientName, setPageMetaData }) => {
       {pageDirectory.map((a) => (
         <React.Fragment>
           {a.b.map((b) => (
-            <Menu mode="vertical">
+            <Menu key={a["a_level"]} mode="vertical">
               {b.c.length ? (
-                <Menu.SubMenu title={b["b_title"]}>
+                <Menu.SubMenu key={b["b_level"]} title={b["b_title"]}>
                   {b.c.map((c) => (
                     <Menu>
                       {c.d.length ? (
                         <Menu.ItemGroup title={c["c_title"]}>
                           {c.d.map((d) => (
-                            <Menu.Item>{d["d_title"]}</Menu.Item>
+                            <Menu.Item key={d["d_level"]}>
+                              {d["d_title"]}
+                            </Menu.Item>
                           ))}
                         </Menu.ItemGroup>
                       ) : (
-                        <Menu.Item>{c["c_title"]}</Menu.Item>
+                        <Menu.Item key={c["c_level"]}>{c["c_title"]}</Menu.Item>
                       )}
                     </Menu>
                   ))}
                 </Menu.SubMenu>
               ) : (
-                <Menu.Item>{b["b_title"]}</Menu.Item>
+                <Menu.Item key={b["b_level"]}>{b["b_title"]}</Menu.Item>
               )}
             </Menu>
           ))}
