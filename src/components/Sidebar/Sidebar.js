@@ -24,7 +24,19 @@ export default Sidebar;
 function renderMenu(a, handleItemClick) {
   return a.b.map((b) =>
     b.c.length ? (
-      <Menu.SubMenu key={b["page_code"]} title={b["b_title"]}>
+      <Menu.SubMenu
+        onTitleClick={() =>
+          handleItemClick(
+            {
+              a_title: a["a_title"],
+              b_title: b["b_title"],
+            },
+            b["page_code"]
+          )
+        }
+        key={b["page_code"]}
+        title={b["b_title"]}
+      >
         {b.c.map((c) => {
           return c.d.length ? (
             <Menu.ItemGroup title={c["c_title"]}>
