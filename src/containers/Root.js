@@ -24,6 +24,10 @@ import { getData } from "../utils/common";
 import sqlQueryTransforms from "./../sqlQueryTransforms";
 import pageCodeToObjectPath from "../utils/pageCodeToObjectPath";
 
+// antd components
+import { Layout, Menu, Breadcrumb } from "antd";
+const { SubMenu } = Menu;
+
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
 
 const Root = ({ clientName, isThemeLight }) => {
@@ -49,10 +53,12 @@ const Root = ({ clientName, isThemeLight }) => {
   return pageDirectory ? (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
-      <StyledContainer>
-        <StyledHeader>
+      <Layout>
+        {/* <StyledHeader> */}
+        <Layout.Header>
           <HeaderContainer />{" "}
-        </StyledHeader>
+        </Layout.Header>
+        {/* </StyledHeader> */}
         <StyledContent>
           <StyledSidebar>
             <Sidebar
@@ -92,7 +98,7 @@ const Root = ({ clientName, isThemeLight }) => {
             </Switch>
           </StyledMain>
         </StyledContent>
-      </StyledContainer>
+      </Layout>
     </ThemeProvider>
   ) : null;
 };
