@@ -54,50 +54,61 @@ const Root = ({ clientName, isThemeLight }) => {
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
       <Layout>
-        {/* <StyledHeader> */}
         <Layout.Header>
           <HeaderContainer />{" "}
         </Layout.Header>
-        {/* </StyledHeader> */}
-        <StyledContent>
-          <StyledSidebar>
-            <Sidebar
-              setPageMetaData={setPageMetaData}
-              clientName={clientName}
-              pageDirectory={pageDirectory}
-            />
-          </StyledSidebar>
-          <StyledMain>
-            <Switch>
-              <Route
-                exact
-                path={`/${clientName}`}
-                render={() => (
-                  <Redirect to={`/${clientName}/${defaultPageCode}`}></Redirect>
-                )}
-              ></Route>
-              <Route
-                path={`/${clientName}/:page_code`}
-                render={({
-                  match: {
-                    params: { page_code },
-                  },
-                }) => (
-                  <GenericDataComponent
-                    pageMetaData={pageMetaData || defaultPageMetaData}
-                    page_code={page_code}
-                    adjacentPages={getAdjacentPageDirectory(
-                      pageDirectory,
-                      page_code
-                    )}
-                    setPageMetaData={setPageMetaData}
-                  />
-                )}
+
+        <Layout.Content style={{ padding: "0 50px" }}>
+          <Breadcrumb style={{ margin: "16px 0" }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb>
+          <Layout style={{ padding: "24px 0" }}>
+            <Layout.Sider className="site-layout-background" width={200}>
+              <Sidebar
+                setPageMetaData={setPageMetaData}
+                clientName={clientName}
+                pageDirectory={pageDirectory}
               />
-              <Route component={ErrorPage} />
-            </Switch>
-          </StyledMain>
-        </StyledContent>
+            </Layout.Sider>
+            <Layout.Content style={{ padding: "0 24px", minHeight: 280 }}>
+              <Switch>
+                <Route
+                  exact
+                  path={`/${clientName}`}
+                  render={() => (
+                    <Redirect
+                      to={`/${clientName}/${defaultPageCode}`}
+                    ></Redirect>
+                  )}
+                ></Route>
+                <Route
+                  path={`/${clientName}/:page_code`}
+                  render={({
+                    match: {
+                      params: { page_code },
+                    },
+                  }) => (
+                    <GenericDataComponent
+                      pageMetaData={pageMetaData || defaultPageMetaData}
+                      page_code={page_code}
+                      adjacentPages={getAdjacentPageDirectory(
+                        pageDirectory,
+                        page_code
+                      )}
+                      setPageMetaData={setPageMetaData}
+                    />
+                  )}
+                />
+                <Route component={ErrorPage} />
+              </Switch>
+            </Layout.Content>
+          </Layout>
+        </Layout.Content>
+        <Layout.Footer style={{ textAlign: "center" }}>
+          Ant Design ©2018 Created by Ant UED
+        </Layout.Footer>
       </Layout>
     </ThemeProvider>
   ) : null;
