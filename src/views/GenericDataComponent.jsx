@@ -32,10 +32,10 @@ const GenericDataComponent = ({
   const [pageData, setPageData] = useState(null)
   useEffect(() => {
     getData(PAGE_CONTENT_QUERY(clientName, page_code)).then(({ data }) => {
-      console.log('data', data)
+      //console.log('PAGE_CONTENT_QUERY data', data)
       setPageData(data.rows[0])
     })
-  }, []);
+  }, [page_code]);
 
   return (
     <Content>

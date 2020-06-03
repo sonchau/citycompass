@@ -12,9 +12,9 @@ const PageContent = ({
     const [pageContent, setPageContent] = useState(null)
     useEffect(() => {
       const updatedQuery = query.replace('{','').replace('}','')
-      console.log('updatedQuery', updatedQuery)
+      //console.log('updatedQuery', updatedQuery)
       getData(updatedQuery).then(({ data }) => {
-        console.log('data', data.rows)
+        //console.log('data', data.rows)
         setPageContent(data.rows)
       })
     }, []);
@@ -22,7 +22,6 @@ const PageContent = ({
     if(pageContent) {
       const inputArray = makeInputData(pageContent)
       newContent = replaceContent(inputArray, content)
-      console.log('newContent', newContent)
     }
 
     return (
