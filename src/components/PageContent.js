@@ -17,7 +17,7 @@ const PageContent = ({
         //console.log('data', data.rows)
         setPageContent(data.rows)
       })
-    }, []);
+    }, [query]);
     let newContent =''
     if(pageContent) {
       const inputArray = makeInputData(pageContent)
