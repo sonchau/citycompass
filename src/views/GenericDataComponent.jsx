@@ -4,7 +4,9 @@ import { pageDepth } from "../utils/pageCodeToObjectPath";
 import { useHistory } from "react-router-dom";
 import { PAGE_CONTENT_QUERY } from "../sqlQueries";
 import { getData } from "../utils/common";
-import PageContent from "../components/PageContent";
+import PageContent from "../components/elements/PageContent";
+import Table from '../components/elements/Table';
+import Map from '../components/elements/Map';
 
 // import {
 //   MailOutlined,
@@ -59,19 +61,19 @@ const GenericDataComponent = ({
           <Breadcrumb.Item>{pageTitle}</Breadcrumb.Item>
         ))}
       </Breadcrumb>
-      
+
       { pageData && pageData.length > 0 &&
         pageData.map((page, index) => {
           //NOTE: depend in element_type then render appropriate component type
           // 'text' => render PageContent
           // 'chart' => render Chart
-          if (page.element_type ==='text') {
-            return <PageContent key={index} header={page.element_header} footer={page.element_footer}
-            content={page.element_text} query={page.data_query}/>
-          }
-          
-        })
-      }
+          return {
+            'text': <PageContent key={index} header={page.element_header} footer={page.element_footer} content={page.element_text} query={page.data_query} />,
+            'table': <Table query={page.data_query} />,
+            'map': <Map content={page.element_text} query={page.data_query} />
+          }[page.element_type]
+    })
+  }
       <pre>{JSON.stringify(pageMetaData, null, 2)}</pre>
       <pre>{JSON.stringify(adjacentPages, null, 2)}</pre>
     </Content>

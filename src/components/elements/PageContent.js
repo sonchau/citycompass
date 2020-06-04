@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from "react"
-import { getData, replaceContent, makeInputData } from "../utils/common";
+import { getData, replaceContent, makeInputData } from "../../utils/common";
 
 const PageContent = ({
     header,
     content,
     footer,
     query,
-    
+
   }) => {
 
     const [pageContent, setPageContent] = useState(null)
@@ -33,6 +33,5 @@ const PageContent = ({
       </>
     );
   };
-  
+
 export default PageContent;
-  
