@@ -6,28 +6,33 @@ export const getData = (queryName) => {
   return response;
 };
 
+export const getGeoJSONData = (queryName) => {
+  return buildQueryUrl(queryName, {}, "geojson");
+};
+
+export const getGeoJSONUrl = (query) => buildQueryUrl(query, {}, "geojson");
+
 export const makeInputData = (inputArray) => {
-  let result = []
+  let result = [];
   inputArray.map((item, index) => {
     for (const [key, value] of Object.entries(item)) {
-      if(value !== null) {
-        const newKey = `{{data.${index}.${key}}}`
-        const outputObj = new Object()
-        outputObj[newKey] = value
-        result.push(outputObj)
+      if (value !== null) {
+        const newKey = `{{data.${index}.${key}}}`;
+        const outputObj = new Object();
+        outputObj[newKey] = value;
+        result.push(outputObj);
       }
-    }    
-  })
-  return result
-}
+    }
+  });
+  return result;
+};
 
 export const replaceContent = (inputArray, inputString) => {
-  let newString = inputString
-  for (let item = 0; item <=inputArray.length -1; item++) {
-    const regexp = new RegExp(Object.keys(inputArray[item])[0], 'g')
-    newString = newString.replace(regexp, Object.values(inputArray[item])[0])
+  let newString = inputString;
+  for (let item = 0; item <= inputArray.length - 1; item++) {
+    const regexp = new RegExp(Object.keys(inputArray[item])[0], "g");
+    newString = newString.replace(regexp, Object.values(inputArray[item])[0]);
     //console.log('newString', newString)
   }
-  return newString
-
-}
+  return newString;
+};
