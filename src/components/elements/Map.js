@@ -1,45 +1,38 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import mapboxgl from "mapbox-gl";
+import React, { useState, useEffect, useRef } from "react";
+import ReactDOM from 'react-dom'
+import mapboxgl from 'mapbox-gl';
 import { getGeoJSONUrl } from "../../utils/common";
-import "./index.css";
+import Tooltip from '../tooltip'
+import './index.css'
 
-const [lat, lng, zoom] = [-38.109904, 145.276908, 10];
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2FibWFuIiwiYSI6ImNpb2Z0OWo4cjAwNHl1dWt4YzNhZWZsMWMifQ.WI9VZukT877h0b86ySkXzw';
+//const [lat, lng, zoom] = [-38.109904, 145.276908, 10];
 
-mapboxgl.accessToken =
-  "pk.eyJ1Ijoic2FibWFuIiwiYSI6ImNpb2Z0OWo4cjAwNHl1dWt4YzNhZWZsMWMifQ.WI9VZukT877h0b86ySkXzw";
+const Map = ({
+  query,
+}) => {
 
-class Map extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      lng,
-      lat,
-      zoom,
-    };
-  }
+  const [latitude, setLatitude] = useState(145.276908)
+  const [longitude, setLongitude] = useState(-38.109904)
+  const [zoom, setZoom] = useState(10)
 
-  componentDidMount() {
-    const updatedQuery = this.props.query.replace("{", "").replace("}", "");
-    // //console.log('updatedQuery', updatedQuery)
-    // const mapData = getGeoJSONData(updatedQuery).then(({ data }) => {
-    //   //console.log('data', data.rows)
-    //   //setMapData(data)
-    //   console.log(data)
-    // })
+  let mapContainer = useRef()
+  // Container to put React generated content in.
+  const tooltipContainer = document.createElement('div');
+
+  useEffect(() => {
+    const updatedQuery = query.replace("{", "").replace("}", "");
     const map = new mapboxgl.Map({
-      container: this.mapContainer,
+      container: mapContainer,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [this.state.lng, this.state.lat],
-      zoom: this.state.zoom,
+      center: [latitude, longitude],
+      zoom,
     });
 
     map.on("move", () => {
-      this.setState({
-        lng: map.getCenter().lng.toFixed(4),
-        lat: map.getCenter().lat.toFixed(4),
-        zoom: map.getZoom().toFixed(2),
-      });
+      setLatitude(map.getCenter().lat.toFixed(4));
+      setLongitude(map.getCenter().lng.toFixed(4));
+      setZoom(map.getZoom().toFixed(2));
     });
 
     map.on("load", () => {
@@ -59,94 +52,131 @@ class Map extends React.Component {
         },
       });
     });
+
+    const tooltip = new mapboxgl.Marker(tooltipContainer, {
+      offset: [-50, 0]
+    }).setLngLat([0, 0]).addTo(map);
+
+    map.on('mousemove', (e) => {
+      console.log(e)
+      if (e.point) {
+        const features = {
+          list: map.queryRenderedFeatures(e.point), mouseX: e.point.x, mouseY: e.point.y
+        }
+        console.log(features)
+        tooltip.setLngLat(e.lngLat);
+        map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+        setTooltip(features);
+      }
+    })
+  }, []);
+
+  const setTooltip = (features) => {
+    if (features.length) {
+      ReactDOM.render(
+        React.createElement(
+          Tooltip, {
+            features
+          }
+        ),
+        tooltipContainer
+      );
+    } else {
+      ReactDOM.unmountComponentAtNode(tooltipContainer);
+    }
   }
 
-  render() {
-    return (
-      <div>
-        <div className="sidebarStyle">
-          <div>
-            Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
-            {this.state.zoom}
-          </div>
-        </div>
-        <div ref={(el) => (this.mapContainer = el)} className="mapContainer" />
+  return (
+    <div>
+      <div className='sidebarStyle'>
+        <div>Longitude: {longitude} | Latitude: {latitude} | Zoom: {zoom}</div>
       </div>
-    );
-  }
+      <div ref={el => mapContainer = el} className='mapContainer' />
+    </div>
+  );
 }
 
 export default Map;
 
-// import React, { useState, useEffect, useRef } from "react";
-// import mapboxgl from 'mapbox-gl';
-// import { getGeoJSONData } from "../../utils/common";
-// import './index.css'
 
-// mapboxgl.accessToken = 'pk.eyJ1Ijoic2FibWFuIiwiYSI6ImNpb2Z0OWo4cjAwNHl1dWt4YzNhZWZsMWMifQ.WI9VZukT877h0b86ySkXzw';
+// import React from "react";
+// import ReactDOM from "react-dom";
+// import mapboxgl from "mapbox-gl";
+// import { getGeoJSONUrl } from "../../utils/common";
+// import "./index.css";
 
-// const Map = ({
-//   query,
-// }) => {
+// const [lat, lng, zoom] = [-38.109904, 145.276908, 10];
 
-//   const [mapData, setMapData] = useState(null)
-//   const [latitude, setLatitude] = useState(-38.081010)
-//   const [longitude, setLongitude] = useState(145.465720)
-//   const [zoom, setZoom] = useState(12)
+// mapboxgl.accessToken =
+//   "pk.eyJ1Ijoic2FibWFuIiwiYSI6ImNpb2Z0OWo4cjAwNHl1dWt4YzNhZWZsMWMifQ.WI9VZukT877h0b86ySkXzw";
 
-//   let mapContainer = useRef()
+// class Map extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       lng,
+//       lat,
+//       zoom,
+//     };
+//   }
 
-//   useEffect(() => {
-//     const updatedQuery = query.replace('{', '').replace('}', '')
-//     //console.log('updatedQuery', updatedQuery)
-//     getGeoJSONData(updatedQuery).then(({ data }) => {
-//       //console.log('data', data.rows)
-//       setMapData(data)
-//       console.log(data)
-//     })
-
-//   }, [query]);
-
-//   useEffect(() => {
+//   componentDidMount() {
+//     const updatedQuery = this.props.query.replace("{", "").replace("}", "");
+//     // //console.log('updatedQuery', updatedQuery)
+//     // const mapData = getGeoJSONData(updatedQuery).then(({ data }) => {
+//     //   //console.log('data', data.rows)
+//     //   //setMapData(data)
+//     //   console.log(data)
+//     // })
 //     const map = new mapboxgl.Map({
-//       container: mapContainer,
-//       style: 'mapbox://styles/mapbox/streets-v11',
-//       center: [longitude, latitude],
-//       zoom
+//       container: this.mapContainer,
+//       style: "mapbox://styles/mapbox/streets-v11",
+//       center: [this.state.lng, this.state.lat],
+//       zoom: this.state.zoom,
 //     });
 
-//     map.on('move', () => {
-//       setLongitude(map.getCenter().lng.toFixed(4))
-//       setLatitude(map.getCenter().lat.toFixed(4))
-//       setZoom(map.getZoom().toFixed(2))
+//     map.on("move", () => {
+//       this.setState({
+//         lng: map.getCenter().lng.toFixed(4),
+//         lat: map.getCenter().lat.toFixed(4),
+//         zoom: map.getZoom().toFixed(2),
+//       });
 //     });
 
-//     map.addSource('maine', {
-//       'type': 'geojson',
-//       'data': mapData
+//     map.on("load", () => {
+//       map.addSource("my-data", {
+//         type: "geojson",
+//         data: getGeoJSONUrl(updatedQuery),
+//       });
+
+//       map.addLayer({
+//         id: "my-data",
+//         type: "line",
+//         source: "my-data",
+//         layout: {},
+//         paint: {
+//           "line-color": "rgba(0, 0, 255, 1)",
+//           "line-width": 2,
+//         },
+//       });
 //     });
+//   }
 
-//     map.addLayer({
-//       'id': 'maine',
-//       'type': 'fill',
-//       'source': 'maine',
-//       'layout': {},
-//       'paint': {
-//         'fill-color': '#088',
-//         'fill-opacity': 0.8
-//       }
-//     });
-
-//   }, [mapData]);
-
-//   return (
-//     <div>
-//       <div className='sidebarStyle'>
-//         <div>Longitude: {longitude} | Latitude: {latitude} | Zoom: {zoom}</div>
+//   render() {
+//     return (
+//       <div>
+//         <div className="sidebarStyle">
+//           <div>
+//             Longitude: {this.state.lng} | Latitude: {this.state.lat} | Zoom:{" "}
+//             {this.state.zoom}
+//           </div>
+//         </div>
+//         <div ref={(el) => (this.mapContainer = el)} className="mapContainer" />
 //       </div>
-//       <div ref={el => mapContainer = el} className='mapContainer' />
-//     </div>
-//   );
+//     );
+//   }
 // }
 
 // export default Map;
+
+
