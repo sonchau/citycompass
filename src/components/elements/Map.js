@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import ReactDOM from 'react-dom'
 import mapboxgl from 'mapbox-gl';
 import { getGeoJSONUrl } from "../../utils/common";
-import Tooltip from '../tooltip'
 import './index.css'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2FibWFuIiwiYSI6ImNpb2Z0OWo4cjAwNHl1dWt4YzNhZWZsMWMifQ.WI9VZukT877h0b86ySkXzw';
@@ -51,40 +49,46 @@ const Map = ({
           "line-width": 2,
         },
       });
+
+      // Create a popup, but don't add it to the map yet.
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
+
+      map.on('mousemove', function (e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+
+        // const features = {
+    //       list: map.queryRenderedFeatures(e.point), mouseX: e.point.x, mouseY: e.point.y
+    //     }
+        const coordinates = [e.lngLat.lng, e.lngLat.lat];
+        const description = `x: ${e.lngLat.lng}, y: ${e.lngLat.lat }`
+        console.log(coordinates, e)
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        // while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        //   coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        // }
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup
+          .setLngLat([e.lngLat.lng, e.lngLat.lat ])
+          .setHTML(description)
+          .addTo(map);
+      });
+
+      map.on('mouseleave', function () {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+      });
     });
 
-    const tooltip = new mapboxgl.Marker(tooltipContainer, {
-      offset: [-50, 0]
-    }).setLngLat([0, 0]).addTo(map);
-
-    map.on('mousemove', (e) => {
-      console.log(e)
-      if (e.point) {
-        const features = {
-          list: map.queryRenderedFeatures(e.point), mouseX: e.point.x, mouseY: e.point.y
-        }
-        console.log(features)
-        tooltip.setLngLat(e.lngLat);
-        map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-        setTooltip(features);
-      }
-    })
   }, []);
-
-  const setTooltip = (features) => {
-    if (features.length) {
-      ReactDOM.render(
-        React.createElement(
-          Tooltip, {
-            features
-          }
-        ),
-        tooltipContainer
-      );
-    } else {
-      ReactDOM.unmountComponentAtNode(tooltipContainer);
-    }
-  }
 
   return (
     <div>

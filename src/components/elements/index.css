@@ -10,6 +10,10 @@
   font-weight: bold;
 }
 
+.mapboxgl-popup {
+  max-width: 400px;
+}
+
 .mapContainer {
   height: 500px;
 }
