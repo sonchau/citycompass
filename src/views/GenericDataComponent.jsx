@@ -34,7 +34,7 @@ const GenericDataComponent = ({
     getData(PAGE_CONTENT_QUERY(clientName, page_code)).then(({ data }) => {
       let response = data.rows
       response.sort((a, b) => (a.element_order > b.element_order) ? 1 : -1)
-      //console.log('PAGE_CONTENT_QUERY data', data.rows)
+      console.log('PAGE_CONTENT_QUERY data', data.rows)
       setPageData(response)
     })
   }, [clientName, page_code]);
@@ -59,13 +59,19 @@ const GenericDataComponent = ({
           <Breadcrumb.Item>{pageTitle}</Breadcrumb.Item>
         ))}
       </Breadcrumb>
-      { pageData && pageData.length > 0 && 
+      
+      { pageData && pageData.length > 0 &&
         pageData.map((page, index) => {
-          return <PageContent key={index} header={page.element_header} footer={page.element_footer}
-          content={page.element_text} query={page.data_query}/>
+          //NOTE: depend in element_type then render appropriate component type
+          // 'text' => render PageContent
+          // 'chart' => render Chart
+          if (page.element_type ==='text') {
+            return <PageContent key={index} header={page.element_header} footer={page.element_footer}
+            content={page.element_text} query={page.data_query}/>
+          }
+          
         })
       }
-      
       <pre>{JSON.stringify(pageMetaData, null, 2)}</pre>
       <pre>{JSON.stringify(adjacentPages, null, 2)}</pre>
     </Content>
