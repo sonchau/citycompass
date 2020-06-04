@@ -6,6 +6,10 @@ export const getData = (queryName) => {
   return response;
 };
 
+export const getGeoJSONData = (queryName, ) => {
+  return buildQueryUrl(queryName, {}, 'geojson');
+};
+
 export const makeInputData = (inputArray) => {
   let result = []
   inputArray.map((item, index) => {
@@ -16,7 +20,7 @@ export const makeInputData = (inputArray) => {
         outputObj[newKey] = value
         result.push(outputObj)
       }
-    }    
+    }
   })
   return result
 }
