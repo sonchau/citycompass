@@ -1,10 +1,10 @@
-import React, { useState, useEffect }  from "react";
+import React, { useState, useEffect } from "react";
 import { Layout, Typography, Menu, Breadcrumb } from "antd";
 import { pageDepth } from "../utils/pageCodeToObjectPath";
 import { useHistory } from "react-router-dom";
 import { PAGE_CONTENT_QUERY } from "../sqlQueries";
 import { getData } from "../utils/common";
-import PageContent from '../components/PageContent';
+import PageContent from "../components/PageContent";
 
 // import {
 //   MailOutlined,
@@ -19,7 +19,7 @@ const GenericDataComponent = ({
   pageMetaData,
   adjacentPages,
   setPageMetaData,
-  clientName
+  clientName,
 }) => {
   let history = useHistory();
   const handleClick = ({ key: newPageCode, ...rest }) => {
@@ -29,7 +29,7 @@ const GenericDataComponent = ({
       d_title: rest.domEvent.target.innerText,
     });
   };
-  const [pageData, setPageData] = useState(null)
+  const [pageData, setPageData] = useState(null);
   useEffect(() => {
     getData(PAGE_CONTENT_QUERY(clientName, page_code)).then(({ data }) => {
       let response = data.rows
@@ -59,16 +59,13 @@ const GenericDataComponent = ({
           <Breadcrumb.Item>{pageTitle}</Breadcrumb.Item>
         ))}
       </Breadcrumb>
-
       { pageData && pageData.length > 0 && 
         pageData.map((page, index) => {
           return <PageContent key={index} header={page.element_header} footer={page.element_footer}
           content={page.element_text} query={page.data_query}/>
         })
       }
-
-      }
-
+      
       <pre>{JSON.stringify(pageMetaData, null, 2)}</pre>
       <pre>{JSON.stringify(adjacentPages, null, 2)}</pre>
     </Content>
