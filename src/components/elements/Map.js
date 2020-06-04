@@ -1,22 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
-import mapboxgl from 'mapbox-gl';
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css"
 import { getGeoJSONUrl } from "../../utils/common";
-import './index.css'
+import "./index.css";
 
-mapboxgl.accessToken = 'pk.eyJ1Ijoic2FibWFuIiwiYSI6ImNpb2Z0OWo4cjAwNHl1dWt4YzNhZWZsMWMifQ.WI9VZukT877h0b86ySkXzw';
+mapboxgl.accessToken =
+  "pk.eyJ1Ijoic2FibWFuIiwiYSI6ImNpb2Z0OWo4cjAwNHl1dWt4YzNhZWZsMWMifQ.WI9VZukT877h0b86ySkXzw";
 //const [lat, lng, zoom] = [-38.109904, 145.276908, 10];
 
-const Map = ({
-  query,
-}) => {
+const Map = ({ query }) => {
+  const [latitude, setLatitude] = useState(145.276908);
+  const [longitude, setLongitude] = useState(-38.109904);
+  const [zoom, setZoom] = useState(10);
 
-  const [latitude, setLatitude] = useState(145.276908)
-  const [longitude, setLongitude] = useState(-38.109904)
-  const [zoom, setZoom] = useState(10)
-
-  let mapContainer = useRef()
+  let mapContainer = useRef();
   // Container to put React generated content in.
-  const tooltipContainer = document.createElement('div');
+  const tooltipContainer = document.createElement("div");
 
   useEffect(() => {
     const updatedQuery = query.replace("{", "").replace("}", "");
@@ -53,19 +52,19 @@ const Map = ({
       // Create a popup, but don't add it to the map yet.
       const popup = new mapboxgl.Popup({
         closeButton: false,
-        closeOnClick: false
+        closeOnClick: false,
       });
 
-      map.on('mousemove', function (e) {
+      map.on("mousemove", function (e) {
         // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = 'pointer';
+        map.getCanvas().style.cursor = "pointer";
 
         // const features = {
-    //       list: map.queryRenderedFeatures(e.point), mouseX: e.point.x, mouseY: e.point.y
-    //     }
+        //       list: map.queryRenderedFeatures(e.point), mouseX: e.point.x, mouseY: e.point.y
+        //     }
         const coordinates = [e.lngLat.lng, e.lngLat.lat];
-        const description = `x: ${e.lngLat.lng}, y: ${e.lngLat.lat }`
-        console.log(coordinates, e)
+        const description = `x: ${e.lngLat.lng}, y: ${e.lngLat.lat}`;
+        console.log(coordinates, e);
 
         // Ensure that if the map is zoomed out such that multiple
         // copies of the feature are visible, the popup appears
@@ -77,31 +76,31 @@ const Map = ({
         // Populate the popup and set its coordinates
         // based on the feature found.
         popup
-          .setLngLat([e.lngLat.lng, e.lngLat.lat ])
+          .setLngLat([e.lngLat.lng, e.lngLat.lat])
           .setHTML(description)
           .addTo(map);
       });
 
-      map.on('mouseleave', function () {
-        map.getCanvas().style.cursor = '';
+      map.on("mouseleave", function () {
+        map.getCanvas().style.cursor = "";
         popup.remove();
       });
     });
-
   }, []);
 
   return (
     <div>
-      <div className='sidebarStyle'>
-        <div>Longitude: {longitude} | Latitude: {latitude} | Zoom: {zoom}</div>
+      <div className="sidebarStyle">
+        <div>
+          Longitude: {longitude} | Latitude: {latitude} | Zoom: {zoom}
+        </div>
       </div>
-      <div ref={el => mapContainer = el} className='mapContainer' />
+      <div ref={(el) => (mapContainer = el)} className="mapContainer" />
     </div>
   );
-}
+};
 
 export default Map;
-
 
 // import React from "react";
 // import ReactDOM from "react-dom";
@@ -182,5 +181,3 @@ export default Map;
 // }
 
 // export default Map;
-
-
