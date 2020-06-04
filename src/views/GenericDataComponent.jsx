@@ -32,10 +32,12 @@ const GenericDataComponent = ({
   const [pageData, setPageData] = useState(null)
   useEffect(() => {
     getData(PAGE_CONTENT_QUERY(clientName, page_code)).then(({ data }) => {
-      //console.log('PAGE_CONTENT_QUERY data', data)
-      setPageData(data.rows[0])
+      let response = data.rows
+      response.sort((a, b) => (a.element_order > b.element_order) ? 1 : -1)
+      //console.log('PAGE_CONTENT_QUERY data', data.rows)
+      setPageData(response)
     })
-  }, [page_code]);
+  }, [clientName, page_code]);
 
   return (
     <Content>
@@ -58,9 +60,13 @@ const GenericDataComponent = ({
         ))}
       </Breadcrumb>
 
-      { pageData &&
-        <PageContent header={pageData.element_header} footer={pageData.element_footer}
-        content={pageData.element_text} query={pageData.data_query}/>
+      { pageData && pageData.length > 0 && 
+        pageData.map((page, index) => {
+          return <PageContent key={index} header={page.element_header} footer={page.element_footer}
+          content={page.element_text} query={page.data_query}/>
+        })
+      }
+
       }
 
       <pre>{JSON.stringify(pageMetaData, null, 2)}</pre>
