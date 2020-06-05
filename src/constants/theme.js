@@ -6,16 +6,16 @@ const lightTheme = {
   // content
   contentBg: "rgb(23, 23, 33)",
 
+  // main
+  mainBg: "rgb(255, 255, 255)",
+
   // sidebar section
   sidebarBg: "rgb(255, 255, 255)",
-  sidebarClr: "rgb(38,38,38)",
-  sidebarHoverClr: "rgb(100, 100, 100)",
+  sidebarHeadingClr: "rgb(38,38,38)",
   sidebarLinkClr: "rgb(38,38,38)",
-  sidebarActiveBg: "rgb(230,247,254)",
-  sidebarActiveClr: "rgb(41,145,250)",
-  sidebarActiveBorderClr: "rgb(29,142,250)",
-  sidebarDropdownBg: "rgb(255, 228, 230)",
-  sidebarWidth: "32rem",
+  sidebarActiveClr: "rgb(100, 100, 100)",
+  sidebarSelectedBg: "rgb(214, 87, 81)",
+  sidebarSelectedClr: "rgb(255, 255, 255)",
 };
 
 const darkTheme = {
@@ -23,15 +23,16 @@ const darkTheme = {
   primaryBg: "rgb(48, 53, 57)",
   color: "rgb(255, 255, 255)",
 
+  // main
+  mainBg: "rgb(48, 53, 57)",
+
   // sidebar section
   sidebarBg: "rgb(51, 51, 51)",
-  sidebarClr: "rgb(255, 255, 255)",
-  sidebarHoverClr: "rgb(241, 241, 241)",
+  sidebarHeadingClr: "rgb(255, 255, 255)",
   sidebarLinkClr: "rgb(129, 129, 129)",
-  sidebarActiveBg: "rgb(214, 87, 81)",
-  sidebarActiveClr: "rgb(255, 255, 255)",
-  sidebarDropdownBg: "rgb(38, 38, 38)",
-  sidebarWidth: "32rem",
+  sidebarActiveClr: "rgb(241, 241, 241)",
+  sidebarSelectedBg: "rgb(214, 87, 81)",
+  sidebarSelectedClr: "rgb(255, 255, 255)",
 };
 
 export default { lightTheme, darkTheme };

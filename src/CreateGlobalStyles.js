@@ -43,6 +43,94 @@ input, textarea, button {font-family: inherit}
 #root {
     min-height: 100vh;
 }
+
+.ant-menu {
+    background-color: ${(props) => props.theme.sidebarBg};
+
+
+
+    .ant-menu-item-group {
+      .ant-menu-item-group-title {
+        color: ${(props) => props.theme.sidebarHeadingClr};
+      }
+
+      .ant-menu-item-group-list {
+        .ant-menu-item {
+          color: ${(props) => props.theme.sidebarLinkClr};
+        }
+        .ant-menu-item:hover {
+          color: ${(props) => props.theme.sidebarActiveClr};
+        }
+        
+        .ant-menu-item-selected {
+          background-color: ${(props) => props.theme.sidebarSelectedBg};
+          color: ${(props) => props.theme.sidebarSelectedClr};
+        }
+
+        .ant-menu-submenu {
+          color: ${(props) => props.theme.sidebarLinkClr};
+        }
+
+
+        
+        
+        .ant-menu-submenu-active {
+          color: ${(props) => props.theme.sidebarActiveClr};
+
+
+          .ant-menu-submenu-title {
+            color: ${(props) => props.theme.sidebarActiveClr};
+          }
+          
+
+        }
+        .ant-menu-submenu-selected {
+          color: ${(props) => props.theme.sidebarActiveClr};
+        }
+      }
+    }
+  }
+
+
+  .ant-menu-sub.ant-menu-vertical{
+    background-color: ${(props) => props.theme.sidebarBg};
+
+  }
+
+h1.ant-typography, .ant-typography{
+    color: ${(props) => props.theme.color};
+}
+
+.ant-breadcrumb{
+    .ant-breadcrumb-link{
+        color: ${(props) => props.theme.color};
+
+    }
+    .ant-breadcrumb-separator{
+        color: ${(props) => props.theme.color};
+
+    }
+}
+
+.ant-menu-horizontal{
+    .ant-menu-item {
+          color: ${(props) => props.theme.sidebarLinkClr};
+        }
+        .ant-menu-item:hover {
+          color: ${(props) => props.theme.sidebarActiveClr};
+          border-bottom: 2px solid ${(props) => props.theme.sidebarActiveClr}
+        }
+
+        .ant-menu-item-selected {
+          background-color: ${(props) => props.theme.sidebarSelectedBg};
+          color: ${(props) => props.theme.sidebarSelectedClr};
+          border-bottom: 2px solid ${(props) => props.theme.sidebarLinkClr}
+
+        }
+}
+
+        
+
 `;
 
 export default CreateGlobalStyle;
