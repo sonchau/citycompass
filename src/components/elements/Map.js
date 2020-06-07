@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css"
+import "mapbox-gl/dist/mapbox-gl.css";
 import { getGeoJSONUrl } from "../../utils/common";
 import "./index.css";
 
@@ -33,57 +33,87 @@ const Map = ({ query }) => {
     });
 
     map.on("load", () => {
-      map.addSource("my-data", {
+      map.addSource("my-data-source", {
         type: "geojson",
         data: getGeoJSONUrl(updatedQuery),
       });
 
+      // map.addLayer({
+      //   id: "my-data-layer",
+      //   type: "line",
+      //   source: "my-data-source",
+      //   layout: {},
+      //   paint: {
+      //     "line-color": "rgba(0, 0, 255, 1)",
+      //     "line-width": 2,
+      //   },
+      // });
+
       map.addLayer({
-        id: "my-data",
-        type: "line",
-        source: "my-data",
+        id: "my-data-layer-fill",
+        type: "fill",
+        source: "my-data-source",
         layout: {},
         paint: {
-          "line-color": "rgba(0, 0, 255, 1)",
-          "line-width": 2,
+          "fill-color": "rgba(200, 100, 240, 0.4)",
+          "fill-outline-color": "rgba(200, 100, 240, 1)",
         },
       });
 
       // Create a popup, but don't add it to the map yet.
-      const popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false,
-      });
+      // const popup = new mapboxgl.Popup({
+      //   closeButton: false,
+      //   closeOnClick: false,
+      // });
 
-      map.on("mousemove", function (e) {
-        // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = "pointer";
+      // map.on("mousemove", function (e) {
+      //   // Change the cursor style as a UI indicator.
+      //   map.getCanvas().style.cursor = "pointer";
 
-        // const features = {
-        //       list: map.queryRenderedFeatures(e.point), mouseX: e.point.x, mouseY: e.point.y
-        //     }
-        const coordinates = [e.lngLat.lng, e.lngLat.lat];
-        const description = `x: ${e.lngLat.lng}, y: ${e.lngLat.lat}`;
-        console.log(coordinates, e);
+      //   // const features = {
+      //   //       list: map.queryRenderedFeatures(e.point), mouseX: e.point.x, mouseY: e.point.y
+      //   //     }
+      //   const coordinates = [e.lngLat.lng, e.lngLat.lat];
+      //   const description = `x: ${e.lngLat.lng}, y: ${e.lngLat.lat}`;
+      //   console.log(coordinates, e);
 
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        // while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-        //   coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        // }
+      //   // Ensure that if the map is zoomed out such that multiple
+      //   // copies of the feature are visible, the popup appears
+      //   // over the copy being pointed to.
+      //   // while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+      //   //   coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      //   // }
 
-        // Populate the popup and set its coordinates
-        // based on the feature found.
-        popup
-          .setLngLat([e.lngLat.lng, e.lngLat.lat])
-          .setHTML(description)
+      //   // Populate the popup and set its coordinates
+      //   // based on the feature found.
+      //   popup
+      //     .setLngLat([e.lngLat.lng, e.lngLat.lat])
+      //     .setHTML(description)
+      //     .addTo(map);
+      // });
+
+      // map.on("mouseleave", function () {
+      //   map.getCanvas().style.cursor = "";
+      //   popup.remove();
+      // });
+
+      // When a click event occurs on a feature in the states layer, open a popup at the
+      // location of the click, with description HTML from its properties.
+      map.on("click", "my-data-layer-fill", function (e) {
+        new mapboxgl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML(e.features[0].properties.ward_label)
           .addTo(map);
       });
 
-      map.on("mouseleave", function () {
+      // Change the cursor to a pointer when the mouse is over the states layer.
+      map.on("mouseenter", "my-data-layer-fill", function () {
+        map.getCanvas().style.cursor = "pointer";
+      });
+
+      // Change it back to a pointer when it leaves.
+      map.on("mouseleave", "my-data-layer-fill", function () {
         map.getCanvas().style.cursor = "";
-        popup.remove();
       });
     });
   }, []);
