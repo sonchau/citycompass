@@ -2,7 +2,7 @@
   "name": "citycompass",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://geografia-au.github.io/citycompass",
+  "homepage": "https://citycompass.com.au",
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
