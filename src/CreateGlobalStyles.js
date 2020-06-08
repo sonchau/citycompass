@@ -59,7 +59,7 @@ input, textarea, button {font-family: inherit}
         .ant-menu-item {
           color: ${(props) => props.theme.sidebarLinkClr};
         }
-        .ant-menu-item:hover {
+        .ant-menu-item-active {
           color: ${(props) => props.theme.sidebarActiveClr};
         }
         
@@ -88,8 +88,22 @@ input, textarea, button {font-family: inherit}
 
         }
         .ant-menu-submenu-selected {
-          color: ${(props) => props.theme.sidebarActiveClr};
+          background-color: ${(props) => props.theme.sidebarSelectedBg};
+
+          color: ${(props) => props.theme.sidebarSelectedClr};
+
         font-weight: bolder;
+
+        .ant-menu-submenu-title {
+
+      
+            &:hover {
+          background-color: ${(props) => props.theme.sidebarSelectedBg};
+          color: ${(props) => props.theme.sidebarSelectedClr};
+          font-weight: bolder;
+          }
+    
+          }
 
         }
       }
@@ -129,13 +143,31 @@ h1.ant-typography, .ant-typography{
         .ant-menu-item-selected {
           background-color: ${(props) => props.theme.sidebarSelectedBg};
           color: ${(props) => props.theme.sidebarSelectedClr};
-          border-bottom: 2px solid ${(props) => props.theme.sidebarActiveClr}
+          border-bottom: 2px solid ${(props) => props.theme.sidebarActiveClr};
+           &:hover {
+            background-color: ${(props) => props.theme.sidebarSelectedBg};
+            color: ${(props) => props.theme.sidebarSelectedClr};
+            border-bottom: 2px solid ${(props) => props.theme.sidebarActiveClr}
+          }
 
         }
 }
 
-.ant-menu-submenu-title {
 
+.ant-menu-submenu-selected {
+  .ant-menu-submenu-title {
+  .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
+        background: ${(props) => props.theme.sidebarSelectedClr} !important;
+    }
+    &:hover{
+    .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
+        background: ${(props) => props.theme.sidebarSelectedClr} !important;
+    }
+  }
+}
+}
+
+.ant-menu-submenu-title {
   .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
         background: ${(props) => props.theme.sidebarLinkClr} !important;
     }
