@@ -52,6 +52,7 @@ input, textarea, button {font-family: inherit}
     .ant-menu-item-group {
       .ant-menu-item-group-title {
         color: ${(props) => props.theme.sidebarHeadingClr};
+        font-weight: bolder;
       }
 
       .ant-menu-item-group-list {
@@ -65,6 +66,8 @@ input, textarea, button {font-family: inherit}
         .ant-menu-item-selected {
           background-color: ${(props) => props.theme.sidebarSelectedBg};
           color: ${(props) => props.theme.sidebarSelectedClr};
+        font-weight: bolder;
+
         }
 
         .ant-menu-submenu {
@@ -86,6 +89,8 @@ input, textarea, button {font-family: inherit}
         }
         .ant-menu-submenu-selected {
           color: ${(props) => props.theme.sidebarActiveClr};
+        font-weight: bolder;
+
         }
       }
     }
