@@ -26,6 +26,7 @@ const GenericDataComponent = ({
   let history = useHistory();
   const handleClick = ({ key: newPageCode, ...rest }) => {
     history.push(`/casey/${newPageCode}`);
+    // TODO: Don't use inner text, because if styling change it will break
     setPageMetaData({
       ...pageMetaData,
       d_title: rest.domEvent.target.innerText,
