@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./utils/object_extensions.exec.js";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { HashRouter, BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import RootComponent from "./containers/Root";
@@ -13,7 +13,7 @@ const defaultClientName = "casey";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter>
         <Switch>
           {/* <Route exact path="/" component={IndexPage} /> */}
           {/* TODO: later we can have an indexPage where other cities are listed for now lets redirect to casey */}
@@ -31,7 +31,7 @@ ReactDOM.render(
             }) => <RootComponent clientName={clientName} />}
           />
         </Switch>
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
