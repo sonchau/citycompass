@@ -24,6 +24,10 @@ import { getData } from "../utils/common";
 import sqlQueryTransforms from "./../sqlQueryTransforms";
 import pageCodeToObjectPath from "../utils/pageCodeToObjectPath";
 
+// antd components
+import { Layout, Menu, Breadcrumb } from "antd";
+const { SubMenu } = Menu;
+
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
 
 const Root = ({ clientName, isThemeLight }) => {
@@ -49,50 +53,72 @@ const Root = ({ clientName, isThemeLight }) => {
   return pageDirectory ? (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
-      <StyledContainer>
+      <Layout>
         <StyledHeader>
-          <HeaderContainer />{" "}
+          <Layout.Header>
+            <HeaderContainer />{" "}
+          </Layout.Header>
         </StyledHeader>
+
         <StyledContent>
-          <StyledSidebar>
-            <Sidebar
-              setPageMetaData={setPageMetaData}
-              clientName={clientName}
-              pageDirectory={pageDirectory}
-            />
-          </StyledSidebar>
-          <StyledMain>
-            <Switch>
-              <Route
-                exact
-                path={`/${clientName}`}
-                render={() => (
-                  <Redirect to={`/${clientName}/${defaultPageCode}`}></Redirect>
-                )}
-              ></Route>
-              <Route
-                path={`/${clientName}/:page_code`}
-                render={({
-                  match: {
-                    params: { page_code },
-                  },
-                }) => (
-                  <GenericDataComponent
-                    pageMetaData={pageMetaData || defaultPageMetaData}
-                    page_code={page_code}
-                    adjacentPages={getAdjacentPageDirectory(
-                      pageDirectory,
-                      page_code
-                    )}
+          <Layout.Content>
+            {/* <Breadcrumb style={{ margin: "16px 0" }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb> */}
+            <Layout>
+              <StyledSidebar>
+                <Layout.Sider className="site-layout-background" width={300}>
+                  <Sidebar
                     setPageMetaData={setPageMetaData}
+                    clientName={clientName}
+                    pageDirectory={pageDirectory}
                   />
-                )}
-              />
-              <Route component={ErrorPage} />
-            </Switch>
-          </StyledMain>
+                </Layout.Sider>
+              </StyledSidebar>
+              <StyledMain>
+                <Layout.Content style={{ padding: "0 24px", minHeight: 280 }}>
+                  <Switch>
+                    <Route
+                      exact
+                      path={`/${clientName}`}
+                      render={() => (
+                        <Redirect
+                          to={`/${clientName}/${defaultPageCode}`}
+                        ></Redirect>
+                      )}
+                    ></Route>
+                    <Route
+                      path={`/${clientName}/:page_code`}
+                      render={({
+                        match: {
+                          params: { page_code },
+                        },
+                      }) => (
+                        <GenericDataComponent
+                          clientName={clientName}
+                          pageMetaData={pageMetaData || defaultPageMetaData}
+                          page_code={page_code}
+                          adjacentPages={getAdjacentPageDirectory(
+                            pageDirectory,
+                            page_code
+                          )}
+                          setPageMetaData={setPageMetaData}
+                        />
+                      )}
+                    />
+                    <Route component={ErrorPage} />
+                  </Switch>
+                </Layout.Content>
+              </StyledMain>
+            </Layout>
+          </Layout.Content>
         </StyledContent>
-      </StyledContainer>
+        <Layout.Footer style={{ textAlign: "center" }}>
+          Ant Design ©2018 Created by Ant UED
+        </Layout.Footer>
+      </Layout>
     </ThemeProvider>
   ) : null;
 };

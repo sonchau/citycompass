@@ -2,9 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { SET_THEME } from "../constants/actionTypes";
 
+// antd component
+import { Switch } from "antd";
+
 const HeaderContainer = ({ isThemeLight, toggleTheme }) => {
   return (
-    <button onClick={() => toggleTheme(!isThemeLight)}>Toggle Theme</button>
+    <Switch
+      style={{ backgroundColor: isThemeLight ? "blue" : "gray" }}
+      defaultChecked
+      onChange={() => toggleTheme(!isThemeLight)}
+    />
   );
 };
 

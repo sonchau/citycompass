@@ -43,6 +43,143 @@ input, textarea, button {font-family: inherit}
 #root {
     min-height: 100vh;
 }
+
+.ant-menu {
+    background-color: ${(props) => props.theme.sidebarBg};
+
+
+
+    .ant-menu-item-group {
+      .ant-menu-item-group-title {
+        color: ${(props) => props.theme.sidebarHeadingClr};
+        font-weight: bolder;
+      }
+
+      .ant-menu-item-group-list {
+        .ant-menu-item {
+          color: ${(props) => props.theme.sidebarLinkClr};
+        }
+        .ant-menu-item-active {
+          color: ${(props) => props.theme.sidebarActiveClr};
+        }
+        
+        .ant-menu-item-selected {
+          background-color: ${(props) => props.theme.sidebarSelectedBg};
+          color: ${(props) => props.theme.sidebarSelectedClr};
+        font-weight: bolder;
+
+        }
+
+        .ant-menu-submenu {
+          color: ${(props) => props.theme.sidebarLinkClr};
+        }
+
+
+        
+        
+        .ant-menu-submenu-active {
+          color: ${(props) => props.theme.sidebarActiveClr};
+
+
+          .ant-menu-submenu-title {
+            color: ${(props) => props.theme.sidebarActiveClr};
+          }
+          
+
+        }
+        .ant-menu-submenu-selected {
+          background-color: ${(props) => props.theme.sidebarSelectedBg};
+
+          color: ${(props) => props.theme.sidebarSelectedClr};
+
+        font-weight: bolder;
+
+        .ant-menu-submenu-title {
+
+      
+            &:hover {
+          background-color: ${(props) => props.theme.sidebarSelectedBg};
+          color: ${(props) => props.theme.sidebarSelectedClr};
+          font-weight: bolder;
+          }
+    
+          }
+
+        }
+      }
+    }
+  }
+
+
+  .ant-menu-sub.ant-menu-vertical{
+    background-color: ${(props) => props.theme.sidebarBg};
+
+  }
+
+h1.ant-typography, .ant-typography{
+    color: ${(props) => props.theme.color};
+}
+
+.ant-breadcrumb{
+    .ant-breadcrumb-link{
+        color: ${(props) => props.theme.color};
+
+    }
+    .ant-breadcrumb-separator{
+        color: ${(props) => props.theme.color};
+
+    }
+}
+
+.ant-menu-horizontal{
+    .ant-menu-item {
+          color: ${(props) => props.theme.sidebarLinkClr};
+        }
+        .ant-menu-item:hover {
+          color: ${(props) => props.theme.sidebarActiveClr};
+          border-bottom: 2px solid ${(props) => props.theme.sidebarActiveClr}
+        }
+
+        .ant-menu-item-selected {
+          background-color: ${(props) => props.theme.sidebarSelectedBg};
+          color: ${(props) => props.theme.sidebarSelectedClr};
+          border-bottom: 2px solid ${(props) => props.theme.sidebarActiveClr};
+           &:hover {
+            background-color: ${(props) => props.theme.sidebarSelectedBg};
+            color: ${(props) => props.theme.sidebarSelectedClr};
+            border-bottom: 2px solid ${(props) => props.theme.sidebarActiveClr}
+          }
+
+        }
+}
+
+
+.ant-menu-submenu-selected {
+  .ant-menu-submenu-title {
+  .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
+        background: ${(props) => props.theme.sidebarSelectedClr} !important;
+    }
+    &:hover{
+    .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
+        background: ${(props) => props.theme.sidebarSelectedClr} !important;
+    }
+  }
+}
+}
+
+.ant-menu-submenu-title {
+  .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
+        background: ${(props) => props.theme.sidebarLinkClr} !important;
+    }
+
+  &:hover{
+    .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
+        background: ${(props) => props.theme.sidebarActiveClr} !important;
+    }
+  }
+}
+        
+
 `;
 
 export default CreateGlobalStyle;

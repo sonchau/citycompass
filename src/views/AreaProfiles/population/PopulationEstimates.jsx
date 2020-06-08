@@ -1,5 +1,5 @@
 import React from "react";
-import HighChart from '../../../components/HighChart'
+import HighChart from '../../../componnts/HighChart'
 
 const PopulationEstimates = () => {
   return <div>
