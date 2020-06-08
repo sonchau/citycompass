@@ -1,90 +1,98 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React from "react";
+import { Menu } from "antd";
+import { useHistory } from "react-router-dom";
 
-// Styled Component
-import StyledDropdown from "../../styled/Sidebar/StyledDropdown";
-import StyledDropdownButton from "../../styled/Sidebar/StyledDropdownButton";
-import StyledSideNav from "../../styled/Sidebar/StyledSideNav";
-
-// Font Awesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronRight,
-  faChevronDown,
-} from "@fortawesome/free-solid-svg-icons";
-
-const Sidebar = ({ routes }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
+const Sidebar = ({ pageDirectory, clientName, setPageMetaData }) => {
+  let history = useHistory();
+  const handleItemClick = (titles, pageCode) => {
+    history.push(`/${clientName}/${pageCode}`);
+    setPageMetaData(titles);
+  };
   return (
-    <React.Fragment>
-      {routes.map((prop, key) => {
-        if (prop.redirect) return null;
-        if (prop.category)
-          return (
-            <React.Fragment>
-              <StyledSideNav padding="2.5rem 0rem 1rem 0rem" fontWeight="600">
-                {prop.categoryText}
-              </StyledSideNav>
-
-              {prop.routes.map((route, key) => {
-                if (route.nestedRoutes) {
-                  return (
-                    <React.Fragment>
-                      <StyledDropdownButton
-                        onClick={() => setDropdownOpen(!dropdownOpen)}
-                      >
-                        <span>{route.name} </span>
-                        <span>
-                          <FontAwesomeIcon
-                            icon={dropdownOpen ? faChevronDown : faChevronRight}
-                          />
-                        </span>
-                      </StyledDropdownButton>
-
-                      <StyledDropdown display={dropdownOpen}>
-                        {route.nestedRoutes.map((nestedRoute, key) => {
-                          return (
-                            <NavLink
-                              to={nestedRoute.path}
-                              activeClassName="selected"
-                            >
-                              <StyledSideNav
-                                padding="0.5rem 0rem"
-                                fontWeight="100"
-                              >
-                                {nestedRoute.name}
-                              </StyledSideNav>
-                            </NavLink>
-                          );
-                        })}
-                      </StyledDropdown>
-                    </React.Fragment>
-                  );
-                }
-
-                /* Nav inside Category*/
-                return (
-                  <NavLink to={route.path} activeClassName="selected">
-                    <StyledSideNav padding="0.5rem 0rem" fontWeight="100">
-                      {route.name}
-                    </StyledSideNav>
-                  </NavLink>
-                );
-              })}
-            </React.Fragment>
-          );
-        return (
-          /* Home and Population Highlights Nav*/
-          <NavLink to={prop.path} activeClassName="selected">
-            <StyledSideNav padding="0.5rem 0rem" fontWeight="600">
-              {prop.name}
-            </StyledSideNav>
-          </NavLink>
-        );
-      })}
-    </React.Fragment>
+    <Menu mode="vertical">
+      {pageDirectory.map((a) => (
+        <Menu.ItemGroup title={a["a_title"]}>
+          {renderMenu(a, handleItemClick)}
+        </Menu.ItemGroup>
+      ))}
+    </Menu>
   );
 };
 
 export default Sidebar;
+
+function renderMenu(a, handleItemClick) {
+  return a.b.map((b) =>
+    b.c.length ? (
+      <Menu.SubMenu
+        onTitleClick={() =>
+          handleItemClick(
+            {
+              a_title: a["a_title"],
+              b_title: b["b_title"],
+            },
+            b["page_code"]
+          )
+        }
+        key={b["page_code"]}
+        title={b["b_title"]}
+      >
+        {b.c.map((c) => {
+          return c.d.length ? (
+            <Menu.ItemGroup title={c["c_title"]}>
+              {c.d.map((d) => (
+                <Menu.Item
+                  key={d["page_code"]}
+                  onClick={() =>
+                    handleItemClick(
+                      {
+                        a_title: a["a_title"],
+                        b_title: b["b_title"],
+                        c_title: c["c_title"],
+                        d_title: d["d_title"],
+                      },
+                      d["page_code"]
+                    )
+                  }
+                >
+                  {d["d_title"]}
+                </Menu.Item>
+              ))}
+            </Menu.ItemGroup>
+          ) : (
+            <Menu.Item
+              key={c["page_code"]}
+              onClick={() =>
+                handleItemClick(
+                  {
+                    a_title: a["a_title"],
+                    b_title: b["b_title"],
+                    c_title: c["c_title"],
+                  },
+                  c["page_code"]
+                )
+              }
+            >
+              {c["c_title"]}
+            </Menu.Item>
+          );
+        })}
+      </Menu.SubMenu>
+    ) : (
+      <Menu.Item
+        key={b["page_code"]}
+        onClick={() =>
+          handleItemClick(
+            {
+              a_title: a["a_title"],
+              b_title: b["b_title"],
+            },
+            b["page_code"]
+          )
+        }
+      >
+        {b["b_title"]}
+      </Menu.Item>
+    )
+  );
+}
