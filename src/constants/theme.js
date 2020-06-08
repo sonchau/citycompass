@@ -14,7 +14,7 @@ const lightTheme = {
   sidebarHeadingClr: "rgb(38,38,38)",
 
   sidebarLinkClr: "rgb(38,38,38)",
-  sidebarActiveClr: "rgb(180, 180, 180)",
+  sidebarActiveClr: "rgb(200, 200, 200)",
   sidebarSelectedBg: "rgb(214, 87, 81)",
   sidebarSelectedClr: "rgb(255, 255, 255)",
 };
