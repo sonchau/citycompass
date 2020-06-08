@@ -2,8 +2,6 @@ import React from "react";
 import { Menu } from "antd";
 import { useHistory } from "react-router-dom";
 
-import { MessageOutlined } from "@ant-design/icons";
-
 const Sidebar = ({ pageDirectory, clientName, setPageMetaData }) => {
   let history = useHistory();
   const handleItemClick = (titles, pageCode) => {
@@ -38,7 +36,6 @@ function renderMenu(a, handleItemClick) {
         }
         key={b["page_code"]}
         title={b["b_title"]}
-        icon=""
       >
         {b.c.map((c) => {
           return c.d.length ? (
