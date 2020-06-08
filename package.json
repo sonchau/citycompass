@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://citycompass.com.au",
+  "engines": {
+    "node": ">=0.12"
+  },
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
