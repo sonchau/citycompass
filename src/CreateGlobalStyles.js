@@ -129,6 +129,18 @@ h1.ant-typography, .ant-typography{
         }
 }
 
+.ant-menu-submenu-title {
+
+  .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
+        background: ${(props) => props.theme.sidebarLinkClr} !important;
+    }
+
+  &:hover{
+    .ant-menu-submenu-arrow::before, .ant-menu-submenu-arrow::after {
+        background: ${(props) => props.theme.sidebarActiveClr} !important;
+    }
+  }
+}
         
 
 `;
