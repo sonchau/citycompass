@@ -124,7 +124,7 @@ h1.ant-typography, .ant-typography{
         .ant-menu-item-selected {
           background-color: ${(props) => props.theme.sidebarSelectedBg};
           color: ${(props) => props.theme.sidebarSelectedClr};
-          border-bottom: 2px solid ${(props) => props.theme.sidebarLinkClr}
+          border-bottom: 2px solid ${(props) => props.theme.sidebarActiveClr}
 
         }
 }
