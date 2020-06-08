@@ -97,6 +97,7 @@ const Root = ({ clientName, isThemeLight }) => {
                         },
                       }) => (
                         <GenericDataComponent
+                          clientName={clientName}
                           pageMetaData={pageMetaData || defaultPageMetaData}
                           page_code={page_code}
                           adjacentPages={getAdjacentPageDirectory(
