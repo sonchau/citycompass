@@ -37,7 +37,7 @@ const GenericDataComponent = ({
     getData(PAGE_CONTENT_QUERY(clientName, page_code)).then(({ data }) => {
       let response = data.rows
       response.sort((a, b) => (a.element_order > b.element_order) ? 1 : -1)
-      console.log('PAGE_CONTENT_QUERY data', data.rows)
+      //console.log('PAGE_CONTENT_QUERY data', data.rows)
       setPageData(response)
     })
   }, [clientName, page_code]);
@@ -75,8 +75,8 @@ const GenericDataComponent = ({
           }[page.element_type]
     })
   }
-      <pre>{JSON.stringify(pageMetaData, null, 2)}</pre>
-      <pre>{JSON.stringify(adjacentPages, null, 2)}</pre>
+      {console.log('pageMetaData', pageMetaData)}
+      {console.log('adjacentPages', adjacentPages)}
     </Content>
   );
 };
