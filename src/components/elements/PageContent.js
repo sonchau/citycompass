@@ -35,7 +35,7 @@ const PageContent = ({
           source={newContent}
           escapeHtml={false}
         />
-       <Text>{footer}</Text>
+       <Text className="content-footer">{footer}</Text>
       </>
     );
   };
