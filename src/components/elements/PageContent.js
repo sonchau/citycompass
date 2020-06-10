@@ -1,5 +1,9 @@
 import React, {useState, useEffect} from "react"
 import { getData, replaceContent, makeInputData } from "../../utils/common";
+import { Typography } from 'antd';
+
+const { Title, Text } = Typography;
+const ReactMarkdown = require('react-markdown')
 
 const PageContent = ({
     header,
@@ -19,17 +23,19 @@ const PageContent = ({
       })
     }, [query]);
     let newContent =''
-    if(pageContent) {
+    if (pageContent) {
       const inputArray = makeInputData(pageContent)
       newContent = replaceContent(inputArray, content)
     }
 
     return (
       <>
-       <h1>{header}</h1>
-       <p>{newContent}</p>
-       <p>{footer}</p>
-
+       <Title level={3}>{header}</Title>
+       <ReactMarkdown
+          source={newContent}
+          escapeHtml={false}
+        />
+       <Text>{footer}</Text>
       </>
     );
   };
