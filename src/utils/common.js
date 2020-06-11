@@ -50,7 +50,7 @@ export const replaceContent = (inputArray, inputString) => {
 };
 
 export const makeHeading = (input) => {
-  const output = input.split('_').map(word => 
+  const output = input.split('_').map(word =>
     word.charAt(0).toUpperCase() + word.slice(1))
   .join(' ')
 

@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://citycompass.com.au",
   "engines": {
-    "node": "=12"
+    "node": ">=10"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
