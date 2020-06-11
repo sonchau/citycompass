@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Table } from 'antd'
-import { getData, replaceContent, makeInputData } from "../../utils/common";
+import { getData, getAllData } from "../../utils/common";
+import FilterDropdown from '../common/FilterDropdown'
 
 const TableElement = ({
   query,
+  pageFilters
 }) => {
 
   const [taleData, setTableData] = useState([])
+  const [filterDropdowns, setFilterDropdowns]= useState([])
+  
+  let filterSqls = null
+  if (pageFilters) {
+    const filters = JSON.parse(pageFilters)
+    filterSqls = Object.values(filters)
+  }
+
   useEffect(() => {
     const updatedQuery = query.replace('{', '').replace('}', '')
     //console.log('updatedQuery', updatedQuery)
@@ -14,6 +24,13 @@ const TableElement = ({
       //console.log('data', data.rows)
       setTableData(data.rows)
     })
+
+    if(filterSqls) {
+      getAllData(filterSqls).then(responses => {
+        setFilterDropdowns(responses)
+      })
+    }
+    
   }, [query]);
 
   let columns;
@@ -24,7 +41,14 @@ const TableElement = ({
   }
 
   return (
-    <Table dataSource={taleData} columns={columns}  />
+    <>
+      <div className="dropdowns">
+        {filterDropdowns.map(filterDropdown => {
+          return <FilterDropdown filterDropdownItems = {filterDropdown} />
+        })}
+      </div>
+      <Table dataSource={taleData} columns={columns} />
+    </>
   );
 };
 

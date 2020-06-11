@@ -1,8 +1,20 @@
 import axios from "axios";
 import buildQueryUrl from "./buildQueryUrl";
 
-export const getData = (queryName) => {
-  const response = axios.get(buildQueryUrl(queryName));
+export const getData = async (queryName) => {
+  const response = await axios.get(buildQueryUrl(queryName));
+  //TODO: catch error
+  return response;
+};
+export const getAllData = async (queries) => {
+  const queryUrls = queries.map(query => axios.get(buildQueryUrl(query)));
+  const response = await axios.all(queryUrls).then(axios.spread((...responses) => {
+    return responses.map( response => {
+      return response.data.rows
+    })
+  })).catch(errors => {
+    // TODO: need to catch error here
+  });
   return response;
 };
 
@@ -36,3 +48,11 @@ export const replaceContent = (inputArray, inputString) => {
   }
   return newString;
 };
+
+export const makeHeading = (input) => {
+  const output = input.split('_').map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1))
+  .join(' ')
+
+  return output
+}

@@ -1,4 +1,4 @@
-import {makeInputData, replaceContent} from '../utils/common';
+import {makeInputData, replaceContent, makeHeading} from '../utils/common';
 
 it('should take input data and return array ob object with correct orders', () => {
     const input = [
@@ -56,4 +56,11 @@ it('should replace content of string', () => {
 
     expect(result).toEqual(output);
   });  
-  
+
+  it('should split underscore and upper case first letter of string to make heading', () => {
+    const input = 'to_become_upcase'
+    const result = makeHeading(input)
+    const output = 'To Become Upcase'
+
+    expect(result).toEqual(output);
+  });    

@@ -32,8 +32,11 @@ const GenericDataComponent = ({
       d_title: rest.domEvent.target.innerText,
     });
   };
+  const pageFilterItem = adjacentPages.filter( item => page_code === item.page_code)
+  const pageFilters = pageFilterItem[0]['page_filters']
   const [pageData, setPageData] = useState(null);
   useEffect(() => {
+    
     getData(PAGE_CONTENT_QUERY(clientName, page_code)).then(({ data }) => {
       let response = data.rows
       response.sort((a, b) => (a.element_order > b.element_order) ? 1 : -1)
@@ -58,8 +61,8 @@ const GenericDataComponent = ({
       <br />
       <Title>City of Casey</Title>
       <Breadcrumb>
-        {Object.values(pageMetaData).map((pageTitle) => (
-          <Breadcrumb.Item>{pageTitle}</Breadcrumb.Item>
+        {Object.values(pageMetaData).map((pageTitle, index) => (
+          <Breadcrumb.Item key={index}>{pageTitle}</Breadcrumb.Item>
         ))}
       </Breadcrumb>
 
@@ -70,15 +73,16 @@ const GenericDataComponent = ({
           // 'chart' => render Chart
           return {
             'text': <PageContent key={index} header={page.element_header} footer={page.element_footer} content={page.element_text} query={page.data_query} />,
-            'table': <Table query={page.data_query} />,
+            'table': <Table query={page.data_query} pageFilters={pageFilters}/>,
             'map': <Map content={page.element_text} query={page.data_query} />
           }[page.element_type]
     })
   }
-      {console.log('pageMetaData', pageMetaData)}
-      {console.log('adjacentPages', adjacentPages)}
+
     </Content>
   );
 };
 
 export default GenericDataComponent;
+      // {console.log('pageMetaData', pageMetaData)}
+      // {console.log('adjacentPages', adjacentPages)}

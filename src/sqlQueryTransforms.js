@@ -19,6 +19,7 @@ export default {
         d_level,
         d_title,
         page_code,
+        page_filters
       }
     ) => {
       const countDepth = (str) => {
@@ -43,6 +44,7 @@ export default {
         memo.push({
           a_level: current["a_level"],
           a_title: current["a_title"],
+          page_filters: current.page_filters
         });
       }
 
@@ -56,10 +58,11 @@ export default {
           rows
             .filter((r) => r["a_level"] === a_level)
             .filter(({ b_level }) => b_level)
-            .map(({ b_level, b_title }) => ({
+            .map(({ b_level, b_title, page_filters }) => ({
               b_level,
               b_title,
               page_code: `${a_level}${b_level}`,
+              page_filters: page_filters,
               // map over cs for this b
               c: uniqueArray(
                 rows
@@ -67,10 +70,11 @@ export default {
                     (r) => r["a_level"] === a_level && r["b_level"] === b_level
                   )
                   .filter(({ c_level }) => c_level)
-                  .map(({ c_level, c_title }) => ({
+                  .map(({ c_level, c_title, page_filters }) => ({
                     c_level,
                     c_title,
                     page_code: `${a_level}${b_level}${c_level}`,
+                    page_filters: page_filters,
                     d: uniqueArray(
                       rows
                         .filter(
@@ -80,10 +84,11 @@ export default {
                             r["c_level"] === c_level
                         )
                         .filter(({ d_level }) => d_level)
-                        .map(({ d_level, d_title }) => ({
+                        .map(({ d_level, d_title, page_filters }) => ({
                           d_level,
                           d_title,
                           page_code: `${a_level}${b_level}${c_level}${d_level}`,
+                          page_filters: page_filters,
                         }))
                     ),
                   }))

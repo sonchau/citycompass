@@ -35,8 +35,10 @@ const Root = ({ clientName, isThemeLight }) => {
   const [pageDirectory, setPageDirectory] = useState(null);
   const [pageMetaData, setPageMetaData] = useState(null);
   useEffect(() => {
-    getData(PAGE_DIRECTORY_QUERY).then(({ data }) =>
+    getData(PAGE_DIRECTORY_QUERY).then(({ data }) =>{
       setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data))
+    }
+    
     );
   }, []);
 
