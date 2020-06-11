@@ -33,7 +33,11 @@ const GenericDataComponent = ({
     });
   };
   const pageFilterItem = adjacentPages.filter( item => page_code === item.page_code)
-  const pageFilters = pageFilterItem[0]['page_filters']
+  let pageFilters = []
+  if (pageFilterItem.length > 0) {
+     pageFilters = pageFilterItem[0]['page_filters']
+  }
+  
   const [pageData, setPageData] = useState(null);
   useEffect(() => {
     

@@ -18,7 +18,7 @@ const TableElement = ({
   const [filterDropdowns, setFilterDropdowns]= useState([])
   
   let filterSqls = null
-  if (pageFilters) {
+  if (pageFilters.length > 0) {
     const filters = JSON.parse(pageFilters)
     filterSqls = Object.values(filters)
   }
