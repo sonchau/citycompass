@@ -7,9 +7,8 @@ import styled from "styled-components";
 const Wrapper = styled.a`
 padding: 0 2rem;
 `
-const FilterDropdown = ({filterDropdownItems}) => {
+const FilterDropdown = ({filterDropdownItems, filterHeading}) => {
   
-  const dropdownName = Object.keys(filterDropdownItems[0])[0]
   const dropdownItems = filterDropdownItems.map(filterDropdownItem => {
     return Object.values(filterDropdownItem)[0]
   })
@@ -33,7 +32,7 @@ const FilterDropdown = ({filterDropdownItems}) => {
     <Wrapper>
       <Dropdown overlay={menu}>
         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-          {makeHeading(dropdownName)} <DownOutlined />
+          {makeHeading(filterHeading)} <DownOutlined />
         </a>
       </Dropdown>
     </Wrapper>

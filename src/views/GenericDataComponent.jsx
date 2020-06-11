@@ -88,5 +88,3 @@ const GenericDataComponent = ({
 };
 
 export default GenericDataComponent;
-      // {console.log('pageMetaData', pageMetaData)}
-      // {console.log('adjacentPages', adjacentPages)}

@@ -17,10 +17,11 @@ const TableElement = ({
   const [taleData, setTableData] = useState([])
   const [filterDropdowns, setFilterDropdowns]= useState([])
   
-  let filterSqls = null
+  let filterSqls = [], filterHeadings =[]
   if (pageFilters.length > 0) {
     const filters = JSON.parse(pageFilters)
     filterSqls = Object.values(filters)
+    filterHeadings = Object.keys(filters)
   }
 
   useEffect(() => {
@@ -49,8 +50,8 @@ const TableElement = ({
   return (
     <>
       <Wrapper>
-        {filterDropdowns.map(filterDropdown => {
-          return <FilterDropdown filterDropdownItems = {filterDropdown} />
+        {filterDropdowns.map((filterDropdown, index) => {
+          return <FilterDropdown key={index} filterDropdownItems={filterDropdown} filterHeading={filterHeadings[index]}/>
         })}
       </Wrapper>
       <Table dataSource={taleData} columns={columns} />
