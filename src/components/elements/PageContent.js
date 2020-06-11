@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react"
 import { getData, replaceContent, makeInputData } from "../../utils/common";
 import { Typography } from 'antd';
+import ReactMarkdown from "react-markdown";
 
 const { Title, Text } = Typography;
-const ReactMarkdown = require('react-markdown')
 
 const PageContent = ({
     header,

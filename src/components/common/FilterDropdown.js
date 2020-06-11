@@ -8,7 +8,7 @@ const Wrapper = styled.a`
 padding: 0 2rem;
 `
 const FilterDropdown = ({filterDropdownItems, filterHeading}) => {
-  
+
   const dropdownItems = filterDropdownItems.map(filterDropdownItem => {
     return Object.values(filterDropdownItem)[0]
   })
@@ -16,10 +16,10 @@ const FilterDropdown = ({filterDropdownItems, filterHeading}) => {
   const onClick = ({ key }) => {
     message.info(`Click on item ${key}`);
   };
-  
+
   const menu = () => {
     return (<Menu onClick={onClick}>
-      { 
+      {
         dropdownItems.map((dropdownItem, index) => {
         return <Menu.Item key={index}>{dropdownItem}</Menu.Item>
         })
@@ -27,7 +27,7 @@ const FilterDropdown = ({filterDropdownItems, filterHeading}) => {
     </Menu>
     )
   }
-  
+
   return (
     <Wrapper>
       <Dropdown overlay={menu}>

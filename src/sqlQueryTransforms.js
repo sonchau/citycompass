@@ -1,4 +1,5 @@
 import remove from "./utils/removeKey";
+import { uniqBy } from 'lodash'
 
 export default {
   PAGE_DIRECTORY_QUERY: ({ rows, fields }) => {
@@ -51,10 +52,25 @@ export default {
       return memo;
     }, []);
 
+    console.log(rows)
+    console.log(data)
+    // a_level: "A1"
+    // a_title: ""
+    // b_level: "B2"
+    // b_title: "Headline Indicators"
+    // c_level: ""
+    // c_title: ""
+    // d_level: ""
+    // d_title: ""
+    // page_code: "A1B2"
+    // page_filters: "{"area": "SELECT distinct(ben
+    // get Bs for A1 (later do in loop for each A*)
+
+
     // get Bs for A1 (later do in loop for each A*)
     data.map(
       ({ a_level }, index) =>
-        (data[index]["b"] = uniqueArray(
+        (data[index]["b"] = uniqBy(
           rows
             .filter((r) => r["a_level"] === a_level)
             .filter(({ b_level }) => b_level)
@@ -64,7 +80,7 @@ export default {
               page_code: `${a_level}${b_level}`,
               page_filters: page_filters,
               // map over cs for this b
-              c: uniqueArray(
+              c: uniqBy(
                 rows
                   .filter(
                     (r) => r["a_level"] === a_level && r["b_level"] === b_level
@@ -75,7 +91,7 @@ export default {
                     c_title,
                     page_code: `${a_level}${b_level}${c_level}`,
                     page_filters: page_filters,
-                    d: uniqueArray(
+                    d: uniqBy(
                       rows
                         .filter(
                           (r) =>
@@ -90,11 +106,11 @@ export default {
                           page_code: `${a_level}${b_level}${c_level}${d_level}`,
                           page_filters: page_filters,
                         }))
-                    ),
+                    , 'page_code'),
                   }))
-              ),
+              , 'page_code'),
             }))
-        ))
+        , 'page_code'))
     );
 
     return data;
