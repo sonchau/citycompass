@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Table } from 'antd'
 import { getData, getAllData } from "../../utils/common";
 import FilterDropdown from '../common/FilterDropdown'
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  padding: 1rem;
+  background: #11131A;
+`;
 
 const TableElement = ({
   query,
@@ -42,11 +48,11 @@ const TableElement = ({
 
   return (
     <>
-      <div className="dropdowns">
+      <Wrapper>
         {filterDropdowns.map(filterDropdown => {
           return <FilterDropdown filterDropdownItems = {filterDropdown} />
         })}
-      </div>
+      </Wrapper>
       <Table dataSource={taleData} columns={columns} />
     </>
   );
