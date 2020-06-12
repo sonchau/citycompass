@@ -3,15 +3,16 @@ import { Menu } from "antd";
 import { useHistory } from "react-router-dom";
 
 const Sidebar = ({ pageDirectory, clientName, setPageMetaData }) => {
+  pageDirectory.log("pageDirectory");
   let history = useHistory();
-  const handleItemClick = (titles, pageCode) => {
+  const handleItemClick = (pageMetaData, pageCode) => {
     history.push(`/${clientName}/${pageCode}`);
-    setPageMetaData(titles);
+    setPageMetaData(pageMetaData);
   };
   return (
     <Menu mode="vertical">
-      {pageDirectory.map((a) => (
-        <Menu.ItemGroup title={a["a_title"]}>
+      {pageDirectory.map((a, index) => (
+        <Menu.ItemGroup title={a["a_title"]} key={index}>
           {renderMenu(a, handleItemClick)}
         </Menu.ItemGroup>
       ))}
@@ -22,19 +23,22 @@ const Sidebar = ({ pageDirectory, clientName, setPageMetaData }) => {
 export default Sidebar;
 
 function renderMenu(a, handleItemClick) {
-  return a.b.map((b) =>
+  return a.b.map((b, i) =>
     b.c.length ? (
       <Menu.SubMenu
         onTitleClick={() =>
           handleItemClick(
             {
-              a_title: a["a_title"],
-              b_title: b["b_title"],
+              page_titles: {
+                a_title: a["a_title"],
+                b_title: b["b_title"],
+              },
+              page_filters: b["page_filters"],
             },
             b["page_code"]
           )
         }
-        key={b["page_code"]}
+        key={`${b["page_code"]}-${i}}`}
         title={b["b_title"]}
       >
         {b.c.map((c) => {
@@ -42,14 +46,18 @@ function renderMenu(a, handleItemClick) {
             <Menu.ItemGroup title={c["c_title"]}>
               {c.d.map((d) => (
                 <Menu.Item
+                  // TODO: move handleItemClick params out to the key and use that in the callback: see docs for ant.design
                   key={d["page_code"]}
                   onClick={() =>
                     handleItemClick(
                       {
-                        a_title: a["a_title"],
-                        b_title: b["b_title"],
-                        c_title: c["c_title"],
-                        d_title: d["d_title"],
+                        page_titles: {
+                          a_title: a["a_title"],
+                          b_title: b["b_title"],
+                          c_title: c["c_title"],
+                          d_title: d["d_title"],
+                        },
+                        page_filters: d["page_filters"],
                       },
                       d["page_code"]
                     )
@@ -65,9 +73,12 @@ function renderMenu(a, handleItemClick) {
               onClick={() =>
                 handleItemClick(
                   {
-                    a_title: a["a_title"],
-                    b_title: b["b_title"],
-                    c_title: c["c_title"],
+                    page_titles: {
+                      a_title: a["a_title"],
+                      b_title: b["b_title"],
+                      c_title: c["c_title"],
+                    },
+                    page_filters: c["page_filters"],
                   },
                   c["page_code"]
                 )
@@ -84,8 +95,11 @@ function renderMenu(a, handleItemClick) {
         onClick={() =>
           handleItemClick(
             {
-              a_title: a["a_title"],
-              b_title: b["b_title"],
+              page_titles: {
+                a_title: a["a_title"],
+                b_title: b["b_title"],
+              },
+              page_filters: b["page_filters"],
             },
             b["page_code"]
           )

@@ -35,20 +35,22 @@ const Root = ({ clientName, isThemeLight }) => {
   const [pageDirectory, setPageDirectory] = useState(null);
   const [pageMetaData, setPageMetaData] = useState(null);
   useEffect(() => {
-    getData(PAGE_DIRECTORY_QUERY).then(({ data }) =>{
-      setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data))
-    }
-    
-    );
+    getData(PAGE_DIRECTORY_QUERY).then(({ data }) => {
+      setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data));
+    });
   }, []);
 
   // Similar to componentDidMount and componentDidUpdate:
   if (pageDirectory) {
     // TODO: refactor to not hard code path write utility belt for parsing the navigation structure
+    // TODO: be explicit about the intial state of the pageMetadata using pagecode maybe?
     defaultPageCode = pageDirectory[0]["b"][0]["page_code"];
     defaultPageMetaData = {
-      a_title: pageDirectory[0]["a_title"],
-      b_title: pageDirectory[0]["b"][0]["b_title"],
+      page_titles: {
+        a_title: pageDirectory[0]["a_title"],
+        b_title: pageDirectory[0]["b"][0]["b_title"],
+      },
+      page_filters: pageDirectory[0]["b"][0]["page_filters"],
     };
   }
 
@@ -99,6 +101,7 @@ const Root = ({ clientName, isThemeLight }) => {
                         },
                       }) => (
                         <GenericDataComponent
+                          key={page_code}
                           clientName={clientName}
                           pageMetaData={pageMetaData || defaultPageMetaData}
                           page_code={page_code}
