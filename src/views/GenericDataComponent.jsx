@@ -54,13 +54,13 @@ const GenericDataComponent = ({
   [pageMetaData].log("pageMetaData");
   [adjacentPages].log("adjacentPages");
 
-  const pageFilterItem = adjacentPages.filter((p) => page_code === p.page_code);
+  // const pageFilterItem = adjacentPages.filter((p) => page_code === p.page_code);
 
-  let pageFilters = [];
+  // let pageFilters = [];
 
-  if (pageFilterItem.length > 0) {
-    pageFilters = pageFilterItem[0]["page_filters"];
-  }
+  // if (pageFilterItem.length > 0) {
+  //   pageFilters = pageFilterItem[0]["page_filters"];
+  // }
 
   return (
     <Content>
@@ -105,7 +105,7 @@ const GenericDataComponent = ({
               query={page.data_query}
             />
           ),
-          table: <Table query={page.data_query} pageFilters={pageFilters} />,
+          table: <Table query={page.data_query} pageFilters={pageMetaData["page_filters"]} />,
           map: <Map content={page.element_text} query={page.data_query} />,
         }[page.element_type];
       })}
