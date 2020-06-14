@@ -29,4 +29,4 @@ const PageData = ({
   );
 };
 
-export default GenericDataComponent;
+export default PageData;
