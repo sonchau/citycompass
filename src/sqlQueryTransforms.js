@@ -52,8 +52,6 @@ export default {
       return memo;
     }, []);
 
-    console.log(rows)
-    console.log(data)
     // a_level: "A1"
     // a_title: ""
     // b_level: "B2"

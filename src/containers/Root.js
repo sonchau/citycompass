@@ -7,7 +7,6 @@ import { PAGE_DIRECTORY_QUERY } from "../sqlQueries";
 import { ThemeProvider } from "styled-components";
 import CreateGlobalStyles from "../CreateGlobalStyles";
 import theme from "../constants/theme";
-import StyledContainer from "../styled/Layout/StyledContainer";
 import StyledHeader from "../styled/Layout/StyledHeader";
 import StyledContent from "../styled/Layout/StyledContent";
 import StyledSidebar from "../styled/Layout/StyledSidebar";
@@ -25,8 +24,7 @@ import sqlQueryTransforms from "./../sqlQueryTransforms";
 import pageCodeToObjectPath from "../utils/pageCodeToObjectPath";
 
 // antd components
-import { Layout, Menu, Breadcrumb } from "antd";
-const { SubMenu } = Menu;
+import { Layout } from "antd";
 
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
 
