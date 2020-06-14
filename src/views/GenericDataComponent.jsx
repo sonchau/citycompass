@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Layout, Typography, Menu, Breadcrumb } from "antd";
 import { pageDepth } from "../utils/pageCodeToObjectPath";
-import { useHistory } from "react-router-dom";
 import { PAGE_CONTENT_QUERY } from "../sqlQueries";
 import { getData } from "../utils/common";
 import PageContent from "../components/elements/PageContent";
@@ -20,33 +19,26 @@ const GenericDataComponent = ({
   page_code,
   pageMetaData,
   adjacentPages,
-  setPageMetaData,
   clientName,
+  handlMenuItemClick
 }) => {
   // initial state
   const [pageData, setPageData] = useState([]);
 
   // hooks
   useEffect(() => {
-    getData(PAGE_CONTENT_QUERY(clientName, page_code)).then(({ data }) => {
+    // TODO: cleanup data fetching https://codesandbox.io/s/jvvkoo8pq3?file=/src/index.js
+     getData(PAGE_CONTENT_QUERY(clientName, page_code)).then(({ data }) => {
       let response = data.rows;
       setPageData(response);
     });
   }, [clientName, page_code]);
 
-  let history = useHistory();
-
-    // Use "props" through menu items, that way we don't invoke the functions
-  const handleItemClick = ({ item: { props: { data: { pageMetaData, page_code} }}}) => {
-    history.push(`/${clientName}/${page_code}`);
-    setPageMetaData(pageMetaData);
-  };
-
   return (
     <Content>
       {pageDepth(page_code) === 4 ? (
         <Menu
-          onClick={handleItemClick}
+          onClick={handlMenuItemClick}
           selectedKeys={[page_code]}
           mode="horizontal"
         >

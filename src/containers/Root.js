@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { PAGE_DIRECTORY_QUERY } from "../sqlQueries";
+import { useHistory } from "react-router-dom";
 
 // Styled components
 import { ThemeProvider } from "styled-components";
@@ -29,6 +30,7 @@ import { Layout } from "antd";
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
 
 const Root = ({ clientName, isThemeLight }) => {
+  let history = useHistory();
   let defaultPageCode, defaultPageMetaData;
   const [pageDirectory, setPageDirectory] = useState(null);
   const [pageMetaData, setPageMetaData] = useState(null);
@@ -51,6 +53,20 @@ const Root = ({ clientName, isThemeLight }) => {
       page_filters: pageDirectory[0]["b"][0]["page_filters"],
     };
   }
+
+  // Use "props" through menu items, that way we don't invoke the functions
+  const handlMenuItemClick = ({ item: { props: { data: { pageMetaData, page_code } } } }) => {
+    handleItemTitleClick(pageMetaData, page_code)
+  };
+  // Unfortunately onTitleClick needs to be used with SubMenu items
+  // Open issue: https://github.com/ant-design/ant-design/issues/6463
+  const handleItemTitleClick = (pageMetaData, page_code) => {
+    if (history.location.pathname !== `/${clientName}/${page_code}`) {
+      history.push(`/${clientName}/${page_code}`);
+      setPageMetaData(pageMetaData);
+    }
+  };
+
 
   return pageDirectory ? (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
@@ -76,6 +92,8 @@ const Root = ({ clientName, isThemeLight }) => {
                     setPageMetaData={setPageMetaData}
                     clientName={clientName}
                     pageDirectory={pageDirectory}
+                    handlMenuItemClick={handlMenuItemClick}
+                    handleItemTitleClick={handleItemTitleClick}
                   />
                 </Layout.Sider>
               </StyledSidebar>
@@ -107,7 +125,7 @@ const Root = ({ clientName, isThemeLight }) => {
                             pageDirectory,
                             page_code
                           )}
-                          setPageMetaData={setPageMetaData}
+                          handlMenuItemClick={handlMenuItemClick}
                         />
                       )}
                     />
