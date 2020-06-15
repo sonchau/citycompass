@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Layout, Typography, Menu, Breadcrumb } from "antd";
 import { pageDepth } from "../utils/pageCodeToObjectPath";
-import { useHistory } from "react-router-dom";
 import { PAGE_CONTENT_QUERY } from "../sqlQueries";
 import { getData } from "../utils/common";
 import PageContent from "../components/elements/PageContent";
@@ -20,64 +19,52 @@ const GenericDataComponent = ({
   page_code,
   pageMetaData,
   adjacentPages,
-  setPageMetaData,
   clientName,
+  handlMenuItemClick
 }) => {
   // initial state
   const [pageData, setPageData] = useState([]);
 
   // hooks
   useEffect(() => {
-    getData(PAGE_CONTENT_QUERY(clientName, page_code)).then(({ data }) => {
+    // TODO: cleanup data fetching https://codesandbox.io/s/jvvkoo8pq3?file=/src/index.js
+     getData(PAGE_CONTENT_QUERY(clientName, page_code)).then(({ data }) => {
       let response = data.rows;
-      response.log("PAGE_CONTENT_QUERY");
       setPageData(response);
     });
   }, [clientName, page_code]);
-
-  let history = useHistory();
-
-  const handleClick = ({
-    page_code: newPageCode,
-    page_filters,
-    d_title,
-    ...rest
-  }) => {
-    [page_filters].log("handleClick");
-    history.push(`/casey/${newPageCode}`);
-    setPageMetaData({
-      page_titles: { ...pageMetaData.page_titles, d_title },
-      page_filters,
-    });
-  };
-
-  [pageMetaData].log("pageMetaData");
-  [adjacentPages].log("adjacentPages");
-
-  // const pageFilterItem = adjacentPages.filter((p) => page_code === p.page_code);
-
-  // let pageFilters = [];
-
-  // if (pageFilterItem.length > 0) {
-  //   pageFilters = pageFilterItem[0]["page_filters"];
-  // }
 
   return (
     <Content>
       {pageDepth(page_code) === 4 ? (
         <Menu
-          onClick={handleClick}
+          onClick={handlMenuItemClick}
           selectedKeys={[page_code]}
           mode="horizontal"
         >
-          {adjacentPages.map(({ page_code, page_filters, d_title }) => (
-            <Menu.Item
-              key={{
-                page_code,
-                page_filters,
-                d_title,
-              }}
-            >
+          {adjacentPages.map(({
+            page_code,
+            page_filters,
+            a_title,
+            b_title,
+            c_title,
+            d_title }) => (
+              <Menu.Item
+                key={page_code}
+                data={{
+                  pageMetaData:
+                  {
+                    page_titles: {
+                      a_title,
+                      b_title,
+                      c_title,
+                      d_title,
+                    },
+                    page_filters,
+                  },
+                  page_code
+                }}
+              >
               {d_title}
             </Menu.Item>
           ))}

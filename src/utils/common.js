@@ -26,11 +26,11 @@ export const getGeoJSONUrl = (query) => buildQueryUrl(query, {}, "geojson");
 
 export const makeInputData = (inputArray) => {
   let result = [];
-  inputArray.map((item, index) => {
+  inputArray.forEach((item, index) => {
     for (const [key, value] of Object.entries(item)) {
       if (value !== null) {
         const newKey = `{{data.${index}.${key}}}`;
-        const outputObj = new Object();
+        const outputObj = {};
         outputObj[newKey] = value;
         result.push(outputObj);
       }
