@@ -4,7 +4,7 @@ import { DownOutlined } from '@ant-design/icons';
 import {makeHeading} from '../../utils/common';
 import styled from "styled-components";
 
-const Wrapper = styled.a`
+const Wrapper = styled.div`
 padding: 0 2rem;
 `
 const FilterDropdown = ({filterDropdownItems, filterHeading}) => {
