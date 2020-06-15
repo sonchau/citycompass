@@ -38,7 +38,7 @@ const TableElement = ({
       })
     }
     
-  }, [query]);
+  }, [query, filterSqls]);
 
   const columns = tableData.length ? Object.keys(tableData[0]).map((i) => ({
     title: i,
