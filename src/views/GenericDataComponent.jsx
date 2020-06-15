@@ -85,15 +85,15 @@ const GenericDataComponent = ({
         return {
           text: (
             <PageContent
-              key={index}
+              key={`text-${page_code}-${index}`}
               header={page.element_header}
               footer={page.element_footer}
               content={page.element_text}
               query={page.data_query}
             />
           ),
-          table: <Table query={page.data_query} pageFilters={pageMetaData["page_filters"]} />,
-          map: <Map content={page.element_text} query={page.data_query} />,
+          table: <Table key={`table-${page_code}-${index}`} query={page.data_query} pageFilters={pageMetaData["page_filters"]} />,
+          map: <Map key={`map-${page_code}-${index}`} content={page.element_text} query={page.data_query} />,
         }[page.element_type];
       })}
     </Content>
