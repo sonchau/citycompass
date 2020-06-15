@@ -17,12 +17,12 @@ const Map = ({ query }) => {
 
   useEffect(() => {
     const updatedQuery = query.replace("{", "").replace("}", "");
-    const map = window.map = new mapboxgl.Map({
-      container: 'map',
+    const map = (window.map = new mapboxgl.Map({
+      container: "map",
       style: "mapbox://styles/mapbox/streets-v11",
       center: [latitude, longitude],
       zoom,
-    });
+    }));
 
     map.on("move", () => {
       setLatitude(map.getCenter().lat.toFixed(4));
@@ -37,7 +37,7 @@ const Map = ({ query }) => {
       });
 
       setLoading(false);
-      addLayerSpinner(map)
+      addLayerSpinner(map);
 
       // When a click event occurs on a feature in the states layer, open a popup at the
       // location of the click, with description HTML from its properties.
@@ -58,7 +58,7 @@ const Map = ({ query }) => {
         map.getCanvas().style.cursor = "";
       });
     });
-  }, []);
+  }, [query]);
 
   function addLayerSpinner(map) {
     setLoading(true)

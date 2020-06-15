@@ -31,7 +31,7 @@ export default {
       const depth = countDepth(page_code).log("depth " + page_code);
 
       const trimByDepth = (_json, _depth) => {
-        if (_depth == 4) return _json;
+        if (_depth === 4) return _json;
         const depth2key = { 1: "a", 2: "b", 3: "c", 4: "d" };
         remove(_json, depth2key[depth + 1]);
         return _json;
@@ -52,8 +52,6 @@ export default {
       return memo;
     }, []);
 
-    console.log(rows)
-    console.log(data)
     // a_level: "A1"
     // a_title: ""
     // b_level: "B2"

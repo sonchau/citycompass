@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./utils/object_extensions.exec.js";
 import * as serviceWorker from "./serviceWorker";
-import { HashRouter, BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import RootComponent from "./containers/Root";

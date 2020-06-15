@@ -14,7 +14,7 @@ const TableElement = ({
   pageFilters
 }) => {
 
-  const [taleData, setTableData] = useState([])
+  const [tableData, setTableData] = useState([])
   const [filterDropdowns, setFilterDropdowns]= useState([])
   
   let filterSqls = [], filterHeadings =[]
@@ -38,14 +38,13 @@ const TableElement = ({
       })
     }
     
-  }, [query]);
+  }, [query, filterSqls]);
 
-  let columns;
-  if (taleData.length > 0) {
-    columns = Object.keys(taleData[0]).map(i => {
-      if (i.includes('foo') || i.includes('bar')) return { title: i, dataIndex: i, key: i }
-    }).filter(i => i !== undefined)
-  }
+  const columns = tableData.length ? Object.keys(tableData[0]).map((i) => ({
+    title: i,
+    dataIndex: i,
+    key: i,
+  })) : [];
 
   return (
     <>
@@ -54,7 +53,7 @@ const TableElement = ({
           return <FilterDropdown key={index} filterDropdownItems={filterDropdown} filterHeading={filterHeadings[index]}/>
         })}
       </Wrapper>
-      <Table dataSource={taleData} columns={columns} />
+      <Table dataSource={tableData} columns={columns} rowKey="cartodb_id" />
     </>
   );
 };

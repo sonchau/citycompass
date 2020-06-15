@@ -1,7 +1,7 @@
 // Remove a key from an object
 function remove(obj, key) {
   for (var k in obj) {
-    if (k == key) {
+    if (k === key) {
       delete obj[key];
       return true;
     } else if (typeof obj[k] === "object") {

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { PAGE_DIRECTORY_QUERY } from "../sqlQueries";
+import { useHistory } from "react-router-dom";
 
 // Styled components
 import { ThemeProvider } from "styled-components";
 import CreateGlobalStyles from "../CreateGlobalStyles";
 import theme from "../constants/theme";
-import StyledContainer from "../styled/Layout/StyledContainer";
 import StyledHeader from "../styled/Layout/StyledHeader";
 import StyledContent from "../styled/Layout/StyledContent";
 import StyledSidebar from "../styled/Layout/StyledSidebar";
@@ -25,32 +25,48 @@ import sqlQueryTransforms from "./../sqlQueryTransforms";
 import pageCodeToObjectPath from "../utils/pageCodeToObjectPath";
 
 // antd components
-import { Layout, Menu, Breadcrumb } from "antd";
-const { SubMenu } = Menu;
+import { Layout } from "antd";
 
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
 
 const Root = ({ clientName, isThemeLight }) => {
+  let history = useHistory();
   let defaultPageCode, defaultPageMetaData;
   const [pageDirectory, setPageDirectory] = useState(null);
   const [pageMetaData, setPageMetaData] = useState(null);
   useEffect(() => {
-    getData(PAGE_DIRECTORY_QUERY).then(({ data }) =>{
-      setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data))
-    }
-    
-    );
+    getData(PAGE_DIRECTORY_QUERY).then(({ data }) => {
+      setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data));
+    });
   }, []);
 
   // Similar to componentDidMount and componentDidUpdate:
   if (pageDirectory) {
     // TODO: refactor to not hard code path write utility belt for parsing the navigation structure
+    // TODO: be explicit about the intial state of the pageMetadata using pagecode maybe?
     defaultPageCode = pageDirectory[0]["b"][0]["page_code"];
     defaultPageMetaData = {
-      a_title: pageDirectory[0]["a_title"],
-      b_title: pageDirectory[0]["b"][0]["b_title"],
+      page_titles: {
+        a_title: pageDirectory[0]["a_title"],
+        b_title: pageDirectory[0]["b"][0]["b_title"],
+      },
+      page_filters: pageDirectory[0]["b"][0]["page_filters"],
     };
   }
+
+  // Use "props" through menu items, that way we don't invoke the functions
+  const handlMenuItemClick = ({ item: { props: { data: { pageMetaData, page_code } } } }) => {
+    handleItemTitleClick(pageMetaData, page_code)
+  };
+  // Unfortunately onTitleClick needs to be used with SubMenu items
+  // Open issue: https://github.com/ant-design/ant-design/issues/6463
+  const handleItemTitleClick = (pageMetaData, page_code) => {
+    if (history.location.pathname !== `/${clientName}/${page_code}`) {
+      history.push(`/${clientName}/${page_code}`);
+      setPageMetaData(pageMetaData);
+    }
+  };
+
 
   return pageDirectory ? (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
@@ -76,6 +92,8 @@ const Root = ({ clientName, isThemeLight }) => {
                     setPageMetaData={setPageMetaData}
                     clientName={clientName}
                     pageDirectory={pageDirectory}
+                    handlMenuItemClick={handlMenuItemClick}
+                    handleItemTitleClick={handleItemTitleClick}
                   />
                 </Layout.Sider>
               </StyledSidebar>
@@ -99,6 +117,7 @@ const Root = ({ clientName, isThemeLight }) => {
                         },
                       }) => (
                         <GenericDataComponent
+                          key={page_code}
                           clientName={clientName}
                           pageMetaData={pageMetaData || defaultPageMetaData}
                           page_code={page_code}
@@ -106,7 +125,7 @@ const Root = ({ clientName, isThemeLight }) => {
                             pageDirectory,
                             page_code
                           )}
-                          setPageMetaData={setPageMetaData}
+                          handlMenuItemClick={handlMenuItemClick}
                         />
                       )}
                     />
