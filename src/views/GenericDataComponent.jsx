@@ -4,6 +4,7 @@ import { pageDepth } from "../utils/pageCodeToObjectPath";
 import { PAGE_CONTENT_QUERY } from "../sqlQueries";
 import { getData } from "../utils/common";
 import PageContent from "../components/elements/PageContent";
+import PageFilters from "../components/elements/PageFilters";
 import Table from "../components/elements/Table";
 import Map from "../components/elements/Map";
 
@@ -77,7 +78,7 @@ const GenericDataComponent = ({
           <Breadcrumb.Item key={index}>{pageTitle}</Breadcrumb.Item>
         ))}
       </Breadcrumb>
-
+      {pageMetaData["page_filters"] && <PageFilters pageFilters={pageMetaData["page_filters"]} /> }
       {pageData.map((page, index) => {
         //NOTE: depend in element_type then render appropriate component type
         // 'text' => render PageContent
@@ -92,7 +93,7 @@ const GenericDataComponent = ({
               query={page.data_query}
             />
           ),
-          table: <Table key={`table-${page_code}-${index}`} query={page.data_query} pageFilters={pageMetaData["page_filters"]} />,
+          table: <Table key={`table-${page_code}-${index}`} query={page.data_query} />,
           map: <Map key={`map-${page_code}-${index}`} content={page.element_text} query={page.data_query} />,
         }[page.element_type];
       })}
