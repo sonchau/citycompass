@@ -1,11 +1,13 @@
 import React from 'react';
-import { Menu, Dropdown, message } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
 import {makeHeading} from '../../utils/common';
 import styled from "styled-components";
+import { Select } from 'antd';
+
+const { Option } = Select;
 
 const Wrapper = styled.span`
-padding: 0 2rem;
+  padding: 0 1rem;
 `
 const FilterDropdown = ({filterDropdownItems, filterHeading}) => {
 
@@ -13,28 +15,44 @@ const FilterDropdown = ({filterDropdownItems, filterHeading}) => {
     return Object.values(filterDropdownItem)[0]
   })
   //console.log('filterDropdownItems',filterDropdownItems,'dropdownName', dropdownName, ';dropdownItems', dropdownItems)
-  const onClick = ({ key }) => {
-    message.info(`Click on item ${key}`);
-  };
 
-  const menu = () => {
-    return (<Menu onClick={onClick}>
-      {
-        dropdownItems.map((dropdownItem, index) => {
-        return <Menu.Item key={index}>{dropdownItem}</Menu.Item>
-        })
-      }
-    </Menu>
-    )
+  function onChange(value) {
+    console.log(`selected ${value}`);
+  }
+  
+  function onBlur() {
+    console.log('blur');
+  }
+  
+  function onFocus() {
+    console.log('focus');
+  }
+  
+  function onSearch(val) {
+    console.log('search:', val);
   }
 
   return (
     <Wrapper>
-      <Dropdown overlay={menu}>
-        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-          {makeHeading(filterHeading)} <DownOutlined />
-        </a>
-      </Dropdown>
+      <Select
+        showSearch
+        style={{ width: 150 }}
+        placeholder={makeHeading(filterHeading)}
+        optionFilterProp="children"
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onSearch={onSearch}
+        filterOption={(input, option) =>
+          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+      >
+        {
+          dropdownItems.map((dropdownItem, index) => {
+          return <Option key={index}>{dropdownItem}</Option>
+          })
+        }
+      </Select>
     </Wrapper>
   )
 }
