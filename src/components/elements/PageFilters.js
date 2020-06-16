@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   padding: 1rem;
-  background: #11131A;
+  background: ${(props) => props.theme.filterPanel};
 `;
 
 const PageFilters = ({

@@ -17,6 +17,10 @@ const lightTheme = {
   sidebarActiveClr: "rgb(200, 200, 200)",
   sidebarSelectedBg: "rgb(214, 87, 81)",
   sidebarSelectedClr: "rgb(255, 255, 255)",
+
+  //Filter Panel
+  filterPanel: "#11131A",
+  filterPanelText: "#FFF"
 };
 
 const darkTheme = {
@@ -34,6 +38,8 @@ const darkTheme = {
   sidebarActiveClr: "rgb(241, 241, 241)",
   sidebarSelectedBg: "rgb(214, 87, 81)",
   sidebarSelectedClr: "rgb(255, 255, 255)",
+  filterPanel: "#CCC",
+  filterPanelText: "#000"
 };
 
 export default { lightTheme, darkTheme };
