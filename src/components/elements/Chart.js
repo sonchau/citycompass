@@ -1,27 +1,19 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { getData, replaceContent, makeInputData } from "../utils/common";
 
-const PageContent = ({
-  header,
-  content,
-  footer,
-  query,
-
-}) => {
-
-  const [pageContent, setPageContent] = useState(null)
+const PageContent = ({ header, content, footer, query }) => {
+  const [pageContent, setPageContent] = useState(null);
   useEffect(() => {
-    const updatedQuery = query.replace('{', '').replace('}', '')
+    const updatedQuery = query.replace("{", "").replace("}", "");
     //console.log('updatedQuery', updatedQuery)
-    getData(updatedQuery).then(({ data }) => {
-      //console.log('data', data.rows)
-      setPageContent(data.rows)
-    })
+    getData(updatedQuery).then(({ data: { rows } }) => {
+      setPageContent(rows);
+    });
   }, [query]);
-  let newContent = ''
+  let newContent = "";
   if (pageContent) {
-    const inputArray = makeInputData(pageContent)
-    newContent = replaceContent(inputArray, content)
+    const inputArray = makeInputData(pageContent);
+    newContent = replaceContent(inputArray, content);
   }
 
   return (
@@ -29,7 +21,6 @@ const PageContent = ({
       <h1>{header}</h1>
       <p>{newContent}</p>
       <p>{footer}</p>
-
     </>
   );
 };

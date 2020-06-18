@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
-import { Spin } from 'antd';
+import { Spin } from "antd";
 import { getGeoJSONUrl } from "../../utils/common";
 import "./index.css";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -9,11 +9,11 @@ mapboxgl.accessToken =
   "pk.eyJ1Ijoic2FibWFuIiwiYSI6ImNpb2Z0OWo4cjAwNHl1dWt4YzNhZWZsMWMifQ.WI9VZukT877h0b86ySkXzw";
 const [lat, lng, zm] = [145.276908, -38.109904, 10];
 
-const Map = ({ query }) => {
+const Map = ({ query, content }) => {
   const [latitude, setLatitude] = useState(lat);
   const [longitude, setLongitude] = useState(lng);
   const [zoom, setZoom] = useState(zm);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const updatedQuery = query.replace("{", "").replace("}", "");
@@ -61,7 +61,7 @@ const Map = ({ query }) => {
   }, [query]);
 
   function addLayerSpinner(map) {
-    setLoading(true)
+    setLoading(true);
 
     map.addLayer({
       id: "my-data-layer-fill",
@@ -73,12 +73,12 @@ const Map = ({ query }) => {
         "fill-outline-color": "rgba(200, 100, 240, 1)",
       },
     });
-    map.on('render', (e) => stopSpinner(e));
+    map.on("render", (e) => stopSpinner(e));
   }
 
   function stopSpinner(e) {
     if (e.target && e.target.loaded()) {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -89,9 +89,14 @@ const Map = ({ query }) => {
           Longitude: {longitude} | Latitude: {latitude} | Zoom: {zoom}
         </div>
       </div>
-      <div id='map' className="mapContainer">
-        {loading && <div className='loading-background'> <Spin size="large" /></div>}
-        </div>
+      <div id="map" className="mapContainer">
+        {loading && (
+          <div className="loading-background">
+            {" "}
+            <Spin size="large" />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

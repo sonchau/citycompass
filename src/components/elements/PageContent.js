@@ -10,7 +10,6 @@ const PageContent = ({
     content,
     footer,
     query,
-
   }) => {
 
     const [pageContent, setPageContent] = useState(null)

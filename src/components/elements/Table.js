@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Table } from 'antd'
-import { getData } from "../../utils/common";
+import { Table } from "antd";
+import { getData, replaceSqlContent } from "../../utils/common";
 
-const TableElement = ({
-  query,
-}) => {
-  const [tableData, setTableData] = useState([])
+const TableElement = ({ query, selectedFilters }) => {
+  const [tableData, setTableData] = useState([{}]);
   useEffect(() => {
-    const updatedQuery = query.replace('{', '').replace('}', '')
-    //console.log('updatedQuery', updatedQuery)
-    getData(updatedQuery).then(({ data }) => {
-      //console.log('data', data.rows)
-      setTableData(data.rows)
-    })  
-  }, [query]);
+    const updatedQuery = replaceSqlContent(selectedFilters, query);
+    [selectedFilters, query].log("selectedFilters, query")
+    let params = arrayToObject(selectedFilters).log("arrayToObject(selectedFilters)")
 
-  const columns = tableData.length ? Object.keys(tableData[0]).map((i) => ({
-    title: i,
-    dataIndex: i,
-    key: i,
-  })) : [];
-  return (
-    <Table dataSource={tableData} columns={columns} rowKey="cartodb_id" />
-  );
+    getData(query, params).then(({ data: { rows } }) =>
+      setTableData(rows)
+    );
+  }, [query, selectedFilters]);
+
+  const columns = Object.keys(tableData[0]).map((col) => ({
+    title: col,
+    dataIndex: col,
+    key: col,
+  }));
+
+  return <Table dataSource={tableData} columns={columns} rowKey="cartodb_id" />;
 };
 
 export default TableElement;
 
+const arrayToObject = (array) =>
+  array.reduce((obj, item) => {
+    obj = {...obj, ...item}
+    return obj;
+  }, {});

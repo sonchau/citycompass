@@ -35,7 +35,7 @@ const Root = ({ clientName, isThemeLight }) => {
   const [pageDirectory, setPageDirectory] = useState(null);
   const [pageMetaData, setPageMetaData] = useState(null);
   useEffect(() => {
-    getData(PAGE_DIRECTORY_QUERY).then(({ data }) => {
+    getData(PAGE_DIRECTORY_QUERY, { clientName }).then(({ data }) => {
       setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data));
     });
   }, []);
@@ -55,8 +55,14 @@ const Root = ({ clientName, isThemeLight }) => {
   }
 
   // Use "props" through menu items, that way we don't invoke the functions
-  const handlMenuItemClick = ({ item: { props: { data: { pageMetaData, page_code } } } }) => {
-    handleItemTitleClick(pageMetaData, page_code)
+  const handlMenuItemClick = ({
+    item: {
+      props: {
+        data: { pageMetaData, page_code },
+      },
+    },
+  }) => {
+    handleItemTitleClick(pageMetaData, page_code);
   };
   // Unfortunately onTitleClick needs to be used with SubMenu items
   // Open issue: https://github.com/ant-design/ant-design/issues/6463
@@ -66,7 +72,6 @@ const Root = ({ clientName, isThemeLight }) => {
       setPageMetaData(pageMetaData);
     }
   };
-
 
   return pageDirectory ? (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
@@ -80,11 +85,6 @@ const Root = ({ clientName, isThemeLight }) => {
 
         <StyledContent>
           <Layout.Content>
-            {/* <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb> */}
             <Layout>
               <StyledSidebar>
                 <Layout.Sider className="site-layout-background" width={300}>
@@ -137,7 +137,7 @@ const Root = ({ clientName, isThemeLight }) => {
           </Layout.Content>
         </StyledContent>
         <Layout.Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
+          Geografia Pty. Ltd. © {new Date().getFullYear()}
         </Layout.Footer>
       </Layout>
     </ThemeProvider>

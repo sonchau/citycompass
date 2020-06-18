@@ -1,4 +1,4 @@
-import {makeInputData, replaceContent, makeHeading} from '../utils/common';
+import { makeInputData, replaceContent, makeHeading, replaceSqlContent, updateFiltersFromDropdownEvent, makeUrlQueryString} from '../utils/common';
 
 it('should take input data and return array ob object with correct orders', () => {
     const input = [
@@ -55,7 +55,45 @@ it('should replace content of string', () => {
     This line contains a template for this second value Pear`
 
     expect(result).toEqual(output);
-  });  
+  });
+
+it('should replace content of sql', () => {
+    const inputArray = [
+        {area: "A1"},
+        {year: 2020}
+    ]
+    const inputString = `{SELECT area, year, fruit_index, foo1, foo2, foo3, bar1, bar2, bar3 FROM pagecontent_foobar
+    WHERE area = {{area}}
+    AND year = {{year}}
+    ORDER BY area, year, fruit_index}`
+
+    const result = replaceSqlContent(inputArray, inputString)
+    const output = `SELECT area, year, fruit_index, foo1, foo2, foo3, bar1, bar2, bar3 FROM pagecontent_foobar
+    WHERE area = 'A1'
+    AND year = '2020'
+    ORDER BY area, year, fruit_index`
+
+    expect(result).toEqual(output);
+});
+
+it('should replace content of sql when input array contain string', () => {
+    const inputArray = [
+        {area: "A1"},
+        {year: "2020"}
+    ]
+    const inputString = `{SELECT area, year, fruit_index, foo1, foo2, foo3, bar1, bar2, bar3 FROM pagecontent_foobar
+    WHERE area = {{area}}
+    AND year = {{year}}
+    ORDER BY area, year, fruit_index}`
+
+    const result = replaceSqlContent(inputArray, inputString)
+    const output = `SELECT area, year, fruit_index, foo1, foo2, foo3, bar1, bar2, bar3 FROM pagecontent_foobar
+    WHERE area = 'A1'
+    AND year = '2020'
+    ORDER BY area, year, fruit_index`
+
+    expect(result).toEqual(output);
+});
 
   it('should split underscore and upper case first letter of string to make heading', () => {
     const input = 'to_become_upcase'
@@ -63,4 +101,32 @@ it('should replace content of string', () => {
     const output = 'To Become Upcase'
 
     expect(result).toEqual(output);
-  });    
+  });
+
+it('should update and return new filters array when object has same keys', () => {
+    const inputArray = [
+        {area: "A1"},
+        {year: 2020}
+    ]
+    const inputObject =  {key: "1", value: "A2", children: "A2", title: "area"}
+
+    const result = updateFiltersFromDropdownEvent(inputArray, inputObject)
+    const output =  [
+        {area: "A2"},
+        {year: 2020}
+    ]
+
+    expect(result).toEqual(output);
+});
+
+it('should create url string base on the array', () => {
+    const inputArray = [
+        {area: "A1"},
+        {year: 2020}
+    ]
+
+    const result = makeUrlQueryString(inputArray)
+    const output =  '?area=A1&year=2020'
+
+    expect(result).toEqual(output);
+});
