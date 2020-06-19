@@ -28,7 +28,7 @@ export default {
         return ((str || "").match(re) || []).length;
       };
 
-      const depth = countDepth(page_code).log("depth " + page_code);
+      const depth = countDepth(page_code);
 
       const trimByDepth = (_json, _depth) => {
         if (_depth === 4) return _json;

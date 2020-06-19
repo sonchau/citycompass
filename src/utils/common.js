@@ -83,10 +83,11 @@ export const updateFiltersFromDropdownEvent = (inputArray, { title, value }) =>
 
 export const makeUrlQueryString = (inputArray) => {
   // Reduce over inputArray to create Url query string
-  inputArray.log("inputArray");
-  const params = inputArray.reduce((m, c) => {
-    m.push(Object.keys(c)[0] + "=" + Object.values(c)[0]);
-    return m;
+  const params = inputArray.reduce((memo, curr) => {
+    const key = Object.keys(curr)[0];
+    const value = encodeURIComponent(Object.values(curr)[0]);
+    memo.push(`${key}=${value}`);
+    return memo;
   }, []);
 
   return "?" + params.join("&");

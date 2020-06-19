@@ -16,6 +16,7 @@ const Map = ({ query, content }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // TODO: use sanatizeSql function
     const updatedQuery = query.replace("{", "").replace("}", "");
     const map = (window.map = new mapboxgl.Map({
       container: "map",

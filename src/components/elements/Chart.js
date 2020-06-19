@@ -4,8 +4,8 @@ import { getData, replaceContent, makeInputData } from "../utils/common";
 const PageContent = ({ header, content, footer, query }) => {
   const [pageContent, setPageContent] = useState(null);
   useEffect(() => {
+    // TODO: use sanatizeSql function
     const updatedQuery = query.replace("{", "").replace("}", "");
-    //console.log('updatedQuery', updatedQuery)
     getData(updatedQuery).then(({ data: { rows } }) => {
       setPageContent(rows);
     });

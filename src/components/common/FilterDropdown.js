@@ -32,7 +32,6 @@ const FilterDropdown = ({ filterItems, selectedItem, filterHeading }) => {
     setSelectedFilters(newFilters);
 
     const urlQueryString = makeUrlQueryString(newFilters);
-    [urlQueryString].log("urlQueryString")
     history.push(urlQueryString);
   };
 
