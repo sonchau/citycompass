@@ -62,7 +62,7 @@ const GenericDataComponent = ({
         >
           {/* TODO: change adjacentPages to match the pageMetaData schema */}
           {adjacentPages.map((adjPage) => (
-            <Menu.Item key={page_code} data={convertAjdPageToMetaData(adjPage)}>
+            <Menu.Item key={adjPage.page_code} data={convertAjdPageToMetaData(adjPage)}>
               {adjPage.d_title}
             </Menu.Item>
           ))}
@@ -77,7 +77,7 @@ const GenericDataComponent = ({
       </Breadcrumb>
       {pageMetaData["page_filters"] && (
         <PageFiltersContext.Provider
-          value={pageFilterContextValue.log("pageFilterContextValue")}
+          value={pageFilterContextValue}
         >
           <PageFilters pageFilters={pageMetaData["page_filters"]} />
         </PageFiltersContext.Provider>
