@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Layout, Typography, Menu, Breadcrumb } from "antd";
 import { pageDepth } from "../utils/pageCodeToObjectPath";
 import { PAGE_CONTENT_QUERY } from "../sqlQueries";
-import { getData } from "../utils/common";
+import { getData, santaizeSql, convertAjdPageToMetaData } from "../utils/common";
 import PageContent from "../components/elements/PageContent";
 import PageFilters from "../components/elements/PageFilters";
 import Table from "../components/elements/Table";
@@ -87,13 +87,14 @@ const GenericDataComponent = ({
         // 'text' => render PageContent
         // 'chart' => render Chart
         return {
-          text: (
+          text: selectedFilters && (
             <PageContent
               key={`text-${page_code}-${index}`}
               header={page.element_header}
               footer={page.element_footer}
               content={page.element_text}
               query={santaizeSql(page.data_query)}
+              selectedFilters={selectedFilters}
             />
           ),
           table: selectedFilters && (
@@ -118,31 +119,3 @@ const GenericDataComponent = ({
 
 export default GenericDataComponent;
 
-const convertAjdPageToMetaData = ({
-  page_code,
-  page_filters,
-  a_title,
-  b_title,
-  c_title,
-  d_title,
-}) => {
-  return {
-    pageMetaData: {
-      page_titles: {
-        a_title,
-        b_title,
-        c_title,
-        d_title,
-      },
-      page_filters,
-    },
-    page_code,
-  };
-};
-
-// removes the "{" and "}" surrounding the query coz SQL queries can't be stored in a database field without these
-const santaizeSql = (rawSql) => {
-  const re = new RegExp(/^\{(.*)\}$/s)
-  const match = re.exec(rawSql);
-  return match ? match[1] : rawSql;
-};

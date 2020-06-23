@@ -1,4 +1,5 @@
-import { makeInputData, replaceContent, makeHeading, replaceSqlContent, updateFiltersFromDropdownEvent, makeUrlQueryString} from '../utils/common';
+import { makeInputData, replaceContent, makeHeading, replaceSqlContent, updateFiltersFromDropdownEvent, makeUrlQueryString,
+    santaizeSql} from '../utils/common';
 
 it('should take input data and return array ob object with correct orders', () => {
     const input = [
@@ -127,6 +128,14 @@ it('should create url string base on the array', () => {
 
     const result = makeUrlQueryString(inputArray)
     const output =  '?area=A1&year=2020'
+
+    expect(result).toEqual(output);
+});
+
+it('should remove start and end braces', () => {
+    const input = "{something}"
+    const result = santaizeSql(input)
+    const output =  'something'
 
     expect(result).toEqual(output);
 });

@@ -92,3 +92,39 @@ export const makeUrlQueryString = (inputArray) => {
 
   return "?" + params.join("&");
 };
+
+// removes the "{" and "}" surrounding the query coz SQL queries can't be stored in a database field without these
+export const santaizeSql = (rawSql) => {
+  const re = new RegExp(/^\{(.*)\}$/s)
+  const match = re.exec(rawSql);
+  return match ? match[1] : rawSql;
+};
+
+export const convertAjdPageToMetaData = ({
+  page_code,
+  page_filters,
+  a_title,
+  b_title,
+  c_title,
+  d_title,
+}) => {
+  return {
+    pageMetaData: {
+      page_titles: {
+        a_title,
+        b_title,
+        c_title,
+        d_title,
+      },
+      page_filters,
+    },
+    page_code,
+  };
+};
+
+export const arrayToObject = (array) =>
+  array.reduce((obj, item) => {
+    obj = { ...obj, ...item };
+    return obj;
+  }, {});
+
