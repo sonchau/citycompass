@@ -3,18 +3,26 @@ import { Table } from "antd";
 import { getData, arrayToObject } from "../../utils/common";
 
 const TableElement = ({ query, selectedFilters }) => {
-  const [tableData, setTableData] = useState([{}]);
+  const [tableData, setTableData] = useState([]);
+  const [columns, setColumns] = useState([])
 
   useEffect(() => {
     const params = arrayToObject(selectedFilters);
-    getData(query, params).then(({ data: { rows } }) => setTableData(rows));
+    const fetchData = async () => {
+      const response = await getData(query, params)
+      const rows = response.data.rows
+      setTableData(rows);
+      if(rows.length > 0) {
+        const columnsName = Object.keys(rows[0]).map((col) => ({
+            title: col,
+            dataIndex: col,
+            key: col,
+          }));
+        setColumns(columnsName)  
+      }
+    };
+    fetchData();
   }, [query, selectedFilters]);
-
-  const columns = Object.keys(tableData[0]).map((col) => ({
-    title: col,
-    dataIndex: col,
-    key: col,
-  }));
 
   return <Table dataSource={tableData} columns={columns} rowKey="cartodb_id" />;
 };
