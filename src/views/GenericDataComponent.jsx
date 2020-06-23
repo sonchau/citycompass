@@ -7,7 +7,7 @@ import PageContent from "../components/elements/PageContent";
 import PageFilters from "../components/elements/PageFilters";
 import Table from "../components/elements/Table";
 import Map from "../components/elements/Map";
-import PageFiltersContext from "./PageFiltersContext";
+import PageFiltersContext from "../context/PageFiltersContext";
 import { useLocation } from "react-router-dom";
 
 // import {

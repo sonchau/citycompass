@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { getAllData } from "../../utils/common";
 import FilterDropdown from "../common/FilterDropdown";
 import styled from "styled-components";
-import PageFiltersContext from "../../views/PageFiltersContext";
+import PageFiltersContext from "../../context/PageFiltersContext";
 
 const Wrapper = styled.div`
   padding: 1rem;

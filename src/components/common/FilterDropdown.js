@@ -6,7 +6,7 @@ import {
   makeHeading,
 } from "../../utils/common";
 import styled from "styled-components";
-import PageFiltersContext from "../../views/PageFiltersContext";
+import PageFiltersContext from "../../context/PageFiltersContext";
 import { useHistory } from "react-router-dom";
 const { Option } = Select;
 
