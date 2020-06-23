@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from "react"
-import { getData, replaceContent, makeInputData, arrayToObject } from "../../utils/common";
+import React, { useEffect } from "react"
+import { replaceContent, makeInputData, arrayToObject } from "../../utils/common";
 import { Typography } from 'antd';
 import ReactMarkdown from "react-markdown";
+import {useApi} from '../../utils/hooks';
 
 const { Title, Text } = Typography;
 
@@ -13,21 +14,21 @@ const PageContent = ({
     selectedFilters
   }) => {
     const params = arrayToObject(selectedFilters);
-    const [pageContent, setPageContent] = useState(null)
+    const [getData, results, errorMessage] = useApi(query, params)
+
     useEffect(() => {
-      getData(query, params).then(({ data }) => {
-        //console.log('data', data.rows)
-        setPageContent(data.rows)
-      })
-    }, [query, selectedFilters]);
-    let newContent =''
-    if (pageContent) {
-      const inputArray = makeInputData(pageContent)
+      getData(query, params)
+    }, [selectedFilters]);
+    
+    let newContent = ''
+    if (results) {
+      const inputArray = makeInputData(results)
       newContent = replaceContent(inputArray, content)
-      
     }
-    return (
-      <>
+
+    return errorMessage ? 
+    (<p>{errorMessage}</p>) : 
+    (<>
        <Title level={3}>{header}</Title>
        <ReactMarkdown
           source={newContent}

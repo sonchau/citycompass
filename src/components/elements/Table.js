@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Table } from "antd";
-import { getData, arrayToObject } from "../../utils/common";
+import { arrayToObject } from "../../utils/common";
+import {useApi} from '../../utils/hooks';
 
 const TableElement = ({ query, selectedFilters }) => {
-  const [tableData, setTableData] = useState([]);
-  const [columns, setColumns] = useState([])
+  const params = arrayToObject(selectedFilters);
+  const [getData, results, errorMessage] = useApi(query, params)
+  let tableData = [], columns = []
+
+  if (results.length) {
+    tableData = results
+    columns = Object.keys(results[0]).map((col) => ({
+                title: col,
+                dataIndex: col,
+                key: col,
+              }));
+  }
 
   useEffect(() => {
-    const params = arrayToObject(selectedFilters);
-    const fetchData = async () => {
-      const response = await getData(query, params)
-      const rows = response.data.rows
-      setTableData(rows);
-      if(rows.length > 0) {
-        const columnsName = Object.keys(rows[0]).map((col) => ({
-            title: col,
-            dataIndex: col,
-            key: col,
-          }));
-        setColumns(columnsName)  
-      }
-    };
-    fetchData();
-  }, [query, selectedFilters]);
+    getData(query, params)
+  }, [selectedFilters]);
 
-  return <Table dataSource={tableData} columns={columns} rowKey="cartodb_id" />;
+  return errorMessage ? 
+      <p>{errorMessage}</p> : 
+      <Table dataSource={tableData} columns={columns} rowKey="cartodb_id" />;
 };
 
 export default TableElement;
