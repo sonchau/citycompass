@@ -9,8 +9,11 @@ const Wrapper = styled.div`
   background: ${(props) => props.theme.filterPanel};
 `;
 
-const PageFilters = ({ pageFilters }) => {
+const PageFilters = ({pageFilters}) => {
   const [filterDropdowns, setFilterDropdowns] = useState([]);
+  const { selectedFilters, dispatch } = useContext(
+    PageFiltersContext
+  );
   let filterSqls = [],
     filterHeadings = [];
 
@@ -20,10 +23,6 @@ const PageFilters = ({ pageFilters }) => {
     filterHeadings = Object.keys(filters);
   }
 
-  const { selectedFilters, setSelectedFilters } = useContext(
-    PageFiltersContext
-  );
-
   useEffect(() => {
     if (filterSqls) {
       getAllData(filterSqls, {}).then((responses) => {
@@ -32,8 +31,9 @@ const PageFilters = ({ pageFilters }) => {
         // initially filers aren't set
         if (!selectedFilters || !selectedFilters.length) {
           // array does not exist, is not an array, or is empty
-          setSelectedFilters(responses.map((i) => i[0]));
+          const initFilters = responses.map((response) => response[0])
           // TODO: push params to history
+          dispatch({type: 'SET_INIT_FILTERS', payload: initFilters})
         }
       });
     }
@@ -41,13 +41,12 @@ const PageFilters = ({ pageFilters }) => {
 
   return (
     <Wrapper>
-      {selectedFilters.length &&
+      {filterDropdowns.length &&
         filterDropdowns.map((filterDropdown, index) => (
           <FilterDropdown
             key={index}
             filterItems={filterDropdown}
             filterHeading={filterHeadings[index]}
-            selectedItem={selectedFilters[index]}
           />
         ))}
     </Wrapper>

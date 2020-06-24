@@ -4,10 +4,12 @@ import {
   updateFiltersFromDropdownEvent,
   makeUrlQueryString,
   makeHeading,
+  getSelectedFilterValue
 } from "../../utils/common";
 import styled from "styled-components";
 import PageFiltersContext from "../../context/PageFiltersContext";
 import { useHistory } from "react-router-dom";
+
 const { Option } = Select;
 
 const Wrapper = styled.span`
@@ -17,19 +19,29 @@ const Wrapper = styled.span`
 const Heading = styled.span`
   color: ${(props) => props.theme.filterPanelText};
 `;
-const FilterDropdown = ({ filterItems, selectedItem, filterHeading }) => {
+const FilterDropdown = ({ filterItems, filterHeading }) => {
   let history = useHistory();
+  let filterValue =''
 
-  const { selectedFilters, setSelectedFilters } = useContext(
+  const { selectedFilters, dispatch } = useContext(
     PageFiltersContext
   );
+  if (selectedFilters.length) {
+    filterValue = getSelectedFilterValue(filterItems, selectedFilters)
+  }
 
   const onChange = (_, { value, title }) => {
     const newFilters = updateFiltersFromDropdownEvent(selectedFilters, {
       value,
       title,
     });
-    setSelectedFilters(newFilters);
+    const updatedFilters = dispatch({
+      type: 'UPDATE_FILTERS',
+      payload: {
+        value,
+        title,
+      }
+    })
 
     const urlQueryString = makeUrlQueryString(newFilters);
     history.push(urlQueryString);
@@ -37,31 +49,35 @@ const FilterDropdown = ({ filterItems, selectedItem, filterHeading }) => {
 
   return (
     <Wrapper>
-      <Space direction="vertical">
-        <Heading>{makeHeading(filterHeading)}</Heading>
-        <Select
-          showSearch
-          style={{ width: 150 }}
-          optionFilterProp="children"
-          onChange={onChange}
-          filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
-          defaultValue={selectedItem ? Object.values(selectedItem)[0] : ""}
-        >
-          {filterItems.map((filterItem, index) => {
-            return (
-              <Option
-                title={Object.keys(filterItem)[0]}
-                key={index}
-                value={Object.values(filterItem)[0]}
-              >
-                {Object.values(filterItem)[0]}
-              </Option>
-            );
-          })}
-        </Select>
-      </Space>
+    {
+      filterValue && (
+        <Space direction="vertical">
+          <Heading>{makeHeading(filterHeading)}</Heading>
+          <Select
+            showSearch
+            style={{ width: 150 }}
+            optionFilterProp="children"
+            onChange={onChange}
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+            defaultValue={filterValue}
+          >
+            {filterItems.map((filterItem, index) => {
+              return (
+                <Option
+                  title={Object.keys(filterItem)[0]}
+                  key={index}
+                  value={Object.values(filterItem)[0]}
+                >
+                  {Object.values(filterItem)[0]}
+                </Option>
+              );
+            })}
+          </Select>
+        </Space>
+      )
+    }
     </Wrapper>
   );
 };

@@ -1,5 +1,5 @@
 import { makeInputData, replaceContent, makeHeading, replaceSqlContent, updateFiltersFromDropdownEvent, makeUrlQueryString,
-    santaizeSql} from '../utils/common';
+    santaizeSql, getSelectedFilterValue} from '../utils/common';
 
 it('should take input data and return array ob object with correct orders', () => {
     const input = [
@@ -136,6 +136,24 @@ it('should remove start and end braces', () => {
     const input = "{something}"
     const result = santaizeSql(input)
     const output =  'something'
+
+    expect(result).toEqual(output);
+});
+
+
+it('should get selected filter value', () => {
+    const filterItems = [
+        {population: "Females"},
+        {population: "Males"},
+        {population: "Persons"}
+    ]
+    const selectedFilters = [
+        {geo_name: "Berwick"},
+        {category: "0 - 4 years old"},
+        {population: "Females"}
+    ]
+    const result = getSelectedFilterValue(filterItems, selectedFilters)
+    const output =  'Females'
 
     expect(result).toEqual(output);
 });

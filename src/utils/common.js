@@ -128,3 +128,12 @@ export const arrayToObject = (array) =>
     return obj;
   }, {});
 
+export const getSelectedFilterValue = (filterItems, selectedFilters) => {
+  const findObjectKey = Object.keys(filterItems[0])[0]
+  const foundObject = selectedFilters.filter(selectedFilter => {
+    return Object.keys(selectedFilter)[0] === findObjectKey
+
+  })
+  const filterValue = foundObject[0][findObjectKey]
+  return filterValue
+}

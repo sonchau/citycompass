@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useReducer } from "react";
 import { Layout, Typography, Menu, Breadcrumb } from "antd";
 import { pageDepth } from "../utils/pageCodeToObjectPath";
 import { PAGE_CONTENT_QUERY } from "../sqlQueries";
-import { getData, santaizeSql, convertAjdPageToMetaData } from "../utils/common";
+import { santaizeSql, convertAjdPageToMetaData } from "../utils/common";
 import PageContent from "../components/elements/PageContent";
 import PageFilters from "../components/elements/PageFilters";
 import Table from "../components/elements/Table";
 import Map from "../components/elements/Map";
 import PageFiltersContext from "../context/PageFiltersContext";
 import { useLocation } from "react-router-dom";
+import filtersReducer from '../reducers/filtersReducer';
+import {useApi} from '../utils/hooks';
 
 // import {
 //   MailOutlined,
@@ -26,7 +28,6 @@ const GenericDataComponent = ({
   handlMenuItemClick,
 }) => {
   // initial state
-  const [pageData, setPageData] = useState([]);
   const query = new URLSearchParams(useLocation().search);
   const initSelectedFilters = Array.from(query.entries()).reduce(
     (memo, [key, value]) => {
@@ -35,25 +36,15 @@ const GenericDataComponent = ({
     },
     []
   );
-  const [selectedFilters, setSelectedFilters] = useState(initSelectedFilters);
+  const [selectedFilters, dispatch] = useReducer(filtersReducer, initSelectedFilters)
+  const [getData, results, errorMessage] = useApi(PAGE_CONTENT_QUERY, {
+    clientName,
+    page_code,
+  })
 
-  // hooks
-  useEffect(() => {
-    // TODO: cleanup data fetching https://codesandbox.io/s/jvvkoo8pq3?file=/src/index.js
-    getData(PAGE_CONTENT_QUERY, {
-      clientName,
-      page_code,
-    }).then(({ data: { rows } }) => setPageData(rows));
-  }, [clientName, page_code]);
-
-  const pageFilterContextValue = {
-    pageFilters: pageMetaData["page_filters"],
-    selectedFilters,
-    setSelectedFilters,
-  };
-
-  return (
-    <Content>
+  return errorMessage ? 
+  <p>{errorMessage}</p> : 
+  ( <Content>
       {pageDepth(page_code) === 4 ? (
         <Menu
           onClick={handlMenuItemClick}
@@ -77,12 +68,15 @@ const GenericDataComponent = ({
       </Breadcrumb>
       {pageMetaData["page_filters"] && (
         <PageFiltersContext.Provider
-          value={pageFilterContextValue}
+          value= {
+            { selectedFilters,
+              dispatch }
+          }
         >
           <PageFilters pageFilters={pageMetaData["page_filters"]} />
         </PageFiltersContext.Provider>
       )}
-      {pageData.map((page, index) => {
+      {results.map((page, index) => {
         //NOTE: depend in element_type then render appropriate component type
         // 'text' => render PageContent
         // 'chart' => render Chart
