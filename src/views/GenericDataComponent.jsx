@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import 'url-search-params-polyfill';
 import { Layout, Typography, Menu, Breadcrumb } from "antd";
 import { pageDepth } from "../utils/pageCodeToObjectPath";
 import { PAGE_CONTENT_QUERY } from "../sqlQueries";

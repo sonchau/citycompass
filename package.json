@@ -25,7 +25,8 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "url-search-params-polyfill": "^8.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
