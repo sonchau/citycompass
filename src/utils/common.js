@@ -130,10 +130,9 @@ export const arrayToObject = (array) =>
 
 export const getSelectedFilterValue = (filterItems, selectedFilters) => {
   const findObjectKey = Object.keys(filterItems[0])[0]
-  const foundObject = selectedFilters.filter(selectedFilter => {
+  const foundObject = selectedFilters.find((selectedFilter) => {
     return Object.keys(selectedFilter)[0] === findObjectKey
-
   })
-  const filterValue = foundObject[0][findObjectKey]
+  const filterValue = foundObject[findObjectKey]
   return filterValue
 }
