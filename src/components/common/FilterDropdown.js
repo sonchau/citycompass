@@ -55,7 +55,7 @@ const FilterDropdown = ({ filterItems, filterHeading }) => {
           <Heading>{makeHeading(filterHeading)}</Heading>
           <Select
             showSearch
-            style={{ width: 150 }}
+            style={{ width: 200 }}
             optionFilterProp="children"
             onChange={onChange}
             filterOption={(input, option) =>

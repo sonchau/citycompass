@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Table } from "antd";
 import { arrayToObject } from "../../utils/common";
 import {useApi} from '../../utils/hooks';
+import {makeHeading} from '../../utils/common';
 
 const TableElement = ({ query, selectedFilters }) => {
   const params = arrayToObject(selectedFilters);
@@ -10,10 +11,10 @@ const TableElement = ({ query, selectedFilters }) => {
 
   if (results.length) {
     tableData = results
-    columns = Object.keys(results[0]).map((col) => ({
-                title: col,
+    columns = Object.keys(results[0]).map((col, index) => ({
+                title: makeHeading(col),
                 dataIndex: col,
-                key: col,
+                key: `${col}-${index}`,
               }));
   }
 
@@ -23,7 +24,7 @@ const TableElement = ({ query, selectedFilters }) => {
 
   return errorMessage ? 
       <p>{errorMessage}</p> : 
-      <Table dataSource={tableData} columns={columns} rowKey="cartodb_id" />;
+      <Table dataSource={tableData} columns={columns} rowKey="key" />;
 };
 
 export default TableElement;
