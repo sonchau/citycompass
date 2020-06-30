@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { PAGE_DIRECTORY_QUERY } from "../sqlQueries";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 // Styled components
 import { ThemeProvider } from "styled-components";
@@ -26,16 +26,20 @@ import pageCodeToObjectPath from "../utils/pageCodeToObjectPath";
 
 // antd components
 import { Layout } from "antd";
+import _ from 'lodash';
 
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
 
 const Root = ({ clientName, isThemeLight }) => {
   let history = useHistory();
+  let location = useLocation();
   let defaultPageCode, defaultPageMetaData;
   const [pageDirectory, setPageDirectory] = useState(null);
   const [pageMetaData, setPageMetaData] = useState(null);
+  const [responseData, setResponseData] = useState(null)
   useEffect(() => {
     getData(PAGE_DIRECTORY_QUERY, { clientName }).then(({ data }) => {
+      setResponseData(data.rows)
       setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data));
     });
   }, []);
@@ -44,13 +48,15 @@ const Root = ({ clientName, isThemeLight }) => {
   if (pageDirectory) {
     // TODO: refactor to not hard code path write utility belt for parsing the navigation structure
     // TODO: be explicit about the intial state of the pageMetadata using pagecode maybe?
-    defaultPageCode = pageDirectory[0]["b"][0]["page_code"];
+    defaultPageCode = 'A1B1';
+    const currentPagecode = _.last(location.pathname.split('/'))
+    const currentPageData = _.find(responseData, { 'page_code': currentPagecode });
     defaultPageMetaData = {
       page_titles: {
-        a_title: pageDirectory[0]["a_title"],
-        b_title: pageDirectory[0]["b"][0]["b_title"],
+        a_title: currentPageData["a_title"],
+        b_title: currentPageData["b_title"],
       },
-      page_filters: pageDirectory[0]["b"][0]["page_filters"],
+      page_filters: currentPageData["page_filters"],
     };
   }
 
