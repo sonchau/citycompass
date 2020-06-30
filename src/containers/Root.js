@@ -49,15 +49,31 @@ const Root = ({ clientName, isThemeLight }) => {
     // TODO: refactor to not hard code path write utility belt for parsing the navigation structure
     // TODO: be explicit about the intial state of the pageMetadata using pagecode maybe?
     defaultPageCode = 'A1B1';
+    
     const currentPagecode = _.last(location.pathname.split('/'))
     const currentPageData = _.find(responseData, { 'page_code': currentPagecode });
-    defaultPageMetaData = {
-      page_titles: {
-        a_title: currentPageData["a_title"],
-        b_title: currentPageData["b_title"],
-      },
-      page_filters: currentPageData["page_filters"],
-    };
+    if (currentPageData) {
+      defaultPageMetaData = {
+        page_titles: {
+          a_title: currentPageData["a_title"],
+          b_title: currentPageData["b_title"],
+        },
+        page_filters: currentPageData["page_filters"],
+      };
+    } else {
+      //TODO: ask Cesar here cause A2B1 does not have any pagecode
+      // the first record is A2B1C1D01
+      // for now default to A1B1
+      // or not able to click on this
+      defaultPageMetaData = {
+        page_titles: {
+          a_title: pageDirectory[0]["a_title"],
+          b_title: pageDirectory[0]["b"][0]["b_title"],
+        },
+        page_filters: pageDirectory[0]["b"][0]["page_filters"],
+      };
+    }
+
   }
 
   // Use "props" through menu items, that way we don't invoke the functions
