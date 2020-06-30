@@ -63,12 +63,14 @@ it('should replace content of sql', () => {
         {area: "A1"},
         {year: 2020}
     ]
-    const inputString = `{SELECT area, year, fruit_index, foo1, foo2, foo3, bar1, bar2, bar3 FROM pagecontent_foobar
-    WHERE area = {{area}}
-    AND year = {{year}}
-    ORDER BY area, year, fruit_index}`
+    const inputString = `SELECT area, year, fruit_index, foo1, foo2, foo3, bar1, bar2, bar3 FROM pagecontent_foobar
+    WHERE area = '{{area}}'
+    AND year = '{{year}}'
+    ORDER BY area, year, fruit_index`
 
     const result = replaceSqlContent(inputArray, inputString)
+    
+
     const output = `SELECT area, year, fruit_index, foo1, foo2, foo3, bar1, bar2, bar3 FROM pagecontent_foobar
     WHERE area = 'A1'
     AND year = '2020'
@@ -82,17 +84,17 @@ it('should replace content of sql when input array contain string', () => {
         {area: "A1"},
         {year: "2020"}
     ]
-    const inputString = `{SELECT area, year, fruit_index, foo1, foo2, foo3, bar1, bar2, bar3 FROM pagecontent_foobar
-    WHERE area = {{area}}
-    AND year = {{year}}
-    ORDER BY area, year, fruit_index}`
+    const inputString = `SELECT area, year, fruit_index, foo1, foo2, foo3, bar1, bar2, bar3 FROM pagecontent_foobar
+    WHERE area = '{{area}}'
+    AND year = '{{year}}'
+    ORDER BY area, year, fruit_index`
 
     const result = replaceSqlContent(inputArray, inputString)
     const output = `SELECT area, year, fruit_index, foo1, foo2, foo3, bar1, bar2, bar3 FROM pagecontent_foobar
     WHERE area = 'A1'
     AND year = '2020'
     ORDER BY area, year, fruit_index`
-
+    
     expect(result).toEqual(output);
 });
 

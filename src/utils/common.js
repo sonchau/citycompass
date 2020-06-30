@@ -56,11 +56,11 @@ export const replaceContent = (inputArray, inputString) => {
   return newString;
 };
 export const replaceSqlContent = (inputArray, inputSql) => {
-  let newSql = inputSql.slice(1, -1);
+  let newSql = inputSql;
   for (let item = 0; item <= inputArray.length - 1; item++) {
     const key = `{{${Object.keys(inputArray[item])[0]}}}`;
     const regexp = new RegExp(key, "g");
-    newSql = newSql.replace(regexp, `'${Object.values(inputArray[item])[0]}'`);
+    newSql = newSql.replace(regexp, `${Object.values(inputArray[item])[0]}`);
     //console.log('newSql', newSql)
   }
   return newSql;
