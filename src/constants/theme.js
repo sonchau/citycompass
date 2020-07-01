@@ -20,7 +20,11 @@ const lightTheme = {
 
   //Filter Panel
   filterPanel: "#11131A",
-  filterPanelText: "#FFF"
+  filterPanelText: "#FFF",
+  tableHeader: "rgb(32,42,52)",
+
+  white: "#fff",
+  black: "#000"
 };
 
 const darkTheme = {
@@ -39,7 +43,11 @@ const darkTheme = {
   sidebarSelectedBg: "rgb(214, 87, 81)",
   sidebarSelectedClr: "rgb(255, 255, 255)",
   filterPanel: "#CCC",
-  filterPanelText: "#000"
+  filterPanelText: "#000",
+  tableHeader: "rgb(61,171,172)",
+
+  white: "#fff",
+  black: "#000"
 };
 
 export default { lightTheme, darkTheme };
