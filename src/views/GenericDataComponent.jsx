@@ -104,6 +104,7 @@ const GenericDataComponent = ({
             <TableGroup
               key={`table-${page_code}-${index}`}
               query={santaizeSql(page.data_query)}
+              options={page.options}
               selectedFilters={selectedFilters}
             />
           ),

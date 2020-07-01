@@ -3,16 +3,26 @@ import { Table } from "antd";
 import { arrayToObject, replaceSqlContent } from "../../utils/common";
 import {useApi} from '../../utils/hooks';
 import {makeHeading} from '../../utils/common';
+import _ from 'lodash';
 
-const TableGroup = ({ query, selectedFilters }) => {
+const { Column, ColumnGroup } = Table;
+
+const TableGroup = ({ query, selectedFilters, options }) => {
   const updatedSql = replaceSqlContent(selectedFilters, query)
-  console.log('query', query, 'selectedFilters', selectedFilters, 'updatedSql', updatedSql)
+  const {grouping} = JSON.parse(options)
+  //console.log(selectedFilters, 'updatedSql', updatedSql, 'options', grouping)
   const params = arrayToObject(selectedFilters);
   const [getData, results, errorMessage] = useApi(query, params)
+
   let tableData = [], columns = []
 
   if (results.length) {
-    tableData = results
+    tableData = results.map(result => {
+      return { 
+        ...result,
+        key: result.cartodb_id
+      }
+    })
     columns = Object.keys(results[0]).map((col, index) => ({
                 title: makeHeading(col),
                 dataIndex: col,
@@ -23,10 +33,20 @@ const TableGroup = ({ query, selectedFilters }) => {
   useEffect(() => {
     getData(query, params)
   }, [selectedFilters]);
-
+  //console.log('tableData', tableData)
   return errorMessage ? 
       <p>{errorMessage}</p> : 
-      <Table dataSource={tableData} columns={columns} rowKey="key" />;
+      <Table dataSource={tableData} rowKey="key">
+      <Column title="Category" dataIndex="category" key="category" />
+        {grouping.map((group) => {
+          const groupValue = _.find(selectedFilters, group)[group]
+          //console.log('groupValue', groupValue)
+          return (<ColumnGroup title={groupValue}>
+          <Column title="Value" dataIndex={`_${groupValue}`} key={`_${groupValue}`} />
+          <Column title="Percentage" dataIndex="percentage" key="percentage" />
+        </ColumnGroup>)
+        })}
+      </Table>
 };
 
 export default TableGroup;
