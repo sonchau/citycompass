@@ -14,38 +14,38 @@ const TableGroup = ({ query, selectedFilters, options }) => {
   const params = arrayToObject(selectedFilters);
   const [getData, results, errorMessage] = useApi(query, params)
 
-  let tableData = [], columns = []
-
-  if (results.length) {
-    tableData = results.map(result => {
-      return { 
-        ...result,
-        key: result.cartodb_id
-      }
-    })
-    columns = Object.keys(results[0]).map((col, index) => ({
-                title: makeHeading(col),
-                dataIndex: col,
-                key: `${col}-${index}`,
-              }));
-  }
-
   useEffect(() => {
     getData(query, params)
   }, [selectedFilters]);
-  //console.log('tableData', tableData)
+  //console.log('results', results)
+
   return errorMessage ? 
       <p>{errorMessage}</p> : 
-      <Table dataSource={tableData} rowKey="key">
+      <Table bordered dataSource={results} rowKey="key">
       <Column title="Category" dataIndex="category" key="category" />
-        {grouping.map((group) => {
+        {
+          grouping.map((group) => {
           const groupValue = _.find(selectedFilters, group)[group]
           //console.log('groupValue', groupValue)
           return (<ColumnGroup title={groupValue}>
           <Column title="Value" dataIndex={`_${groupValue}`} key={`_${groupValue}`} />
           <Column title="Percentage" dataIndex="percentage" key="percentage" />
         </ColumnGroup>)
-        })}
+        })
+      }
+        <Column title="Change" key="change" 
+          render={(record) => {
+            const output = grouping.reduce((memo, group, index) => {
+                const groupValue = _.find(selectedFilters, group)[group]
+                const recordValue = record[`_${groupValue}`]
+                //console.log('record',record,'groupValue', groupValue, 'recordValue', recordValue, 'out',  memo - parseInt(recordValue, 10))
+                return (index === 0) ?  memo + recordValue : memo - recordValue
+              }, 0)
+            return <p>{output}</p>
+            }
+            
+          }
+        />
       </Table>
 };
 
