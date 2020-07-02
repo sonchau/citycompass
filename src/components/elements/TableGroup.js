@@ -19,7 +19,7 @@ const Wrapper = styled.table`
   //background: ${(props) => props.theme.filterPanel};
 const TableGroup = ({ query, selectedFilters, options }) => {
   const updatedSql = replaceSqlContent(selectedFilters, query)
-  const {grouping, showing} = JSON.parse(options)
+  const {before, grouping, after} = JSON.parse(options)
   // {"grouping": ["base_year", "comparison_year"],
   // "showing":["category", "population"]}         
   //console.log(selectedFilters, 'updatedSql', updatedSql, 'grouping', grouping, 'showing', showing)
@@ -29,38 +29,36 @@ const TableGroup = ({ query, selectedFilters, options }) => {
   useEffect(() => {
     getData(query, params)
   }, [selectedFilters]);
-  //console.log('results', results)
+  //console.log('selectedFilters',selectedFilters,'results', results)
 
   return errorMessage ? 
       <p>{errorMessage}</p> : 
       (results.length && selectedFilters.length &&
       <Wrapper>
         <Table bordered dataSource={results} rowKey="key">
-          { showing.map((show) => {
+          { before.map((beforeItem) => {
             //console.log('show', show)
-            return <Column align="center" title={makeHeading(show)} dataIndex={show} key={show} />
+            return <Column align="center" title={makeHeading(beforeItem)} dataIndex={beforeItem} key={beforeItem} />
           })}
           { grouping.map((group) => {
-              const groupValue = _.find(selectedFilters, group)[group]
-              //console.log('groupValue', groupValue)
-              return (<ColumnGroup title={groupValue}>
-              <Column align="center" title="Value" dataIndex={`_${groupValue}`} key={`_${groupValue}`} />
-              <Column align="center" title="Percentage" dataIndex="percentage" key="percentage" />
-            </ColumnGroup>)
+            
+            const key = Object.keys(group)[0]
+            const groupValue = _.find(selectedFilters, key)[key]
+            const groupPercent = `${groupValue} (%)`
+            //console.log('group', group, 'groupValue', groupValue, 'groupPercent', groupPercent)
+              return (
+                <ColumnGroup title={groupValue}>
+                  <Column align="center" title="Number" dataIndex={groupValue} key={groupValue} />
+                  <Column align="center" title="%" dataIndex={groupPercent} key={groupPercent} />
+                </ColumnGroup>
+              )
             })
           }
-          <Column align="center" title="Change" key="change" 
-            render={(record) => {
-              const output = grouping.reduce((memo, group, index) => {
-                  const groupValue = _.find(selectedFilters, group)[group]
-                  const recordValue = record[`_${groupValue}`]
-                  //console.log('record',record,'groupValue', groupValue, 'recordValue', recordValue, 'out',  memo - parseInt(recordValue, 10))
-                  return (index === 0) ?  memo + recordValue : memo - recordValue
-                }, 0)
-              return <p>{output}</p>
-              }
-            }
-          />
+          { after.map((afterItem) => {
+            //console.log('show', show)
+            return <Column align="center" title={makeHeading(afterItem)} dataIndex={afterItem} key={afterItem} />
+          })}
+
         </Table>
       </Wrapper> 
       )

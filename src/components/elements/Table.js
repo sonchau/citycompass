@@ -21,7 +21,7 @@ const TableElement = ({ query, selectedFilters }) => {
   useEffect(() => {
     getData(query, params)
   }, [selectedFilters]);
-
+  //console.log('results', results)
   return errorMessage ? 
       <p>{errorMessage}</p> : 
       <Table dataSource={tableData} columns={columns} rowKey="key" />;
