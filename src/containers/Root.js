@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import _ from 'lodash';
 import { PAGE_DIRECTORY_QUERY } from "../sqlQueries";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -25,8 +26,8 @@ import sqlQueryTransforms from "./../sqlQueryTransforms";
 import pageCodeToObjectPath from "../utils/pageCodeToObjectPath";
 
 // antd components
-import { Layout } from "antd";
-import _ from 'lodash';
+import { Layout } from 'antd';
+const { Header, Footer, Sider, Content } = Layout;
 
 // TODO: Do we weant the paths to be the A1B2 serial codes or the names of the pages?
 
@@ -100,16 +101,14 @@ const Root = ({ clientName, isThemeLight }) => {
       <CreateGlobalStyles />
       <Layout>
         <StyledHeader>
-          <Layout.Header>
-            <HeaderContainer />{" "}
-          </Layout.Header>
+            <HeaderContainer />
         </StyledHeader>
 
         <StyledContent>
-          <Layout.Content>
+          <Content>
             <Layout>
               <StyledSidebar>
-                <Layout.Sider className="site-layout-background" width={300}>
+                <Sider className="site-layout-background" width={300}>
                   <Sidebar
                     setPageMetaData={setPageMetaData}
                     clientName={clientName}
@@ -117,10 +116,10 @@ const Root = ({ clientName, isThemeLight }) => {
                     handlMenuItemClick={handlMenuItemClick}
                     handleItemTitleClick={handleItemTitleClick}
                   />
-                </Layout.Sider>
+                </Sider>
               </StyledSidebar>
               <StyledMain>
-                <Layout.Content style={{ padding: "0 24px", minHeight: 280 }}>
+                <Content style={{ padding: "0 24px", minHeight: 280 }}>
                   <Switch>
                     <Route
                       exact
@@ -153,14 +152,14 @@ const Root = ({ clientName, isThemeLight }) => {
                     />
                     <Route component={ErrorPage} />
                   </Switch>
-                </Layout.Content>
+                </Content>
               </StyledMain>
             </Layout>
-          </Layout.Content>
+          </Content>
         </StyledContent>
-        <Layout.Footer style={{ textAlign: "center" }}>
+        <Footer style={{ textAlign: "center" }}>
           Geografia Pty. Ltd. © {new Date().getFullYear()}
-        </Layout.Footer>
+        </Footer>
       </Layout>
     </ThemeProvider>
   ) : null;
