@@ -3,11 +3,10 @@ import { Table } from "antd";
 import { arrayToObject, replaceSqlContent } from "../../utils/common";
 import {useApi} from '../../utils/hooks';
 import {makeHeading} from '../../utils/common';
-import _ from 'lodash';
 import styled from "styled-components";
 const { Column, ColumnGroup } = Table;
 
-const Wrapper = styled.table`
+const Wrapper = styled.div`
   width: 100%;
   .ant-table-thead > tr > th {
     background-color: ${(props) => props.theme.tableHeader};
@@ -15,14 +14,16 @@ const Wrapper = styled.table`
   }
 `;
 
-  //padding: 1rem;
-  //background: ${(props) => props.theme.filterPanel};
 const TableGroup = ({ query, selectedFilters, options }) => {
   const updatedSql = replaceSqlContent(selectedFilters, query)
   const {before, grouping, after} = JSON.parse(options)
-  // {"grouping": ["base_year", "comparison_year"],
-  // "showing":["category", "population"]}         
-  //console.log(selectedFilters, 'updatedSql', updatedSql, 'grouping', grouping, 'showing', showing)
+  // options is in the following format
+  // {"before":["category"],
+  // "grouping": [{"This can be text and {{column_name}}": ["column name 1", "column name 2)"]}, {"This can be text and other {{column_name}}": ["column name 3", "column name 4)"]}],
+  // "after":["change"]
+  // }    
+
+  //console.log(selectedFilters, 'updatedSql', updatedSql, 'grouping', grouping)
   const params = arrayToObject(selectedFilters);
   const [getData, results, errorMessage] = useApi(updatedSql, params)
 
@@ -40,16 +41,20 @@ const TableGroup = ({ query, selectedFilters, options }) => {
             //console.log('show', show)
             return <Column align="center" title={makeHeading(beforeItem)} dataIndex={beforeItem} key={beforeItem} />
           })}
-          { grouping.map((group) => {
-            
+          { grouping.map((group, groupIndex) => {
             const key = Object.keys(group)[0]
-            const groupValue = _.find(selectedFilters, key)[key]
-            const groupPercent = `${groupValue} (%)`
-            //console.log('group', group, 'groupValue', groupValue, 'groupPercent', groupPercent)
+            const values = Object.values(group)[0]
+            const updatedKey = replaceSqlContent(selectedFilters, key)
+            //console.log('group', group, 'key', key, 'updatedKey', updatedKey)
               return (
-                <ColumnGroup title={groupValue}>
-                  <Column align="center" title="Number" dataIndex={groupValue} key={groupValue} />
-                  <Column align="center" title="%" dataIndex={groupPercent} key={groupPercent} />
+                <ColumnGroup key={groupIndex} title={updatedKey}>
+                  {
+                    values.map( (value, index) => {
+                      const updatedValue = replaceSqlContent(selectedFilters, value)
+                      //console.log('updatedValue', updatedValue)
+                      return <Column align="center" title={updatedValue} dataIndex={updatedValue} key={updatedValue} />
+                    })
+                  }
                 </ColumnGroup>
               )
             })
