@@ -3,16 +3,8 @@ import { Table } from "antd";
 import { arrayToObject, replaceSqlContent } from "../../utils/common";
 import {useApi} from '../../utils/hooks';
 import {makeHeading} from '../../utils/common';
-import styled from "styled-components";
+import StyledTable from '../../styled/Components/StyledTable';
 const { Column, ColumnGroup } = Table;
-
-const Wrapper = styled.div`
-  width: 100%;
-  .ant-table-thead > tr > th {
-    background-color: ${(props) => props.theme.tableHeader};
-    color: ${(props) => props.theme.white};
-  }
-`;
 
 const TableGroup = ({ query, selectedFilters, options }) => {
   const updatedSql = replaceSqlContent(selectedFilters, query)
@@ -35,7 +27,7 @@ const TableGroup = ({ query, selectedFilters, options }) => {
   return errorMessage ? 
       <p>{errorMessage}</p> : 
       (results.length && selectedFilters.length &&
-      <Wrapper>
+      <StyledTable>
         <Table bordered dataSource={results} rowKey="key">
           { before.map((beforeItem) => {
             //console.log('show', show)
@@ -65,7 +57,7 @@ const TableGroup = ({ query, selectedFilters, options }) => {
           })}
 
         </Table>
-      </Wrapper> 
+      </StyledTable> 
       )
 };
 

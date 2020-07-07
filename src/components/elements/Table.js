@@ -3,6 +3,7 @@ import { Table } from "antd";
 import { arrayToObject } from "../../utils/common";
 import {useApi} from '../../utils/hooks';
 import {makeHeading} from '../../utils/common';
+import StyledTable from '../../styled/Components/StyledTable';
 
 const TableElement = ({ query, selectedFilters }) => {
   const params = arrayToObject(selectedFilters);
@@ -24,7 +25,9 @@ const TableElement = ({ query, selectedFilters }) => {
   //console.log('results', results)
   return errorMessage ? 
       <p>{errorMessage}</p> : 
-      <Table dataSource={tableData} columns={columns} rowKey="key" />;
+      <StyledTable>
+        <Table bordered dataSource={tableData} columns={columns} rowKey="key" />
+      </StyledTable>
 };
 
 export default TableElement;
