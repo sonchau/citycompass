@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from "axios";
 import buildQueryUrl from "./buildQueryUrl";
 
-export const useApi = (queryName, params) => {
+export const useApi = (queryName, params, refetch = null) => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -17,7 +17,7 @@ export const useApi = (queryName, params) => {
 
   useEffect(() => {
     getData(queryName, params);
-  }, []);
+  }, [refetch]);
 
   return [getData, results, errorMessage];
 };

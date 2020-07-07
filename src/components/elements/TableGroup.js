@@ -17,17 +17,14 @@ const TableGroup = ({ query, selectedFilters, options }) => {
 
   //console.log(selectedFilters, 'updatedSql', updatedSql, 'grouping', grouping)
   const params = arrayToObject(selectedFilters);
-  const [getData, results, errorMessage] = useApi(updatedSql, params)
+  const [getData, results, errorMessage] = useApi(updatedSql, params, selectedFilters)
 
-  useEffect(() => {
-    getData(query, params)
-  }, [selectedFilters]);
   //console.log('selectedFilters',selectedFilters,'results', results)
 
   return errorMessage ? 
       <p>{errorMessage}</p> : 
-      (results.length && selectedFilters.length &&
-      <StyledTable>
+      results.length ?
+      (<StyledTable>
         <Table bordered dataSource={results} rowKey="key">
           { before.map((beforeItem) => {
             //console.log('show', show)
@@ -58,7 +55,7 @@ const TableGroup = ({ query, selectedFilters, options }) => {
 
         </Table>
       </StyledTable> 
-      )
+      ) : null
 };
 
 export default TableGroup;
