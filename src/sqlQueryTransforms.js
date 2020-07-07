@@ -2,7 +2,7 @@ import remove from "./utils/removeKey";
 import { uniqBy } from 'lodash'
 
 export default {
-  PAGE_DIRECTORY_QUERY: ({ rows, fields }) => {
+  PAGE_DIRECTORY_QUERY: (rows) => {
     const row2nested = (
       memo,
       {

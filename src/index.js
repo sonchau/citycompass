@@ -11,7 +11,6 @@ import "antd/dist/antd.css";
 const defaultClientName = "casey";
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={store}>
       <HashRouter>
         <Switch>
@@ -32,8 +31,7 @@ ReactDOM.render(
           />
         </Switch>
       </HashRouter>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById("root")
 );
 

@@ -24,7 +24,7 @@ import HeaderContainer from "./HeaderContainer";
 import { getData } from "../utils/common";
 import sqlQueryTransforms from "./../sqlQueryTransforms";
 import pageCodeToObjectPath from "../utils/pageCodeToObjectPath";
-
+import {useApi} from '../utils/hooks';
 // antd components
 import { Layout } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
@@ -35,24 +35,23 @@ const Root = ({ clientName, isThemeLight }) => {
   let history = useHistory();
   let location = useLocation();
   let defaultPageCode, defaultPageMetaData;
-  const [pageDirectory, setPageDirectory] = useState(null);
+  //const [pageDirectory, setPageDirectory] = useState(null);
+  let pageDirectory
   const [pageMetaData, setPageMetaData] = useState(null);
-  const [responseData, setResponseData] = useState(null)
-  useEffect(() => {
-    getData(PAGE_DIRECTORY_QUERY, { clientName }).then(({ data }) => {
-      setResponseData(data.rows)
-      setPageDirectory(sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](data));
-    });
-  }, []);
+  const [getData, results, errorMessage] = useApi(PAGE_DIRECTORY_QUERY, {
+    clientName,
+  })
 
-  // Similar to componentDidMount and componentDidUpdate:
-  if (pageDirectory) {
+  if(results.length) {
+    pageDirectory = sqlQueryTransforms["PAGE_DIRECTORY_QUERY"](results);
+    
     // TODO: refactor to not hard code path write utility belt for parsing the navigation structure
     // TODO: be explicit about the intial state of the pageMetadata using pagecode maybe?
     defaultPageCode = 'A1B1';
     
     const currentPagecode = _.last(location.pathname.split('/'))
-    const currentPageData = _.find(responseData, { 'page_code': currentPagecode });
+    const currentPageData = _.find(results, { 'page_code': currentPagecode });
+    //console.log('results', results, 'pageDirectory', pageDirectory, 'currentPageData', currentPageData)
     if (currentPageData) {
       defaultPageMetaData = {
         page_titles: {
@@ -74,7 +73,6 @@ const Root = ({ clientName, isThemeLight }) => {
         page_filters: pageDirectory[0]["b"][0]["page_filters"],
       };
     }
-
   }
 
   // Use "props" through menu items, that way we don't invoke the functions
@@ -96,7 +94,9 @@ const Root = ({ clientName, isThemeLight }) => {
     }
   };
 
-  return pageDirectory ? (
+  return errorMessage ? 
+  <p>{errorMessage}</p> : 
+    pageDirectory ? (
     <ThemeProvider theme={isThemeLight ? theme.lightTheme : theme.darkTheme}>
       <CreateGlobalStyles />
       <Layout>
