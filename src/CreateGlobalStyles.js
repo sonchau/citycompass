@@ -178,11 +178,6 @@ h1.ant-typography, .ant-typography{
     }
   }
 }
-.content-footer {
-  font-size: 1.2rem;
-  opacity: 0.8;
-}        
-
 `;
 
 export default CreateGlobalStyle;

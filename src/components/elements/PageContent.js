@@ -3,8 +3,15 @@ import { replaceContent, makeInputData, arrayToObject } from "../../utils/common
 import { Typography } from 'antd';
 import ReactMarkdown from "react-markdown";
 import {useApi} from '../../utils/hooks';
+import styled from "styled-components";
 
 const { Title, Text } = Typography;
+
+const FooterText = styled.div`
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-bottom: 1rem;
+`;
 
 const PageContent = ({
     header,
@@ -34,7 +41,9 @@ const PageContent = ({
           source={newContent}
           escapeHtml={false}
         />
-       <Text className="content-footer">{footer}</Text>
+        <FooterText>
+          <Text>{footer}</Text>
+        </FooterText>
       </>
     );
   };
