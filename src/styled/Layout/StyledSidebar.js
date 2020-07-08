@@ -1,13 +1,9 @@
 import styled from "styled-components";
 
-const StyledSidebar = styled.nav`
-  /* .ant-menu-item {
-    &-active {
-    }
-
-    &-selected {
-    }
-  } */
+const StyledSidebar = styled.div`
+  aside {
+    border-radius: 1rem
+  }
 `;
 
 export default StyledSidebar;

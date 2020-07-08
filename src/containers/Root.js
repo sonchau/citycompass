@@ -105,10 +105,9 @@ const Root = ({ clientName, isThemeLight }) => {
         </StyledHeader>
 
         <StyledContent>
-          <Content>
             <Layout>
               <StyledSidebar>
-                <Sider className="site-layout-background" width={300}>
+                <Sider width={250}>
                   <Sidebar
                     setPageMetaData={setPageMetaData}
                     clientName={clientName}
@@ -155,7 +154,6 @@ const Root = ({ clientName, isThemeLight }) => {
                 </Content>
               </StyledMain>
             </Layout>
-          </Content>
         </StyledContent>
         <Footer style={{ textAlign: "center" }}>
           Geografia Pty. Ltd. © {new Date().getFullYear()}

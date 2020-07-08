@@ -10,7 +10,7 @@ const lightTheme = {
   mainBg: "rgb(255, 255, 255)",
 
   // sidebar section
-  sidebarBg: "rgb(255, 255, 255)",
+  sidebarBg: "rgb(233, 233, 233)",
   sidebarHeadingClr: "rgb(38,38,38)",
 
   sidebarLinkClr: "rgb(38,38,38)",

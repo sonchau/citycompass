@@ -43,10 +43,13 @@ input, textarea, button {font-family: inherit}
 #root {
     min-height: 100vh;
 }
-
+.ant-layout {
+  background-color: rgb(23,23,33);
+}
 .ant-menu {
     background-color: ${(props) => props.theme.sidebarBg};
-
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
 
 
     .ant-menu-item-group {
@@ -177,7 +180,7 @@ h1.ant-typography, .ant-typography{
         background: ${(props) => props.theme.sidebarActiveClr} !important;
     }
   }
-}
+}      
 `;
 
 export default CreateGlobalStyle;
