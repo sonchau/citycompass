@@ -8,6 +8,7 @@ import PageContent from "../components/elements/PageContent";
 import PageFilters from "../components/elements/PageFilters";
 import Table from "../components/elements/Table";
 import TableGroup from "../components/elements/TableGroup";
+import HorizontalBarChart from '../components/elements/HorizontalBarChart';
 import Map from "../components/elements/Map";
 import PageFiltersContext from "../context/PageFiltersContext";
 import { useLocation } from "react-router-dom";
@@ -103,6 +104,14 @@ const GenericDataComponent = ({
           'tableGroup': selectedFilters && (
             <TableGroup
               key={`table-${page_code}-${index}`}
+              query={santaizeSql(page.data_query)}
+              options={page.options}
+              selectedFilters={selectedFilters}
+            />
+          ),
+          'horizontalBarChart': selectedFilters && (
+            <HorizontalBarChart
+              key={`chart-${page_code}-${index}`}
               query={santaizeSql(page.data_query)}
               options={page.options}
               selectedFilters={selectedFilters}
