@@ -1,5 +1,7 @@
 import React from 'react';
 import {HorizontalBar} from 'react-chartjs-2';
+import {barChartOptions} from '../../utils/chart';
+import StyledHorizontalBarChart from '../../styled/Components/StyledHorizontalBarChart';
 
 const data = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -18,10 +20,12 @@ const data = {
 
 const HorizontalBarChart = ({ query, selectedFilters, options }) => {
     return (
-        <div>
-          <h2>Horizontal Bar Example</h2>
-          <HorizontalBar data={data} />
-        </div>
+        <StyledHorizontalBarChart>
+            <HorizontalBar download={true} redraw={true} data={data} 
+            width={600}
+            height={300} 
+            options={barChartOptions} />
+        </StyledHorizontalBarChart>
       );
 }
 
