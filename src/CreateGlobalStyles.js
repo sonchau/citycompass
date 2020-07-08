@@ -50,7 +50,12 @@ input, textarea, button {font-family: inherit}
     background-color: ${(props) => props.theme.sidebarBg};
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
-
+    &.ant-menu-root.ant-menu-vertical {
+      box-shadow: inset -10px 0 10px -10px rgba(0,0,0,0.4);
+      -moz-box-shadow: inset -10px 0 10px -10px rgba(0,0,0,0.4);
+      -webkit-box-shadow: inset -10px 0 10px -10px rgba(0,0,0,0.4);
+    }
+    
 
     .ant-menu-item-group {
       .ant-menu-item-group-title {
