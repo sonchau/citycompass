@@ -2,31 +2,36 @@ import React from 'react';
 import {HorizontalBar} from 'react-chartjs-2';
 import {barChartOptions} from '../../utils/chart';
 import StyledHorizontalBarChart from '../../styled/Components/StyledHorizontalBarChart';
-
-const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-  datasets: [
-    {
-      label: 'My First dataset',
-      backgroundColor: 'rgba(255,99,132,0.2)',
-      borderColor: 'rgba(255,99,132,1)',
-      borderWidth: 1,
-      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-      hoverBorderColor: 'rgba(255,99,132,1)',
-      data: [65, 59, 80, 81, 56, 55, 40]
-    }
-  ]
-};
+import {useApi} from '../../utils/hooks';
+import {makeChartLabel, makeChartDataSets, arrayToObject, replaceSqlContent} from '../../utils/common';
 
 const HorizontalBarChart = ({ query, selectedFilters, options }) => {
-    return (
+    // options is in the following format
+    // {"label":"category",
+    //  "datasets": [{"year": "2006"}, {"year": "2016"}]
+    // }  
+    const {label, datasets} = JSON.parse(options)
+    const updatedSql = replaceSqlContent(selectedFilters, query)
+    const params = arrayToObject(selectedFilters);
+    const [getData, results, errorMessage] = useApi(updatedSql, params, selectedFilters)
+    //console.log('query', query, 'selectedFilters', selectedFilters, 'options', options)
+    const chartLabel = makeChartLabel(results, label)
+    const chartDataSets = makeChartDataSets(results, datasets)
+    const data = {
+        labels: chartLabel,
+        datasets: chartDataSets
+    }
+    //console.log('results', results, 'label', label, 'datasets', datasets, 'chartLabel', chartLabel, 'chartDataSets', chartDataSets)
+    return errorMessage ? 
+    <p>{errorMessage}</p> :
+    (
         <StyledHorizontalBarChart>
             <HorizontalBar download={true} redraw={true} data={data} 
-            width={600}
-            height={300} 
+            width={800}
+            height={400} 
             options={barChartOptions} />
         </StyledHorizontalBarChart>
-      );
+    );
 }
 
 export default HorizontalBarChart

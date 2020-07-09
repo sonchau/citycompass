@@ -1,5 +1,5 @@
 import { makeInputData, replaceContent, makeHeading, replaceSqlContent, updateFiltersFromDropdownEvent, makeUrlQueryString,
-    santaizeSql, getSelectedFilterValue} from '../utils/common';
+    santaizeSql, getSelectedFilterValue, makeChartLabel, makeChartDataSets} from '../utils/common';
 
 it('should take input data and return array ob object with correct orders', () => {
     const input = [
@@ -159,3 +159,54 @@ it('should get selected filter value', () => {
 
     expect(result).toEqual(output);
 });
+
+it('should make chart label', () => {
+    const input = [
+        {category: "Infants / Pre-school (0 - 4)", population: "Females", year: 2006, value: 9293},
+        {category: "Primary school (5- 11)", population: "Females", year: 2006, value: 12378},
+        {category: "Infants / Pre-school (0 - 4)", population: "Females", year: 2016, value: 293},
+        {category: "Primary school (5- 11)", population: "Females", year: 2016, value: 2378}
+    ]
+    const result = makeChartLabel(input, 'category')
+    const output =  [
+        "Infants / Pre-school (0 - 4)",
+        "Primary school (5- 11)"
+    ]
+
+    expect(result).toEqual(output);
+});
+
+it('should make chart datasets', () => {
+    const input = [
+        {category: "Infants / Pre-school (0 - 4)", population: "Females", year: 2006, value: 9293},
+        {category: "Primary school (5- 11)", population: "Females", year: 2006, value: 12378},
+        {category: "Infants / Pre-school (0 - 4)", population: "Females", year: 2016, value: 293},
+        {category: "Primary school (5- 11)", population: "Females", year: 2016, value: 2378}
+    ]
+    const datasets = [{"year": 2006}, {"year": 2016}]
+    const result = makeChartDataSets(input, datasets)
+
+    const output =  [
+        {
+            label: '2006',
+            data: [9293, 12378],
+            backgroundColor: 'rgba(233,130,68,1)',
+            borderColor: 'rgba(233,130,68,1)',
+            borderWidth: 1,
+            hoverBackgroundColor: 'rgba(233,130,68,1)',
+            hoverBorderColor: 'rgba(233,130,68,1)',
+        },
+        {
+            label: '2016',
+            data: [293, 2378],
+            backgroundColor: 'rgba(78,115,190,1)',
+            borderColor: 'rgba(78,115,190,1)',
+            borderWidth: 1,
+            hoverBackgroundColor: 'rgba(78,115,190,1)',
+            hoverBorderColor: 'rgba(78,115,190,1)',
+        }
+    ]
+
+    expect(result).toEqual(output);
+});
+

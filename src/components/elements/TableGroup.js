@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Table } from "antd";
 import { arrayToObject, replaceSqlContent } from "../../utils/common";
 import {useApi} from '../../utils/hooks';

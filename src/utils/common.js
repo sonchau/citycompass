@@ -1,5 +1,7 @@
 import axios from "axios";
 import buildQueryUrl from "./buildQueryUrl";
+import {barChartItemStyles} from '../utils/chart'
+import _ from 'lodash';
 
 export const getData = async (queryName, params) => {
   const response = await axios.get(buildQueryUrl(queryName, params));
@@ -135,4 +137,28 @@ export const getSelectedFilterValue = (filterItems, selectedFilters) => {
   })
   const filterValue = foundObject[findObjectKey]
   return filterValue
+}
+
+export const makeChartLabel = (inputArray, label) => {
+  const labels =  inputArray.map(item => {
+    return item[label]
+  })
+  return _.uniqBy(labels)
+}
+
+export const makeChartDataSets = (inputArray, datasets) => {
+  const dataOutput = datasets.map((dataset, index) => {
+    const value = Object.values(dataset)[0]
+    const dataFilters = _.filter(inputArray, dataset)
+    const data = dataFilters.map( (dataFilter, index) => {
+      return dataFilter['value']
+    })
+    //console.log('dataset ...barChartItemStyles[index]', )
+    return {
+      label: `${value}`,
+      data, 
+      ...barChartItemStyles[index]
+    }
+  })
+  return dataOutput
 }

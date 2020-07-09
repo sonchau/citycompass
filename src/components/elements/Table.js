@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { Table } from "antd";
-import { arrayToObject } from "../../utils/common";
+import { arrayToObject, replaceSqlContent } from "../../utils/common";
 import {useApi} from '../../utils/hooks';
 import {makeHeading} from '../../utils/common';
 import StyledTable from '../../styled/Components/StyledTable';
 
 const TableElement = ({ query, selectedFilters }) => {
+  const updatedSql = replaceSqlContent(selectedFilters, query)
   const params = arrayToObject(selectedFilters);
-  const [getData, results, errorMessage] = useApi(query, params)
+  const [getData, results, errorMessage] = useApi(updatedSql, params, selectedFilters)
   let tableData = [], columns = []
 
   if (results.length) {
@@ -18,10 +19,6 @@ const TableElement = ({ query, selectedFilters }) => {
                 key: `${col}-${index}`,
               }));
   }
-
-  useEffect(() => {
-    getData(query, params)
-  }, [selectedFilters]);
   //console.log('results', results)
   return errorMessage ? 
       <p>{errorMessage}</p> : 
