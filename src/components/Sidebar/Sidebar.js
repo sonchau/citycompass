@@ -1,5 +1,10 @@
 import React from "react";
-import { Menu } from "antd";
+import { Menu} from "antd";
+import styled from "styled-components";
+
+const MenuTitle = styled.span`
+  position: relative;
+` 
 
 const Sidebar = ({ pageDirectory, handlMenuItemClick, handleItemTitleClick }) => {
   return (
@@ -10,7 +15,7 @@ const Sidebar = ({ pageDirectory, handlMenuItemClick, handleItemTitleClick }) =>
             b.c.length ? (
               <Menu.SubMenu
                 key={`${b["page_code"]}-${i}}`}
-                title={b["b_title"]}
+                title={<MenuTitle>{b["b_title"]}</MenuTitle>}
                 onTitleClick={() => handleItemTitleClick(
                   {
                     page_titles: {
@@ -41,7 +46,7 @@ const Sidebar = ({ pageDirectory, handlMenuItemClick, handleItemTitleClick }) =>
                             page_code: d["page_code"]
                           }}
                         >
-                          {d["d_title"]}
+                          <MenuTitle>{d["d_title"]}</MenuTitle>
                         </Menu.Item>
                       ))}
                     </Menu.ItemGroup>
@@ -60,7 +65,7 @@ const Sidebar = ({ pageDirectory, handlMenuItemClick, handleItemTitleClick }) =>
                           page_code: c["page_code"]
                         }}
                       >
-                        {c["c_title"]}
+                      <MenuTitle>{c["c_title"]}</MenuTitle>
                       </Menu.Item>
                     );
                 })}
@@ -79,7 +84,7 @@ const Sidebar = ({ pageDirectory, handlMenuItemClick, handleItemTitleClick }) =>
                     page_code: b["page_code"]
                   }}
                 >
-                  {b["b_title"]}
+                  <MenuTitle>{b["b_title"]}</MenuTitle>
             </Menu.Item>))}
         </Menu.ItemGroup>
       ))}

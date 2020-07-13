@@ -21,7 +21,6 @@ import ErrorPage from "../views/ErrorPage";
 // container
 import HeaderContainer from "./HeaderContainer";
 
-import { getData } from "../utils/common";
 import sqlQueryTransforms from "./../sqlQueryTransforms";
 import pageCodeToObjectPath from "../utils/pageCodeToObjectPath";
 import {useApi} from '../utils/hooks';
