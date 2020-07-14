@@ -5,8 +5,17 @@ import styled from "styled-components";
 import PageFiltersContext from "../../context/PageFiltersContext";
 
 const Wrapper = styled.div`
-  padding: 1rem;
+  padding: 1rem 1rem 1.5rem;
+  margin-bottom: 1rem;
   background: ${(props) => props.theme.filterPanel};
+  border-radius: 1rem;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 1rem;
+  z-index: 10;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
 `;
 
 const PageFilters = ({pageFilters}) => {
