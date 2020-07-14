@@ -57,7 +57,7 @@ h1.ant-typography, .ant-typography{
 // Menu
 .ant-menu-vertical {
   background-color: ${(props) => props.theme.sidebarBg};
-  padding-left: 2rem;
+  padding: 1rem 0 1rem 2rem;
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
   &.ant-menu-root.ant-menu-vertical {

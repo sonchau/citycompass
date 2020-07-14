@@ -146,19 +146,16 @@ export const makeChartLabel = (inputArray, label) => {
   return _.uniqBy(labels)
 }
 
-export const makeChartDataSets = (inputArray, datasets) => {
-  const dataOutput = datasets.map((dataset, index) => {
-    const value = Object.values(dataset)[0]
-    const dataFilters = _.filter(inputArray, dataset)
-    const data = dataFilters.map( (dataFilter, index) => {
-      return dataFilter['value']
-    })
-    //console.log('dataset ...barChartItemStyles[index]', )
+export const makeChartDataSets = (inputArray, datasets, valueInput) => {
+  const groups = _.groupBy(inputArray, datasets)
+  const dataOutput = Object.keys(groups).map( (group, index) => {
+    const data = _.map(groups[group], valueInput)
     return {
-      label: `${value}`,
-      data, 
+      label: group,
+      data,
       ...barChartItemStyles[index]
     }
   })
+  //console.log('dataOutput', dataOutput)
   return dataOutput
 }

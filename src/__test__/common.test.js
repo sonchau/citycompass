@@ -183,8 +183,9 @@ it('should make chart datasets', () => {
         {category: "Infants / Pre-school (0 - 4)", population: "Females", year: 2016, value: 293},
         {category: "Primary school (5- 11)", population: "Females", year: 2016, value: 2378}
     ]
-    const datasets = [{"year": 2006}, {"year": 2016}]
-    const result = makeChartDataSets(input, datasets)
+    const datasets = "year"
+    const valueInput = "value"
+    const result = makeChartDataSets(input, datasets, valueInput)
 
     const output =  [
         {
