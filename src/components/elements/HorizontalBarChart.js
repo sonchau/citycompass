@@ -8,15 +8,16 @@ import {makeChartLabel, makeChartDataSets, arrayToObject, replaceSqlContent} fro
 const HorizontalBarChart = ({ query, selectedFilters, options }) => {
     // options is in the following format
     // {"label":"category",
-    //  "datasets": [{"year": "2006"}, {"year": "2016"}]
-    // }  
-    const {label, datasets} = JSON.parse(options)
+    // "datasets": "year",
+    // "value": "value"
+    // }
+    const {label, datasets, value} = JSON.parse(options)
     const updatedSql = replaceSqlContent(selectedFilters, query)
     const params = arrayToObject(selectedFilters);
     const [getData, results, errorMessage] = useApi(updatedSql, params, selectedFilters)
     //console.log('query', query, 'selectedFilters', selectedFilters, 'options', options)
     const chartLabel = makeChartLabel(results, label)
-    const chartDataSets = makeChartDataSets(results, datasets)
+    const chartDataSets = makeChartDataSets(results, datasets, value)
     const data = {
         labels: chartLabel,
         datasets: chartDataSets
