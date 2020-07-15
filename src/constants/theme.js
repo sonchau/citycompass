@@ -24,7 +24,8 @@ const lightTheme = {
   tableHeader: "rgb(32,42,52)",
 
   white: "#fff",
-  black: "#000"
+  black: "#000",
+  chartBackground: "rgb(33, 42, 52)",
 };
 
 const darkTheme = {
@@ -47,7 +48,8 @@ const darkTheme = {
   tableHeader: "rgb(61,171,172)",
 
   white: "#fff",
-  black: "#000"
+  black: "#000",
+  chartBackground: "rgb(33, 42, 52)",
 };
 
 export default { lightTheme, darkTheme };

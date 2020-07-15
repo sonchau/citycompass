@@ -28,13 +28,16 @@ export const barHorizontalChartOptions = (xAxes, yAxes) => {
       maintainAspectRatio: false,
       legend: {
          display: true,
-       },
-       responsive: false,
-       intersect: true,
-       chartArea: {
-         backgroundColor: 'rgba(255, 255, 255, 1)'
-       },
-       
+         labels: {
+          //fontColor: '#fff'
+        }
+      },
+      responsive: false,
+      intersect: true,
+      chartArea: {
+         backgroundColor: "rgb(33, 42, 52)",
+         bottom: 150
+      },
       scales: {
         xAxes: [{
           ticks: {
@@ -46,18 +49,25 @@ export const barHorizontalChartOptions = (xAxes, yAxes) => {
             display: true,
             labelString: xAxes,
             fontStyle: 'bold',
-            fontSize: 16
-          }
+            fontSize: 16,
+          },
+          
         }
       ],
-        yAxes: [{
+        yAxes: [
+          {
           scaleLabel: {
             display: true,
             labelString: yAxes,
             fontStyle: 'bold',
-            fontSize: 16
+            fontSize: 16,
+          },
+          ticks: {
+            beginAtZero:true,
+            fontColor: 'rgb(98, 112, 123)'
           }
-        }],
+        }
+      ],
       },
       "tooltips": {
         "enabled": true,
@@ -83,25 +93,30 @@ export const barVerticalChartOptions = (xAxes, yAxes) => {
     maintainAspectRatio: false,
     legend: {
         display: true,
-      },
-      responsive: false,
-      intersect: true,
-      chartArea: {
-        backgroundColor: 'rgba(255, 255, 255, 1)'
-      },
+        labels: {
+        }
+    },
+    responsive: false,
+    intersect: true,
+    chartArea: {
+      backgroundColor: "rgb(33, 42, 52)",
+      bottom: 100
+    },
       
     scales: {
       yAxes: [{
         ticks: {
           callback: (value) => {
               return numeral(value).format('0,0');
-          }
+          },
+          beginAtZero:true,
+          fontColor: 'rgb(98, 112, 123)'
         },
         scaleLabel: {
           display: true,
           labelString: yAxes,
           fontStyle: 'bold',
-          fontSize: 16
+          fontSize: 16,
         }
       }
     ],
@@ -110,7 +125,7 @@ export const barVerticalChartOptions = (xAxes, yAxes) => {
           display: true,
           labelString: xAxes,
           fontStyle: 'bold',
-          fontSize: 16
+          fontSize: 16,
         }
       }],
      }

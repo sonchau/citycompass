@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import _ from 'lodash';
 import { PAGE_DIRECTORY_QUERY } from "../sqlQueries";
 import { useHistory, useLocation } from "react-router-dom";
+import {chartPlugin} from '../utils/chartPlugin';
 
 // Styled components
 import { ThemeProvider } from "styled-components";
@@ -33,6 +34,7 @@ const { Header, Footer, Sider, Content } = Layout;
 const Root = ({ clientName, isThemeLight }) => {
   let history = useHistory();
   let location = useLocation();
+  chartPlugin();
   let defaultPageCode, defaultPageMetaData;
   //const [pageDirectory, setPageDirectory] = useState(null);
   let pageDirectory
