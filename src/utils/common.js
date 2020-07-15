@@ -152,6 +152,7 @@ export const makeChartDataSets = (inputArray, datasets, valueInput) => {
     const data = _.map(groups[group], valueInput)
     return {
       label: group,
+      backgroundColor: 'rgba(255, 255, 255, 1)',
       data,
       ...barChartItemStyles[index]
     }
