@@ -51,7 +51,10 @@ export const barHorizontalChartOptions = (xAxes, yAxes) => {
             fontStyle: 'bold',
             fontSize: 16,
           },
-          
+          gridLines: {
+            color: 'rgb(62, 95, 119)',
+            borderDash: [1, 5],
+          },
         }
       ],
         yAxes: [
@@ -65,7 +68,11 @@ export const barHorizontalChartOptions = (xAxes, yAxes) => {
           ticks: {
             beginAtZero:true,
             fontColor: 'rgb(98, 112, 123)'
-          }
+          },
+          gridLines: {
+            color: 'rgb(33, 42, 52)',
+            borderDash: [1, 1000],
+          },
         }
       ],
       },
@@ -104,6 +111,18 @@ export const barVerticalChartOptions = (xAxes, yAxes) => {
     },
       
     scales: {
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: xAxes,
+          fontStyle: 'bold',
+          fontSize: 16,
+        },
+        gridLines: {
+          color: 'rgb(33, 42, 52)',
+          borderDash: [1, 1000],
+        },
+      }],
       yAxes: [{
         ticks: {
           callback: (value) => {
@@ -117,16 +136,11 @@ export const barVerticalChartOptions = (xAxes, yAxes) => {
           labelString: yAxes,
           fontStyle: 'bold',
           fontSize: 16,
-        }
-      }
-    ],
-      xAxes: [{
-        scaleLabel: {
-          display: true,
-          labelString: xAxes,
-          fontStyle: 'bold',
-          fontSize: 16,
-        }
+        },
+        gridLines: {
+          color: 'rgb(62, 95, 119)',
+          borderDash: [1, 5],
+        },
       }],
      }
     ,
