@@ -45,15 +45,6 @@ h1.ant-typography, .ant-typography{
   color: ${(props) => props.theme.color};
 }
 
-.ant-breadcrumb {
-  .ant-breadcrumb-link {
-      color: ${(props) => props.theme.color};
-  }
-  .ant-breadcrumb-separator{
-      color: ${(props) => props.theme.color};
-  }
-}
-
 // Menu
 .ant-menu-vertical {
   background-color: ${(props) => props.theme.sidebarBg};

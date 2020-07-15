@@ -6,6 +6,7 @@ import { PAGE_CONTENT_QUERY } from "../sqlQueries";
 import { santaizeSql, convertAjdPageToMetaData } from "../utils/common";
 import PageContent from "../components/elements/PageContent";
 import PageFilters from "../components/elements/PageFilters";
+import PageBreadcrumb from "../components/elements/PageBreadcrumb";
 import Table from "../components/elements/Table";
 import TableGroup from "../components/elements/TableGroup";
 import BarChart from '../components/elements/BarChart';
@@ -64,11 +65,7 @@ const GenericDataComponent = ({
       ) : null}
       <br />
       <Title>City of Casey</Title>
-      <Breadcrumb>
-        {Object.values(pageMetaData.page_titles).map((pageTitle, index) => (
-          <Breadcrumb.Item key={index}>{pageTitle}</Breadcrumb.Item>
-        ))}
-      </Breadcrumb>
+      <PageBreadcrumb titles={pageMetaData.page_titles} />
       {pageMetaData["page_filters"] && (
         <PageFiltersContext.Provider
           value= {
