@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledHorizontalBarChart = styled.div`
+const StyledBarChart = styled.div`
   width: 100%;
   padding-bottom: 2rem;
   canvas {
@@ -8,4 +8,4 @@ const StyledHorizontalBarChart = styled.div`
   }
 `;
 
-export default StyledHorizontalBarChart;
+export default StyledBarChart;
