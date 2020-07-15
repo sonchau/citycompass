@@ -5,12 +5,17 @@ import styled from "styled-components";
 const MenuTitle = styled.span`
   position: relative;
 ` 
+const MenuTitleStrong = styled.strong`
+  position: relative;
+` 
 
 const Sidebar = ({ pageDirectory, handlMenuItemClick, handleItemTitleClick }) => {
   return (
     <Menu onClick={handlMenuItemClick} mode="vertical">
       {pageDirectory.map((a, index) => (
-        <Menu.ItemGroup title={a["a_title"]} key={index}>
+        <Menu.ItemGroup 
+          title={a["a_title"] ?<MenuTitleStrong>{a["a_title"]}</MenuTitleStrong> : a["a_title"]}
+          key={index}>
           {a.b.map((b, i) =>
             b.c.length ? (
               <Menu.SubMenu
@@ -29,7 +34,10 @@ const Sidebar = ({ pageDirectory, handlMenuItemClick, handleItemTitleClick }) =>
               >
                 {b.c.map((c) => {
                   return c.d.length ? (
-                    <Menu.ItemGroup key={c["c_title"]} title={c["c_title"]}>
+                    <Menu.ItemGroup 
+                      key={c["c_title"]} 
+                      title={c["c_title"] ? <MenuTitleStrong>{c["c_title"]}</MenuTitleStrong> : c["c_title"]}
+                      >
                       {c.d.map((d) => (
                         <Menu.Item
                           key={d["page_code"]}

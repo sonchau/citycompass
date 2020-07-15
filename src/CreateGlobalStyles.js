@@ -1,18 +1,32 @@
 import { createGlobalStyle } from "styled-components";
 
-import GothamPropTtf from "./fonts/GothamPro/GothamPro.ttf";
-import GothamPropWoff2 from "./fonts/GothamPro/GothamPro.woff2";
+// import GothamPropTtf from "./fonts/GothamPro/GothamPro.ttf";
+// import GothamPropWoff2 from "./fonts/GothamPro/GothamPro.woff2";
+
+// @font-face {
+//         font-family: 'Gotham Pro';
+//         src: local('Gotham Pro'), local('GothamPro'),
+//         url(${GothamPropTtf}) format('ttf'),
+//         url(${GothamPropWoff2}) format('woff2');
+//         font-weight: 300;
+//         font-style: normal;
+//     }
+
+import OpenSansBoldTtf from "./fonts/Open_Sans/OpenSans-Bold.ttf";
+import OpenSansBoldWoff2 from "./fonts/Open_Sans/OpenSans-Bold.woff2";
+import OpenSansRegularTtf from "./fonts/Open_Sans/OpenSans-Regular.ttf";
+import OpenSansRegularWoff2 from "./fonts/Open_Sans/OpenSans-Regular.woff2";
 
 const CreateGlobalStyle = createGlobalStyle`
 
 @font-face {
-        font-family: 'Gotham Pro';
-        src: local('Gotham Pro'), local('GothamPro'),
-        url(${GothamPropTtf}) format('ttf'),
-        url(${GothamPropWoff2}) format('woff2');
-        font-weight: 300;
-        font-style: normal;
-    }
+  font-family: 'OpenSans';
+  src: local('OpenSans'),
+  url(${OpenSansBoldTtf}) format('ttf'),
+  url(${OpenSansBoldWoff2}) format('woff2')
+  url(${OpenSansRegularTtf}) format('ttf'),
+  url(${OpenSansRegularWoff2}) format('woff2');
+}
 
 * {
   margin: 0;
@@ -33,16 +47,12 @@ html
 body {
     background: ${(props) => props.theme.primaryBg};
     color: ${(props) => props.theme.color};
-    font-family: "Gotham Pro", sans-serif;
+    font-family: "OpenSans", sans-serif;
     min-height: 100vh;
 }
 
 .ant-layout {
   background-color: inherit;
-}
-
-h1.ant-typography, .ant-typography{
-  color: ${(props) => props.theme.color};
 }
 
 // Menu
@@ -57,14 +67,12 @@ h1.ant-typography, .ant-typography{
     -webkit-box-shadow: inset -10px 0 10px -10px rgba(0,0,0,0.4);
   }
   .ant-menu-item.ant-menu-item-only-child {
-    font-weight: bolder;
     font-size: 1.4rem;
   }
 
   .ant-menu-item-group {
     .ant-menu-item-group-title {
       color: ${(props) => props.theme.sidebarHeadingClr};
-      font-weight: bolder;
       font-size: 1.4rem;
       border-bottom: 1px solid ${(props) => props.theme.sidebarHeadingClr};
       padding: 0;
@@ -87,7 +95,6 @@ h1.ant-typography, .ant-typography{
     .ant-menu-item-selected {
       background-color: ${(props) => props.theme.sidebarSelectedBg};
       color: ${(props) => props.theme.sidebarSelectedClr};
-      font-weight: bolder;
     }
 
     .ant-menu-submenu {
@@ -102,7 +109,6 @@ h1.ant-typography, .ant-typography{
     .ant-menu-submenu-selected {
       background-color: ${(props) => props.theme.sidebarSelectedBg};
       color: ${(props) => props.theme.sidebarSelectedClr};
-      font-weight: bolder;
     }
   }
 

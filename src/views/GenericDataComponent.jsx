@@ -15,14 +15,14 @@ import PageFiltersContext from "../context/PageFiltersContext";
 import { useLocation } from "react-router-dom";
 import filtersReducer from '../reducers/filtersReducer';
 import {useApi} from '../utils/hooks';
-
-// import {
-//   MailOutlined,
-//   AppstoreOutlined,
-// } from "@ant-design/icons";
+import styled from "styled-components";
 
 const { Content } = Layout;
 const { Title } = Typography;
+const PageTitle = styled.div`
+  font-size: 3rem;
+  margin-bottom: 1rem;
+` 
 
 const GenericDataComponent = ({
   page_code,
@@ -64,7 +64,7 @@ const GenericDataComponent = ({
         </Menu>
       ) : null}
       <br />
-      <Title>City of Casey</Title>
+      <PageTitle>City of Casey</PageTitle>
       <PageBreadcrumb titles={pageMetaData.page_titles} />
       {pageMetaData["page_filters"] && (
         <PageFiltersContext.Provider
