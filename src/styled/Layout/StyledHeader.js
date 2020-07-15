@@ -7,6 +7,6 @@ const StyledHeader = styled(Header)`
     height: 8rem;
     line-height: 8rem;
     display: flex;
-`;
-
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 100%);
+`
 export default StyledHeader;
