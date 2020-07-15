@@ -4,7 +4,6 @@ import {barHorizontalChartOptions, barVerticalChartOptions} from '../../utils/ch
 import StyledBarChart from '../../styled/Components/StyledBarChart';
 import {useApi} from '../../utils/hooks';
 import {makeChartLabel, makeChartDataSets, arrayToObject, replaceSqlContent} from '../../utils/common';
-import {makeHeading} from '../../utils/common';
 
 const BarChart = ({ query, selectedFilters, options, chartType }) => {
     // options is in the following format
@@ -32,11 +31,11 @@ const BarChart = ({ query, selectedFilters, options, chartType }) => {
                 <HorizontalBar download={true} redraw={true} data={data} 
                 width={800}
                 height={400} 
-                options={barHorizontalChartOptions(makeHeading(value), makeHeading(label))} />
+                options={barHorizontalChartOptions(value, label)} />
             :  <Bar download={true} redraw={true} data={data} 
                 width={1000}
                 height={400} 
-                options={barVerticalChartOptions(makeHeading(label), makeHeading(value))} />
+                options={barVerticalChartOptions(label, value)} />
             }
         </StyledBarChart>
     );
