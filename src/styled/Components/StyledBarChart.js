@@ -5,6 +5,9 @@ const StyledBarChart = styled.div`
   padding-bottom: 2rem;
   canvas {
     margin: 0 auto;
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
   }
 `;
 
